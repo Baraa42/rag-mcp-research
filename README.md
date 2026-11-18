@@ -4,8 +4,8 @@ A production-oriented research assistant for ML papers, planned to combine
 hybrid retrieval with citation-grounded answers and expose research tools
 through MCP and FastAPI.
 
-**Status:** Session 1, Step 2 — PDF/Markdown ingestion implemented. Chunking,
-embeddings, retrieval, answer generation, and servers are not implemented yet.
+**Status:** Session 1, Step 3 — ingestion and token-aware chunking implemented.
+Embeddings, retrieval, answer generation, and servers are not implemented yet.
 
 ## Planned architecture
 
@@ -21,8 +21,8 @@ benchmarks will follow. No LangChain or LlamaIndex is planned.
 
 - Python 3.11 (the project supports `>=3.11,<3.12`)
 - `uv` and Git
-- Internet access for initial dependency installation; later sessions will also
-  download embedding and reranking models
+- Internet access for initial dependencies and the first tokenizer download;
+  later sessions will also download embedding and reranking models
 
 ## Setup
 
@@ -50,8 +50,13 @@ uv run ruff check .
 uv run python -c "import research_assistant; print(research_assistant.__file__)"
 ```
 
-Tests cover package importability and ingestion using small synthetic fixtures.
-They do not require downloaded papers or models.
+Ordinary tests use synthetic documents and a tiny local WordPiece tokenizer;
+they do not require downloaded papers or models. The actual MiniLM tokenizer
+check is opt-in (downloads tokenizer files on first use, never model weights):
+
+```sh
+RUN_TOKENIZER_INTEGRATION=1 uv run pytest tests/test_chunking.py -k actual_minilm
+```
 
 ## Document ingestion
 
@@ -95,6 +100,60 @@ Local validation extracted 15/15 nonempty pages from Attention Is All You Need,
 optional `fontTools` warnings for embedded CFF fonts; extraction completed, but
 some font encodings may be imperfect. No additional dependency was added.
 
+## Token-aware chunking
+
+```python
+from research_assistant.chunking import chunk_pages, load_tokenizer
+
+tokenizer = load_tokenizer()
+chunks = chunk_pages(pages, max_tokens=180, overlap=30, tokenizer=tokenizer)
+```
+
+The default tokenizer is `sentence-transformers/all-MiniLM-L6-v2`, pinned to
+revision `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`. Loading a tokenizer does not
+load an embedding model. `chunk_pages` loads it if none is supplied; reuse one
+instance across calls to avoid repeated loading.
+
+The 180-token maximum includes special tokens: MiniLM adds two, leaving 178
+text tokens. This is a conservative project budget, not an experimentally
+optimized size. Character offsets locate windows in the original string;
+the implementation never decodes token slices. Each final substring is encoded
+again without truncation and shortened if necessary to satisfy the limit.
+Capitalization, accents, punctuation, and internal whitespace remain unchanged.
+
+Consecutive windows overlap by 30 source tokens by default. Independently
+tokenizing a substring that starts inside a word can change the tokenization,
+so overlap is not guaranteed to equal 30 independently encoded tokens. Windows
+always advance; overlap can shrink for unusually small windows. Zero overlap
+is supported. Size/overlap must be integers, the text budget must be positive,
+and overlap must be nonnegative and smaller than that budget. The configured
+maximum cannot exceed the tokenizer's own input limit.
+
+PDF pages are never merged. Markdown (`page_number=None`) starts a new section
+at each ATX heading (`#` through `######`) outside backtick/tilde fences. Heading
+text stays in the first chunk; `section` records the latest heading title.
+There is no overlap across page or section boundaries. Introductory text has
+`section=None`. Setext headings, nested heading paths, and the full CommonMark
+grammar are not implemented.
+
+`Chunk` is immutable and retains `document_id`, `source`, `page_number`, and
+`section`, plus `text`, a zero-based `chunk_index` within each input page, and
+`chunk_id`. IDs hash the tokenizer configuration, chunking settings, provenance,
+index, and exact text. Mutable tokenizer padding/truncation settings are excluded
+from the fingerprint. Input order is preserved; IDs are stable for identical
+inputs and configuration, but can change when configuration or source changes.
+
+Trade-offs: boundaries may split sentences or words; short final chunks remain.
+Whitespace-only spans produce no chunks. Source text ignored by the tokenizer
+is retained in adjacent slices, but the tokenizer itself can still normalize or
+ignore characters when encoding. No PDF extraction defects are repaired here.
+The implementation re-tokenizes remaining section text for clarity; very large
+sections may need a more efficient streaming approach later.
+
+Local validation: 68 pages produced 419 chunks (73 Attention, 129 RAG, 217
+FlashAttention), averaging 166.38 tokens including special tokens, with a maximum
+of 180. Every non-whitespace character in the ingested pages was covered.
+
 ## Five-session roadmap (10 hours total)
 
 | Session | Time | Scope |
@@ -105,6 +164,6 @@ some font encodings may be imperfect. No additional dependency was added.
 | 4 | ~2 hours | FastAPI, Docker, reliability, logging |
 | 5 | ~2 hours | Evaluation, benchmarking, GitHub documentation |
 
-Next: Session 1, Step 3 will add token-aware chunking separately.
+Next: Sentence Transformer embeddings will be implemented separately.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
