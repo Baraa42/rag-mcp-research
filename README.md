@@ -4,8 +4,8 @@ A production-oriented research assistant for ML papers, planned to combine
 hybrid retrieval with citation-grounded answers and expose research tools
 through MCP and FastAPI.
 
-**Status:** Session 1, Step 1 — repository setup only. Retrieval, ingestion,
-answer generation, and servers are not implemented yet.
+**Status:** Session 1, Step 2 — PDF/Markdown ingestion implemented. Chunking,
+embeddings, retrieval, answer generation, and servers are not implemented yet.
 
 ## Planned architecture
 
@@ -50,7 +50,50 @@ uv run ruff check .
 uv run python -c "import research_assistant; print(research_assistant.__file__)"
 ```
 
-The smoke test verifies only package importability, not any ML functionality.
+Tests cover package importability and ingestion using small synthetic fixtures.
+They do not require downloaded papers or models.
+
+## Document ingestion
+
+```python
+from pathlib import Path
+from research_assistant.ingestion import ingest_directory
+
+pages = ingest_directory(Path("data/papers"))
+for page in pages:
+    print(page.source, page.page_number, len(page.text))
+```
+
+`extract_pdf(path)` returns one `DocumentPage` per nonempty physical PDF page,
+with 1-based page numbers. `extract_markdown(path)` reads UTF-8 Markdown into a
+single record with `page_number=None`, preserving Markdown syntax. Both trim
+leading/trailing whitespace and skip whitespace-only text. Valid PDFs with no
+pages and empty Markdown files return an empty list; a zero-byte PDF is invalid.
+
+Each immutable record contains `document_id` (SHA-256 of the original file
+bytes), `source`, `page_number`, and `text`. Identical bytes have the same ID
+even after renaming; any byte change, including PDF metadata, changes the ID.
+Direct extractors use the filename. Directory ingestion uses relative POSIX
+paths, scans `.pdf` and `.md` case-insensitively, sorts paths lexicographically,
+and preserves page order. Other extensions are ignored; directory symlinks are
+not traversed.
+
+Filesystem errors propagate. Invalid UTF-8, PDF parsing/extraction failures,
+and encrypted PDFs raise contextual `ValueError` exceptions. Directory scanning
+errors also propagate; a failed file aborts ingestion rather than returning
+partial results. Strict PDF parsing deliberately rejects malformed files.
+
+Limitations: no OCR, layout reconstruction, equation/table interpretation, or
+header/footer removal. Image-only pages may produce no records. Column order,
+spacing, ligatures, and mathematical notation may be imperfect. Markdown is
+not rendered or split into sections. Files and extracted records are held in
+memory, so large collections need future resource limits or streaming. Source
+metadata supports future citations; citation generation is not implemented.
+
+Local validation extracted 15/15 nonempty pages from Attention Is All You Need,
+19/19 from RAG (2020), and 34/34 from FlashAttention. FlashAttention emitted
+optional `fontTools` warnings for embedded CFF fonts; extraction completed, but
+some font encodings may be imperfect. No additional dependency was added.
 
 ## Five-session roadmap (10 hours total)
 
@@ -62,7 +105,6 @@ The smoke test verifies only package importability, not any ML functionality.
 | 4 | ~2 hours | FastAPI, Docker, reliability, logging |
 | 5 | ~2 hours | Evaluation, benchmarking, GitHub documentation |
 
-Next: Session 1, Step 2 will implement PDF/Markdown ingestion with source
-metadata and focused tests. No future component placeholder modules are present.
+Next: Session 1, Step 3 will add token-aware chunking separately.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
