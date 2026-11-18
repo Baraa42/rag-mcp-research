@@ -56,11 +56,11 @@ The smoke test verifies only package importability, not any ML functionality.
 
 | Session | Time | Scope |
 | --- | --- | --- |
-| 1 | 2 hours | Repository setup, PDF/Markdown ingestion, token-aware chunking |
-| 2 | 2 hours | Sentence Transformer embeddings and FAISS vector retrieval |
-| 3 | 2 hours | BM25 hybrid retrieval and cross-encoder reranking |
-| 4 | 2 hours | Citation-grounded answering, MCP tools, and FastAPI endpoints |
-| 5 | 2 hours | Docker deployment, evaluation, benchmarking, and documentation |
+| 1 | ~2 hours | PDF/Markdown ingestion, chunking, Sentence Transformer embeddings, FAISS vector search |
+| 2 | ~2 hours | BM25 hybrid retrieval, reranking, citation-grounded answers |
+| 3 | ~2 hours | MCP server and research tools |
+| 4 | ~2 hours | FastAPI, Docker, reliability, logging |
+| 5 | ~2 hours | Evaluation, benchmarking, GitHub documentation |
 
 Next: Session 1, Step 2 will implement PDF/Markdown ingestion with source
 metadata and focused tests. No future component placeholder modules are present.
