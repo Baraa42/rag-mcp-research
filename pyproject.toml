@@ -1,0 +1,35 @@
+[project]
+name = "rag-mcp-research"
+version = "0.1.0"
+description = "A research assistant for citation-grounded answers over ML papers."
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "sentence-transformers",
+    "faiss-cpu",
+    "pypdf",
+    "numpy",
+]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/research_assistant"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
