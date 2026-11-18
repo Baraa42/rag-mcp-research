@@ -9,9 +9,11 @@ from dataclasses import dataclass
 from transformers import AutoTokenizer, PreTrainedTokenizerFast
 
 from research_assistant.ingestion import DocumentPage
+from research_assistant.model_config import MODEL_NAME, MODEL_REVISION
 
-TOKENIZER_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-TOKENIZER_REVISION = "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+# Keep existing tokenizer constant names compatible with callers.
+TOKENIZER_NAME = MODEL_NAME
+TOKENIZER_REVISION = MODEL_REVISION
 
 
 @dataclass(frozen=True)

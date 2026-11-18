@@ -4,8 +4,9 @@ A production-oriented research assistant for ML papers, planned to combine
 hybrid retrieval with citation-grounded answers and expose research tools
 through MCP and FastAPI.
 
-**Status:** Session 1, Step 3 — ingestion and token-aware chunking implemented.
-Embeddings, retrieval, answer generation, and servers are not implemented yet.
+**Status:** Session 1, Step 4 — ingestion, token-aware chunking, and sentence
+embeddings implemented. Indexing, retrieval, answer generation, and servers are
+not implemented yet.
 
 ## Planned architecture
 
@@ -21,8 +22,8 @@ benchmarks will follow. No LangChain or LlamaIndex is planned.
 
 - Python 3.11 (the project supports `>=3.11,<3.12`)
 - `uv` and Git
-- Internet access for initial dependencies and the first tokenizer download;
-  later sessions will also download embedding and reranking models
+- Internet access for initial dependencies and the first tokenizer/embedding
+  model download; later sessions will also download reranking models
 
 ## Setup
 
@@ -57,6 +58,16 @@ check is opt-in (downloads tokenizer files on first use, never model weights):
 ```sh
 RUN_TOKENIZER_INTEGRATION=1 uv run pytest tests/test_chunking.py -k actual_minilm
 ```
+
+Embedding unit tests use a fake model. Run the real-model check separately:
+
+```sh
+RUN_EMBEDDING_INTEGRATION=1 uv run pytest tests/test_embeddings.py -k real_model
+```
+
+This downloads the pinned weights on first use. It checks dimensions, unit
+norms, identical inputs, and a relative related/unrelated sentence comparison;
+it does not impose a universal semantic-similarity threshold.
 
 ## Document ingestion
 
@@ -154,6 +165,70 @@ Local validation: 68 pages produced 419 chunks (73 Attention, 129 RAG, 217
 FlashAttention), averaging 166.38 tokens including special tokens, with a maximum
 of 180. Every non-whitespace character in the ingested pages was covered.
 
+## Sentence embeddings
+
+```python
+from research_assistant.embeddings import Embedder
+
+embedder = Embedder(batch_size=32)
+vectors = embedder.encode([chunk.text for chunk in chunks])
+# vectors.shape == (len(chunks), 384); vectors.dtype == numpy.float32
+```
+
+`Embedder` loads `SentenceTransformer` once per instance and explicitly uses
+CPU inference. Reuse the instance for multiple calls. Model name and revision
+are defined once in `model_config.py` and shared with chunking: MiniLM at the
+same pinned revision documented above. No new dependencies are required.
+
+`encode` accepts a list of strings and preserves row ordering. Sentence
+Transformers handles batches internally; `batch_size` must be a positive
+integer. An empty list returns `(0, 384)` without model inference (the instance
+has already loaded its model). Empty strings are valid inputs, although ingestion
+and chunking do not produce empty text records. Other container types and
+non-string elements raise `TypeError`.
+
+Output shape and finite values are checked before each vector is divided by
+its L2 norm. Norms accumulate in float64 for numerical stability; the returned
+matrix is float32. Zero-norm, non-finite, and incorrectly shaped model output
+raise `ValueError`. For these unit-length vectors, a dot product is cosine
+similarity, up to floating-point rounding.
+
+### Local CPU measurement (2026-11-18)
+
+Apple M5 Pro, macOS arm64, PyTorch using 6 CPU threads, batch size 32. The three
+papers were ingested and chunked with 180 tokens / 30 overlap. Model files were
+prefetched before timing model construction. The inference timer covered one
+corpus `encode` call, including tokenization, batching, conversion, validation,
+and normalization; no explicit warm-up or repeated-run averaging was used.
+
+| Measurement | Result |
+| --- | --- |
+| Chunks / matrix shape | 419 / `(419, 384)` |
+| Data type | `float32` |
+| L2 norm min / mean / max | 0.9999999404 / 1.0000000000 / 1.0000000000 |
+| Initial download/cache check | 16.234 s |
+| Model construction from cached files | 2.466 s |
+| Corpus embedding inference | 1.824 s |
+| Throughput | 229.77 chunks/s |
+| Device | CPU; no CUDA or MPS used |
+
+Sentence comparisons, measured separately from the corpus timing:
+
+| Sentence A | Sentence B | Cosine similarity |
+| --- | --- | --- |
+| A cat is sleeping on the sofa. | A kitten is resting on a couch. | 0.694172 |
+| A cat is sleeping on the sofa. | The stock market closed higher today. | 0.044238 |
+| A cat is sleeping on the sofa. | A cat is sleeping on the sofa. | 1.000000 |
+
+These are illustrative measurements on one machine, not performance guarantees
+or a retrieval evaluation. The model truncates inputs beyond its 256-token
+sequence limit; current 180-token chunks fit, but arbitrary longer strings passed
+directly to `encode` can be truncated. Corpus quality still depends on PDF
+extraction and chunk boundaries. Results can vary slightly across hardware and
+library versions. All output vectors are held in memory; batching reduces model
+working memory, not final matrix size. Weights remain in the external Hugging
+Face cache and are not committed. FAISS indexing is not implemented.
+
 ## Five-session roadmap (10 hours total)
 
 | Session | Time | Scope |
@@ -164,6 +239,6 @@ of 180. Every non-whitespace character in the ingested pages was covered.
 | 4 | ~2 hours | FastAPI, Docker, reliability, logging |
 | 5 | ~2 hours | Evaluation, benchmarking, GitHub documentation |
 
-Next: Sentence Transformer embeddings will be implemented separately.
+Next: FAISS vector indexing will be implemented separately.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
