@@ -1,0 +1,58 @@
+"""Minimal local index/search commands; retrieval remains usable as a library."""
+
+import argparse
+from pathlib import Path
+
+from research_assistant.chunking import chunk_pages
+from research_assistant.embeddings import Embedder
+from research_assistant.ingestion import ingest_directory
+from research_assistant.retrieval import VectorIndex
+
+
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description="Index and search research papers")
+    commands = parser.add_subparsers(dest="command", required=True)
+    build = commands.add_parser("index", help="Build an exact vector index")
+    build.add_argument("directory", type=Path)
+    build.add_argument("--out", type=Path, required=True)
+    search = commands.add_parser("search", help="Retrieve passages for a question")
+    search.add_argument("question")
+    search.add_argument("--index", type=Path, required=True)
+    search.add_argument("--top-k", type=int, default=5)
+    args = parser.parse_args(argv)
+    try:
+        if args.command == "index":
+            pages = ingest_directory(args.directory)
+            chunks = chunk_pages(pages)
+            vectors = Embedder().encode([chunk.text for chunk in chunks])
+            VectorIndex(chunks, vectors).save(args.out)
+            print(
+                f"Indexed {len(chunks)} chunks from {len(pages)} pages into {args.out}"
+            )
+        else:
+            if args.top_k <= 0 or not args.question.strip():
+                raise ValueError("Provide a nonempty question and positive --top-k")
+            index = VectorIndex.load(args.index)
+            results = (
+                index.search(args.question, Embedder(), args.top_k)
+                if index.chunks
+                else []
+            )
+            if not results:
+                print("No results: the index is empty.")
+            for rank, result in enumerate(results, 1):
+                location = (
+                    f"page {result.page_number}"
+                    if result.page_number is not None
+                    else f"section {result.section or '(untitled)'}"
+                )
+                print(
+                    f"\n{rank}. score={result.score:.6f} | {result.source} | {location}"
+                )
+                print(result.text)
+    except (OSError, ValueError, TypeError, RuntimeError) as exc:
+        parser.exit(1, f"Error: {exc}\n")
+
+
+if __name__ == "__main__":
+    main()

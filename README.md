@@ -4,9 +4,9 @@ A production-oriented research assistant for ML papers, planned to combine
 hybrid retrieval with citation-grounded answers and expose research tools
 through MCP and FastAPI.
 
-**Status:** Session 1, Step 4 — ingestion, token-aware chunking, and sentence
-embeddings implemented. Indexing, retrieval, answer generation, and servers are
-not implemented yet.
+**Status:** Session 1, Step 5 — ingestion, chunking, embeddings, exact FAISS
+search, persistence, and a CLI are implemented. BM25, reranking, generated
+answers, MCP, and FastAPI are not implemented yet.
 
 ## Planned architecture
 
@@ -227,7 +227,101 @@ directly to `encode` can be truncated. Corpus quality still depends on PDF
 extraction and chunk boundaries. Results can vary slightly across hardware and
 library versions. All output vectors are held in memory; batching reduces model
 working memory, not final matrix size. Weights remain in the external Hugging
-Face cache and are not committed. FAISS indexing is not implemented.
+Face cache and are not committed.
+
+## Exact semantic retrieval
+
+```sh
+uv run python -m research_assistant index data/papers --out data/index
+uv run python -m research_assistant search \
+  "How does FlashAttention reduce memory usage?" \
+  --index data/index --top-k 5
+```
+
+The current executable pipeline is PDF/Markdown ingestion → per-page/section
+chunking → normalized MiniLM embeddings → exact FAISS `IndexFlatIP(384)` →
+ranked passages. Search embeds only the question, never the indexed documents.
+The CLI displays rank, cosine similarity, filename, physical page or Markdown
+section, and the full retrieved text; it does not generate an answer. Each CLI
+search invocation loads the model; reuse an `Embedder` for repeated library calls.
+
+```python
+from pathlib import Path
+from research_assistant.retrieval import VectorIndex
+
+index = VectorIndex.load(Path("data/index"))
+results = index.search("Why use positional encoding?", embedder, top_k=5)
+```
+
+`VectorIndex(chunks, vectors)` preserves an immutable tuple of chunk records in
+FAISS row order. `SearchResult` contains chunk/document IDs, source, page, section,
+text, and score. Inputs are converted to contiguous float32 and checked for
+384 dimensions, finite values, and unit norms. `top_k` must be a positive integer;
+requests larger than the corpus are capped. An empty index returns no results
+without query inference. Scores descend; equal-score ordering at the top-k
+cutoff is not a cross-version guarantee.
+
+### Saved format
+
+```text
+data/index/
+├── vectors.faiss
+├── chunks.jsonl
+└── manifest.json
+```
+
+The JSONL contains one complete Chunk per FAISS row. The versioned manifest
+records the shared model name/revision, dimension, chunk count, chunk size and
+overlap, index type, source-document IDs, and SHA-256 hashes of both data files.
+Loading verifies checksums before FAISS deserialization, then checks the actual
+index type/metric/dimension, row count, vector norms/finiteness, chunk field types,
+unique chunk IDs, and manifest consistency. It does not re-embed documents.
+Caller-provided vectors must correspond to the supplied chunks and pinned model;
+that semantic relationship cannot be inferred from vector values alone.
+
+Saving replaces files individually using temporary files and writes the manifest
+last. Interrupted or mixed writes fail validation on load; this is not a
+transactional or concurrent-writer store. Load only trusted local artifacts:
+checksums detect accidental corruption, not maliciously rewritten manifests.
+Source files are not re-read on load; rebuild the index when sources change.
+Generated files under `data/index/` are ignored by Git.
+
+### Actual retrieval review
+
+[Full top-three passages, scores, and manual assessments](docs/retrieval-evaluation.md)
+are recorded for all four requested questions. No relevance metrics or ground
+truth labels are claimed.
+
+| Question topic | Top three: filename / page / score | Manual assessment |
+| --- | --- | --- |
+| Self-attention complexity | flashattention.pdf / 1 / 0.592781; attention_is_all_you_need.pdf / 6 / 0.588325; attention_is_all_you_need.pdf / 6 / 0.583313 | Ranks 1 and 3 directly address complexity; rank 2 is contextual. |
+| FlashAttention memory transfers | flashattention.pdf / 22 / 0.712328; flashattention.pdf / 10 / 0.675855; flashattention.pdf / 22 / 0.613865 | Useful; the mechanism is clearest at rank 3. |
+| RAG memory combination | rag_2020.pdf / 3 / 0.516974; rag_2020.pdf / 2 / 0.514233; rag_2020.pdf / 2 / 0.504367 | Relevant; rank 3 is the most direct explanation. |
+| Positional encoding | flashattention.pdf / 16 / 0.476756; attention_is_all_you_need.pdf / 3 / 0.474649; flashattention.pdf / 17 / 0.461168 | Failure: none answers the question; a bibliography fragment ranks first. |
+
+On Apple M5 Pro CPU, batch 32, document embedding took **1.706088 s**, raw FAISS
+construction **0.013958 ms** (validated wrapper construction **0.416583 ms**).
+Query embedding took **2.703–2.969 ms**; raw FAISS searches took **0.988084,
+0.021250, 0.019916, and 0.020750 ms**, respectively. Loading/downloads were excluded.
+These are single-run measurements, with first-use overhead visible in the first
+search. The FAISS file is **643,629 bytes**; all three saved files total
+**1,027,841 bytes**. Reloaded results matched all four in-memory queries exactly.
+
+```sh
+RUN_RETRIEVAL_INTEGRATION=1 uv run pytest tests/test_retrieval.py -k real_end_to_end
+```
+
+Offline tests use synthetic vectors/fake embedders. The opt-in test runs actual
+Markdown ingestion, chunking, model inference, search, and save/load. FAISS is
+imported after the embedding runtime: importing it first caused a native crash
+with the installed macOS wheels; standalone integration and corpus validation
+passed after this initialization-order fix.
+
+Limitations: exact search scales linearly with corpus size; this corpus is only
+419 vectors. Overlap can yield redundant hits, bibliography text can outrank
+answers, and cosine scores are not relevance probabilities. There is no keyword
+retrieval, reranking, metadata filtering, confidence threshold, or generated
+answer. Existing PDF font/formatting warnings and chunk-boundary artifacts remain.
 
 ## Five-session roadmap (10 hours total)
 
@@ -239,6 +333,7 @@ Face cache and are not committed. FAISS indexing is not implemented.
 | 4 | ~2 hours | FastAPI, Docker, reliability, logging |
 | 5 | ~2 hours | Evaluation, benchmarking, GitHub documentation |
 
-Next: FAISS vector indexing will be implemented separately.
+Session 1 is complete. Next: Session 2 will add BM25 hybrid retrieval, reranking,
+and citation-grounded answering separately.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
