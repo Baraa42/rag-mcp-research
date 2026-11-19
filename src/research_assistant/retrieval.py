@@ -19,7 +19,11 @@ from research_assistant.model_config import (
 
 @dataclass(frozen=True)
 class SearchResult:
-    """A retrieved source passage and its inner-product similarity."""
+    """A retrieved passage with a method-specific score.
+
+    Vector retrieval uses cosine similarity (normalized inner product);
+    BM25 retrieval uses a BM25 relevance score. These are not directly comparable.
+    """
 
     chunk_id: str
     document_id: str

@@ -330,11 +330,13 @@ uv run python -m research_assistant search \
   --index data/index --method bm25 --top-k 5
 ```
 
-`--method vector` remains the default. BM25 loads the same validated persisted
-index/chunks and builds an in-memory `rank_bm25.BM25Okapi` at startup; no second
-corpus or persistence format is introduced. It does not instantiate `Embedder`
-or download model files, although existing module imports and FAISS validation
-still contribute to CLI startup time.
+`--method vector` remains the default. BM25 CLI search calls `VectorIndex.load()`,
+which loads and validates the FAISS index from disk alongside the persisted
+chunks. BM25 statistics are rebuilt from those chunks using
+`rank_bm25.BM25Okapi` for each CLI invocation; no second corpus or persistence
+format is introduced. BM25 does not instantiate the embedding model, run
+inference, or download model files. Existing module imports and FAISS index
+loading/validation still contribute to CLI startup time.
 
 ```python
 from research_assistant.bm25 import BM25Index
