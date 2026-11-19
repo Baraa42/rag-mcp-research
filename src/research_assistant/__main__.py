@@ -3,6 +3,7 @@
 import argparse
 from pathlib import Path
 
+from research_assistant.bm25 import BM25Index
 from research_assistant.chunking import chunk_pages
 from research_assistant.embeddings import Embedder
 from research_assistant.ingestion import ingest_directory
@@ -19,6 +20,7 @@ def main(argv: list[str] | None = None) -> None:
     search.add_argument("question")
     search.add_argument("--index", type=Path, required=True)
     search.add_argument("--top-k", type=int, default=5)
+    search.add_argument("--method", choices=("vector", "bm25"), default="vector")
     args = parser.parse_args(argv)
     try:
         if args.command == "index":
@@ -33,13 +35,18 @@ def main(argv: list[str] | None = None) -> None:
             if args.top_k <= 0 or not args.question.strip():
                 raise ValueError("Provide a nonempty question and positive --top-k")
             index = VectorIndex.load(args.index)
-            results = (
-                index.search(args.question, Embedder(), args.top_k)
-                if index.chunks
-                else []
-            )
+            if args.method == "bm25":
+                results = BM25Index(list(index.chunks)).search(
+                    args.question, args.top_k
+                )
+            else:
+                results = (
+                    index.search(args.question, Embedder(), args.top_k)
+                    if index.chunks
+                    else []
+                )
             if not results:
-                print("No results: the index is empty.")
+                print("No results: empty index or no matching terms.")
             for rank, result in enumerate(results, 1):
                 location = (
                     f"page {result.page_number}"

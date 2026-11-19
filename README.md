@@ -4,9 +4,9 @@ A production-oriented research assistant for ML papers, planned to combine
 hybrid retrieval with citation-grounded answers and expose research tools
 through MCP and FastAPI.
 
-**Status:** Session 1, Step 5 — ingestion, chunking, embeddings, exact FAISS
-search, persistence, and a CLI are implemented. BM25, reranking, generated
-answers, MCP, and FastAPI are not implemented yet.
+**Status:** Session 2, Step 1 — BM25 lexical retrieval is implemented alongside
+the existing ingestion, chunking, embeddings, FAISS search, persistence, and CLI.
+Hybrid retrieval, reranking, generated answers, MCP, and FastAPI are not implemented.
 
 ## Planned architecture
 
@@ -319,9 +319,78 @@ passed after this initialization-order fix.
 
 Limitations: exact search scales linearly with corpus size; this corpus is only
 419 vectors. Overlap can yield redundant hits, bibliography text can outrank
-answers, and cosine scores are not relevance probabilities. There is no keyword
-retrieval, reranking, metadata filtering, confidence threshold, or generated
-answer. Existing PDF font/formatting warnings and chunk-boundary artifacts remain.
+answers, and cosine scores are not relevance probabilities. The vector method has no keyword matching, reranking, metadata filtering,
+confidence threshold, or generated answer; BM25 is now available separately. Existing PDF font/formatting warnings and chunk-boundary artifacts remain.
+
+## BM25 lexical retrieval
+
+```sh
+uv run python -m research_assistant search \
+  "Why does the Transformer use positional encoding?" \
+  --index data/index --method bm25 --top-k 5
+```
+
+`--method vector` remains the default. BM25 loads the same validated persisted
+index/chunks and builds an in-memory `rank_bm25.BM25Okapi` at startup; no second
+corpus or persistence format is introduced. It does not instantiate `Embedder`
+or download model files, although existing module imports and FAISS validation
+still contribute to CLI startup time.
+
+```python
+from research_assistant.bm25 import BM25Index
+
+lexical = BM25Index(list(index.chunks), k1=1.5, b=0.75)
+results = lexical.search("positional encoding", top_k=5)
+```
+
+BM25 sums query-term contributions using inverse document frequency, saturating
+term frequency, and document-length normalization. `k1=1.5` controls term-frequency
+saturation; larger values allow repeated terms to contribute more. `b=0.75`
+controls length normalization; zero disables it and one applies full normalization.
+Here each chunk is a BM25 document. Repeated query terms contribute repeatedly.
+The library's default IDF-floor parameter (`epsilon=0.25`) is unchanged.
+
+Documents and queries use `re.findall(r"\w+", text.casefold())`: Unicode letters,
+numbers, and underscores form tokens. Punctuation and hyphens split tokens, so
+`self-attention` matches `self attention`; `Q_K` stays `q_k`, `BM25` stays `bm25`,
+and `C++` becomes `c`. Casefolding handles forms such as `Straße` → `strasse`.
+Accents are not stripped; there is no Unicode canonical normalization, stemming,
+lemmatization, stopword removal, or repair of PDF line-break hyphenation.
+
+Results reuse `SearchResult` and original chunk metadata. Matching chunks are
+sorted by descending BM25 score, then original corpus position for ties. Only
+chunks sharing at least one query token are returned. Empty/tokenless queries,
+empty corpora, and absent terms return no results. Invalid types, nonpositive
+`top_k`, invalid parameters, and duplicate chunk IDs are rejected. Punctuation-only
+chunks retain their corpus positions but cannot match a query. Zero/negative
+scores are retained for matches: Okapi IDF can yield these values in small corpora.
+BM25 scores are not cosine scores or probabilities; do not compare or add the raw
+scores across methods.
+
+### Observed comparison and performance
+
+[All 40 top-five results with scores and excerpts](docs/bm25-evaluation.md) compare
+both methods on the same 419 chunks. BM25 retrieved the direct positional-encoding
+explanation at rank 1 (`attention_is_all_you_need.pdf`, page 6, **15.931601**).
+FAISS missed it in its top five and ranked a bibliography fragment first. BM25
+also ranked the direct RAG architecture explanation first and the FlashAttention
+tiling explanation first. Conversely, its complexity-query winner was a noisy
+repeated-text figure passage, and an unrelated RAG passage appeared in its
+FlashAttention results. Four examples do not establish overall superiority.
+
+On Apple M5 Pro CPU (2026-11-19), 30 construction measurements after warm-up
+produced median **7.823 ms** (min 7.614, max 8.198). Across 200 repetitions per
+question, median query latencies were **0.276, 0.212, 0.302, and 0.246 ms** in the
+four-question order used in the report. Construction and query timers exclude
+imports, persisted-index loading, and model operations. A separate Python
+allocation trace measured approximately **2.44 MiB retained / 3.56 MiB peak**
+additional memory, excluding existing chunks and untraced native allocations;
+this is not total process memory.
+
+Limitations include literal-token matching, stopword noise, vocabulary mismatch,
+PDF artifacts, and redundant overlapping passages. The implementation scores the
+small corpus in memory and makes no large-corpus performance claims. No hybrid
+retrieval, Reciprocal Rank Fusion, or reranking is performed.
 
 ## Five-session roadmap (10 hours total)
 
@@ -333,7 +402,7 @@ answer. Existing PDF font/formatting warnings and chunk-boundary artifacts remai
 | 4 | ~2 hours | FastAPI, Docker, reliability, logging |
 | 5 | ~2 hours | Evaluation, benchmarking, GitHub documentation |
 
-Session 1 is complete. Next: Session 2 will add BM25 hybrid retrieval, reranking,
-and citation-grounded answering separately.
+Next: hybrid retrieval will be implemented separately. BM25 and vector scores
+are currently returned independently, with no fusion or reranking.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
