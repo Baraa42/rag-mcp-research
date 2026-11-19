@@ -6,6 +6,7 @@ from pathlib import Path
 from research_assistant.bm25 import BM25Index
 from research_assistant.chunking import chunk_pages
 from research_assistant.embeddings import Embedder
+from research_assistant.hybrid import HybridRetriever
 from research_assistant.ingestion import ingest_directory
 from research_assistant.retrieval import VectorIndex
 
@@ -20,7 +21,9 @@ def main(argv: list[str] | None = None) -> None:
     search.add_argument("question")
     search.add_argument("--index", type=Path, required=True)
     search.add_argument("--top-k", type=int, default=5)
-    search.add_argument("--method", choices=("vector", "bm25"), default="vector")
+    search.add_argument(
+        "--method", choices=("vector", "bm25", "hybrid"), default="vector"
+    )
     args = parser.parse_args(argv)
     try:
         if args.command == "index":
@@ -38,6 +41,14 @@ def main(argv: list[str] | None = None) -> None:
             if args.method == "bm25":
                 results = BM25Index(list(index.chunks)).search(
                     args.question, args.top_k
+                )
+            elif args.method == "hybrid":
+                results = (
+                    HybridRetriever(
+                        index, BM25Index(list(index.chunks)), Embedder()
+                    ).search(args.question, args.top_k)
+                    if index.chunks
+                    else []
                 )
             else:
                 results = (

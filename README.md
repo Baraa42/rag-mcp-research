@@ -4,9 +4,9 @@ A production-oriented research assistant for ML papers, planned to combine
 hybrid retrieval with citation-grounded answers and expose research tools
 through MCP and FastAPI.
 
-**Status:** Session 2, Step 1 — BM25 lexical retrieval is implemented alongside
-the existing ingestion, chunking, embeddings, FAISS search, persistence, and CLI.
-Hybrid retrieval, reranking, generated answers, MCP, and FastAPI are not implemented.
+**Status:** Session 2, Step 2 — RRF hybrid retrieval combines the existing
+BM25 and FAISS rankings. Reranking, generated answers, MCP, and FastAPI are not
+implemented.
 
 ## Planned architecture
 
@@ -391,8 +391,58 @@ this is not total process memory.
 
 Limitations include literal-token matching, stopword noise, vocabulary mismatch,
 PDF artifacts, and redundant overlapping passages. The implementation scores the
-small corpus in memory and makes no large-corpus performance claims. No hybrid
-retrieval, Reciprocal Rank Fusion, or reranking is performed.
+small corpus in memory and makes no large-corpus performance claims. The BM25 method remains independent; hybrid RRF is available separately. No
+cross-encoder reranking is performed.
+
+## Hybrid retrieval with Reciprocal Rank Fusion
+
+```sh
+uv run python -m research_assistant search \
+  "Why does the Transformer use positional encoding?" \
+  --index data/index --method hybrid --top-k 5
+```
+
+Vector search remains the default. Hybrid reuses the saved `VectorIndex`, builds
+BM25 statistics from the same ordered chunks, and loads one `Embedder` to encode
+the question. It does not rebuild document embeddings or create a separate index.
+For library usage, reuse all three existing instances:
+
+```python
+from research_assistant.hybrid import HybridRetriever
+
+hybrid = HybridRetriever(index, lexical, embedder, candidate_k=20, rrf_k=60)
+results = hybrid.search("Why use positional encoding?", top_k=5)
+```
+
+`reciprocal_rank_fusion(rankings, top_k=5, rrf_k=60)` is independently usable.
+For each chunk ID, it sums `1 / (rrf_k + rank)` across ranked lists, using 1-based
+ranks and equal method weights. Raw BM25 and cosine scores are ignored: their
+scales have different meanings, so simply adding them is not justified. Returned
+`SearchResult.score` is an RRF score, not cosine similarity or a probability.
+
+Chunks are deduplicated by ID. Within one list, only the first occurrence
+contributes; subsequent positions retain their original ranks. Conflicting
+metadata for the same ID raises an error. Metadata/text are preserved, inputs
+are not mutated, and ties are broken lexicographically by chunk ID. `top_k` must
+be a positive integer; `rrf_k` must be a nonnegative integer. Empty lists produce
+no results. Hybrid indexes must contain exactly the same ordered Chunk records.
+
+Each method supplies 20 candidates by default. If `top_k` exceeds `candidate_k`,
+the effective depth automatically grows to `max(candidate_k, top_k)`; small corpora
+or sparse lexical matches can still return fewer results. RRF cannot recover a
+passage absent from both candidate lists. It loses raw score margins and can
+promote broad consensus over a more directly answering passage. SHA-based ID
+ordering is deterministic but has no relevance meaning. Overlapping chunks with
+different IDs remain distinct, so fusion does not remove passage redundancy.
+
+[All 60 comparison results and component ranks](docs/hybrid-evaluation.md) cover
+the same four questions as the BM25 review. Hybrid ranks the complexity table
+first, the FlashAttention tiling/recomputation comparison first, and the direct
+RAG architecture explanation first. For positional encoding, the direct page-6
+explanation is **hybrid rank 2**, RRF **0.03067916** (BM25 rank 1, vector rank 10).
+The less-direct dropout passage wins at **0.03076923** (rank 5 in both lists).
+This illustrates both recovery beyond vector top five and the limits of rank
+fusion; four manually inspected examples do not establish general improvement.
 
 ## Five-session roadmap (10 hours total)
 
@@ -404,7 +454,6 @@ retrieval, Reciprocal Rank Fusion, or reranking is performed.
 | 4 | ~2 hours | FastAPI, Docker, reliability, logging |
 | 5 | ~2 hours | Evaluation, benchmarking, GitHub documentation |
 
-Next: hybrid retrieval will be implemented separately. BM25 and vector scores
-are currently returned independently, with no fusion or reranking.
+Next: cross-encoder reranking will be implemented separately.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.

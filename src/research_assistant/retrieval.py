@@ -22,7 +22,8 @@ class SearchResult:
     """A retrieved passage with a method-specific score.
 
     Vector retrieval uses cosine similarity (normalized inner product);
-    BM25 retrieval uses a BM25 relevance score. These are not directly comparable.
+    BM25 retrieval uses a BM25 relevance score; hybrid retrieval uses an RRF
+    score. These method-specific scores are not directly comparable.
     """
 
     chunk_id: str
