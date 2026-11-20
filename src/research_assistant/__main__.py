@@ -8,6 +8,7 @@ from research_assistant.chunking import chunk_pages
 from research_assistant.embeddings import Embedder
 from research_assistant.hybrid import HybridRetriever
 from research_assistant.ingestion import ingest_directory
+from research_assistant.reranking import CrossEncoderReranker
 from research_assistant.retrieval import VectorIndex
 
 
@@ -22,7 +23,7 @@ def main(argv: list[str] | None = None) -> None:
     search.add_argument("--index", type=Path, required=True)
     search.add_argument("--top-k", type=int, default=5)
     search.add_argument(
-        "--method", choices=("vector", "bm25", "hybrid"), default="vector"
+        "--method", choices=("vector", "bm25", "hybrid", "rerank"), default="vector"
     )
     args = parser.parse_args(argv)
     try:
@@ -42,6 +43,15 @@ def main(argv: list[str] | None = None) -> None:
                 results = BM25Index(list(index.chunks)).search(
                     args.question, args.top_k
                 )
+            elif args.method == "rerank":
+                results = []
+                if index.chunks:
+                    candidates = HybridRetriever(
+                        index, BM25Index(list(index.chunks)), Embedder()
+                    ).search(args.question, max(20, args.top_k))
+                    results = CrossEncoderReranker().rerank(
+                        args.question, candidates, args.top_k
+                    )
             elif args.method == "hybrid":
                 results = (
                     HybridRetriever(

@@ -23,7 +23,8 @@ class SearchResult:
 
     Vector retrieval uses cosine similarity (normalized inner product);
     BM25 retrieval uses a BM25 relevance score; hybrid retrieval uses an RRF
-    score. These method-specific scores are not directly comparable.
+    score. Reranking uses a raw cross-encoder relevance logit. These method-specific
+    scores are not directly comparable or calibrated probabilities.
     """
 
     chunk_id: str

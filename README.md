@@ -4,9 +4,8 @@ A production-oriented research assistant for ML papers, planned to combine
 hybrid retrieval with citation-grounded answers and expose research tools
 through MCP and FastAPI.
 
-**Status:** Session 2, Step 2 — RRF hybrid retrieval combines the existing
-BM25 and FAISS rankings. Reranking, generated answers, MCP, and FastAPI are not
-implemented.
+**Status:** Session 2B, Step 3 — cross-encoder reranking is available after
+RRF hybrid retrieval. Generated answers, MCP, and FastAPI are not implemented.
 
 ## Planned architecture
 
@@ -391,8 +390,8 @@ this is not total process memory.
 
 Limitations include literal-token matching, stopword noise, vocabulary mismatch,
 PDF artifacts, and redundant overlapping passages. The implementation scores the
-small corpus in memory and makes no large-corpus performance claims. The BM25 method remains independent; hybrid RRF is available separately. No
-cross-encoder reranking is performed.
+small corpus in memory and makes no large-corpus performance claims. The BM25 method remains independent; hybrid RRF and cross-encoder reranking
+are available as separate CLI modes.
 
 ## Hybrid retrieval with Reciprocal Rank Fusion
 
@@ -444,6 +443,86 @@ The less-direct dropout passage wins at **0.03076923** (rank 5 in both lists).
 This illustrates both recovery beyond vector top five and the limits of rank
 fusion; four manually inspected examples do not establish general improvement.
 
+## Cross-encoder reranking
+
+```sh
+uv run python -m research_assistant search \
+  "Why does the Transformer use positional encoding?" \
+  --index data/index --method rerank --top-k 5
+```
+
+This mode retrieves `max(20, top_k)` hybrid candidates, scores them with a
+cross-encoder, and returns up to `top_k`. The hybrid retriever also expands its
+component candidate depth as needed. Existing `vector`, `bm25`, and `hybrid`
+modes are unchanged; vector remains the default. Persisted document embeddings
+are reused, never recomputed.
+
+```python
+from research_assistant.reranking import CrossEncoderReranker
+
+reranker = CrossEncoderReranker(batch_size=16)
+candidates = hybrid.search(question, top_k=20)
+results = reranker.rerank(question, candidates, top_k=5)
+```
+
+The CPU model is `cross-encoder/ms-marco-MiniLM-L6-v2`, pinned to verified Hugging
+Face revision `233902d25c440f23af6f7d6e94d2946bac0bee0a`. It loads once per instance;
+reuse the instance across queries. The CLI creates an instance per invocation.
+`CrossEncoder.predict()` jointly processes `(question, passage_text)` pairs in
+batches (default 16). An explicit identity activation preserves raw relevance
+logits: these scores are not probabilities and are not directly comparable to
+BM25, cosine, or RRF scores.
+
+The wrapper validates question/candidate types, nonempty text/IDs, unique IDs,
+positive integer batch size/top_k, output count/shape, and finite scores. It
+returns new SearchResult records, replacing only scores and preserving all
+source metadata exactly. Descending score order uses original candidate position
+for ties. Empty candidates return `[]` without prediction; the model was already
+loaded at construction. Requests above the candidate count return all candidates.
+
+```sh
+RUN_RERANKING_INTEGRATION=1 uv run pytest tests/test_reranking.py -k real_model
+```
+
+Ordinary tests use a fake cross-encoder and do not download weights. The opt-in
+check loads the real pinned model and verifies a simple relevant/unrelated
+ranking and metadata preservation. Downloaded weights remain in the external
+Hugging Face cache and are not committed.
+
+Limitations: reranking cannot recover a passage missing from the hybrid candidate
+pool. It adds CPU latency, is trained on MS MARCO rather than ML research papers,
+and is sensitive to PDF artifacts and chunk boundaries. The question/passage pair
+is limited to 512 model tokens; long inputs may be truncated. Overlapping chunks
+can still dominate the output. Relevance logits are uncalibrated, may be negative,
+and do not establish factual correctness. No answer generation is performed.
+
+### Measured reranking comparison
+
+[All 80 top-five results across four methods](docs/reranking-evaluation.md) include
+scores, sources, physical pages, excerpts, and timing methodology. The direct
+positional-encoding explanation moves from hybrid rank 2 to **reranked rank 1**
+(raw score **3.436294**); the dropout passage falls from hybrid rank 1 to
+**reranked rank 3** (**1.625410**). Results are mixed: the complexity query also
+promotes a Linformer bibliography fragment to rank 3. Four examples are not a
+labeled evaluation and do not establish overall improvement.
+
+On Apple M5 Pro CPU, six PyTorch threads, batch size 16, 20 candidates, one
+warm-up followed by 10 timed repetitions per question produced:
+
+| Question | Candidate retrieval median ms | Cross-encoder predict median ms | Warm end-to-end median ms |
+| --- | ---: | ---: | ---: |
+| Self-attention complexity | 3.619 | 86.860 | 90.536 |
+| FlashAttention transfers | 3.515 | 88.639 | 92.196 |
+| RAG memory | 3.838 | 94.775 | 98.613 |
+| Positional encoding | 3.722 | 94.501 | 98.218 |
+
+Initial weight download/cache preparation took **25.096 s**; cross-encoder
+initialization after prefetch took **2.732 s**, separately from all inference
+measurements. Embedder initialization took **1.416 s**. Warm end-to-end includes
+hybrid retrieval and reranking, but excludes imports, disk/index loading, model
+initialization, and CLI output. `predict` timing includes tokenization and NumPy
+conversion. Repeated model construction in separate CLI calls adds startup cost.
+
 ## Five-session roadmap (10 hours total)
 
 | Session | Time | Scope |
@@ -454,6 +533,6 @@ fusion; four manually inspected examples do not establish general improvement.
 | 4 | ~2 hours | FastAPI, Docker, reliability, logging |
 | 5 | ~2 hours | Evaluation, benchmarking, GitHub documentation |
 
-Next: cross-encoder reranking will be implemented separately.
+Next steps will be implemented separately after reviewing cross-encoder reranking.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
