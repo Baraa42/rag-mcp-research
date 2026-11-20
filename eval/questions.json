@@ -1,0 +1,7 @@
+{
+  "Q01": "Why does the Transformer need positional encoding?",
+  "Q02": "What is the computational complexity of self-attention?",
+  "Q03": "How does FlashAttention reduce GPU memory transfers?",
+  "Q04": "How does RAG combine parametric and non-parametric memory?",
+  "Q05": "What distinguishes RAG-Sequence from RAG-Token?"
+}
