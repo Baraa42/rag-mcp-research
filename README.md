@@ -4,8 +4,9 @@ A production-oriented research assistant for ML papers, planned to combine
 hybrid retrieval with citation-grounded answers and expose research tools
 through MCP and FastAPI.
 
-**Status:** Session 2B, Step 3 — cross-encoder reranking is available after
-RRF hybrid retrieval. Generated answers, MCP, and FastAPI are not implemented.
+**Status:** Session 2B, Step 4 — minimal citation-grounded answer generation is
+available after hybrid retrieval and cross-encoder reranking. MCP and FastAPI
+are not implemented.
 
 ## Planned architecture
 
@@ -22,7 +23,7 @@ benchmarks will follow. No LangChain or LlamaIndex is planned.
 - Python 3.11 (the project supports `>=3.11,<3.12`)
 - `uv` and Git
 - Internet access for initial dependencies and the first tokenizer/embedding
-  model download; later sessions will also download reranking models
+  and reranking model downloads; `ask` also requires OpenAI API access
 
 ## Setup
 
@@ -103,7 +104,7 @@ header/footer removal. Image-only pages may produce no records. Column order,
 spacing, ligatures, and mathematical notation may be imperfect. Markdown is
 not rendered or split into sections. Files and extracted records are held in
 memory, so large collections need future resource limits or streaming. Source
-metadata supports future citations; citation generation is not implemented.
+metadata supplies physical source locations for citations in the `ask` command.
 
 Local validation extracted 15/15 nonempty pages from Attention Is All You Need,
 19/19 from RAG (2020), and 34/34 from FlashAttention. FlashAttention emitted
@@ -494,7 +495,7 @@ pool. It adds CPU latency, is trained on MS MARCO rather than ML research papers
 and is sensitive to PDF artifacts and chunk boundaries. The question/passage pair
 is limited to 512 model tokens; long inputs may be truncated. Overlapping chunks
 can still dominate the output. Relevance logits are uncalibrated, may be negative,
-and do not establish factual correctness. No answer generation is performed.
+and do not establish factual correctness. The `search` command does not generate answers; use `ask` for generation.
 
 ### Measured reranking comparison
 
@@ -523,6 +524,74 @@ hybrid retrieval and reranking, but excludes imports, disk/index loading, model
 initialization, and CLI output. `predict` timing includes tokenization and NumPy
 conversion. Repeated model construction in separate CLI calls adds startup cost.
 
+## Citation-grounded answers
+
+`ask` loads the persisted index, retrieves 20 hybrid candidates, reranks them,
+and sends the top 5 passages to the OpenAI Responses API. Document embeddings
+are reused. Existing `search` modes remain local and do not construct an API client.
+
+Configure credentials in your shell (do not commit them), and select a
+Responses-compatible model available to your account:
+
+```sh
+export OPENAI_API_KEY='your-api-key'
+export OPENAI_MODEL='your-model-id'
+uv run python -m research_assistant ask \
+  "Why does the Transformer use positional encoding?" --index data/index
+```
+
+There is no default generation model. Prefer a snapshot model ID when available
+for reproducibility. `.env` files are ignored but are not automatically loaded.
+The CLI prints the answer followed by its cited references: label, source path,
+physical PDF page or Markdown section, and chunk ID.
+
+`GroundedAnswerer(client, model=...)` accepts an injected OpenAI-shaped client;
+`answer(question, passages)` accepts ordered `SearchResult` records. Frozen
+`GroundedAnswer` records contain `answer` and a tuple of unique cited
+`CitationSource` records in evidence order, retaining the exact chunk ID,
+document ID, source, page, section, and passage text. Labels S1, S2, etc. are
+stable for the same ordered evidence within an answer, not global document IDs.
+Uncited passages are omitted from the returned source mapping.
+
+Evidence is serialized deterministically as JSON in the request input, separate
+from higher-priority instructions. Those instructions require evidence-only
+answers, factual-claim citations, and acknowledgement of insufficient evidence;
+passages and questions are treated as untrusted data, never instructions.
+Empty evidence returns a fixed insufficient-evidence message without an API
+request. For nonempty evidence, that exact fallback is also accepted without
+citations. Otherwise at least one citation is required. Unknown or malformed
+bracketed S-labels, empty output, and incomplete Responses are rejected with a
+clear error rather than edited or presented as a valid answer. Repeated valid
+citations produce only one source entry. API failures are surfaced by the CLI.
+
+**Citation validity is not factual support.** Validation checks label membership,
+not whether each claim follows from the cited passage or whether every factual
+claim is cited. Prompt instructions and JSON separation do not prove resistance
+to prompt injection. Retrieval omissions, PDF artifacts, overlapping evidence,
+model hallucinations, and model-dependent abstention remain limitations. The
+strict fallback/label format can reject otherwise useful responses. Deterministic
+context and labels do not make LLM output deterministic. No factual-grounding
+evaluation suite has been implemented.
+
+The question and selected passages are sent to OpenAI. Each nonempty generation
+uses one Responses call, with `store=False` and an output budget of 2048 tokens
+(including reasoning tokens). The CLI uses a 60-second SDK timeout and up to two
+retries; retries can increase total latency. Input/output tokens incur API costs
+that depend on the configured model, and long questions are not truncated locally.
+Network generation adds latency beyond retrieval and reranking; the earlier local
+benchmarks do not measure `ask`. No live generation cost or latency has been
+measured in this step. See the official [Responses API reference](https://developers.openai.com/api/reference/python/resources/responses/methods/create).
+
+Offline tests inject a fake client, requiring neither credentials nor network.
+The live smoke test is disabled by default and incurs API usage when enabled:
+
+```sh
+RUN_ANSWERING_INTEGRATION=1 uv run pytest tests/test_answering.py -k live_api -v
+```
+
+It requires both environment variables above and checks a simple citation
+contract; it is not a factual-grounding evaluation.
+
 ## Five-session roadmap (10 hours total)
 
 | Session | Time | Scope |
@@ -533,6 +602,6 @@ conversion. Repeated model construction in separate CLI calls adds startup cost.
 | 4 | ~2 hours | FastAPI, Docker, reliability, logging |
 | 5 | ~2 hours | Evaluation, benchmarking, GitHub documentation |
 
-Next steps will be implemented separately after reviewing cross-encoder reranking.
+Next steps will be implemented separately after reviewing answer generation.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
