@@ -215,3 +215,77 @@ def test_cli_invalid_citation_does_not_print_answer(monkeypatch, capsys):
     output = capsys.readouterr()
     assert not output.out
     assert "Invalid citation IDs: S99" in output.err
+
+
+def test_default_output_budget():
+    client = client_with()
+    GroundedAnswerer(client, model="test").answer("q", [passage()])
+    assert client.responses.create.call_args.kwargs["max_output_tokens"] == 1024
+
+
+@pytest.mark.parametrize("budget", [1, 512, 4096])
+def test_custom_output_budget(budget):
+    client = client_with()
+    GroundedAnswerer(client, model="test", max_output_tokens=budget).answer(
+        "q", [passage()]
+    )
+    assert client.responses.create.call_args.kwargs["max_output_tokens"] == budget
+
+
+@pytest.mark.parametrize("budget", [0, -1, True, False, 1.5, "1024", None])
+def test_invalid_output_budget(budget):
+    client = client_with()
+    with pytest.raises(ValueError, match="max_output_tokens.*positive integer"):
+        GroundedAnswerer(client, model="test", max_output_tokens=budget)
+    client.responses.create.assert_not_called()
+
+
+def test_exact_input_limits_preserve_text():
+    client = client_with()
+    question = "é" * 2000
+    passages = [
+        replace(passage(1), text="a" * 10000),
+        replace(passage(2), text="b" * 10000),
+    ]
+    GroundedAnswerer(client, model="test").answer(question, passages)
+    context = json.loads(client.responses.create.call_args.kwargs["input"])
+    assert context["question"] == question
+    assert [s["text"] for s in context["evidence"]] == [p.text for p in passages]
+
+
+@pytest.mark.parametrize("passages", [[], [passage()]])
+def test_question_exceeds_limit(passages):
+    client = client_with()
+    with pytest.raises(ValueError, match="question exceeds 2000"):
+        GroundedAnswerer(client, model="test").answer("q" * 2001, passages)
+    client.responses.create.assert_not_called()
+
+
+def test_total_evidence_exceeds_limit():
+    client = client_with()
+    passages = [
+        replace(passage(1), text="a" * 10000),
+        replace(passage(2), text="b" * 10001),
+    ]
+    with pytest.raises(ValueError, match="Total evidence text exceeds 20000"):
+        GroundedAnswerer(client, model="test").answer("q", passages)
+    client.responses.create.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    "reference",
+    ["[S01]", "[S1, S2]", "[s1]", "[S0]", "[S１]", "[S1\n]", "[S1 ]", "[S1"],
+)
+def test_malformed_reference_even_alongside_valid_citation(reference):
+    with pytest.raises(ValueError, match="Invalid citation format"):
+        GroundedAnswerer(
+            client_with(f"Valid [S1]. Bad {reference}"), model="test"
+        ).answer("q", [passage()])
+
+
+def test_multidigit_citations():
+    result = GroundedAnswerer(
+        client_with("Supported [S10] [S10]."), model="test"
+    ).answer("q", [passage(i) for i in range(10)])
+    assert [s.label for s in result.sources] == ["S10"]
+    assert result.sources[0].chunk_id == "9"

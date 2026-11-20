@@ -574,10 +574,16 @@ context and labels do not make LLM output deterministic. No factual-grounding
 evaluation suite has been implemented.
 
 The question and selected passages are sent to OpenAI. Each nonempty generation
-uses one Responses call, with `store=False` and an output budget of 2048 tokens
+uses one Responses call, with `store=False` and an default output budget of 1024 tokens
 (including reasoning tokens). The CLI uses a 60-second SDK timeout and up to two
 retries; retries can increase total latency. Input/output tokens incur API costs
-that depend on the configured model, and long questions are not truncated locally.
+that depend on the configured model. `GroundedAnswerer(..., max_output_tokens=1024)`
+accepts a custom positive integer budget (booleans are rejected).
+Questions are limited to 2,000 characters and total evidence passage text to
+20,000 characters, inclusive. Oversized inputs raise `ValueError` before the API
+call; nothing is silently truncated. These application-level limits count Python
+string characters, not tokens; they do not guarantee token counts or API costs.
+Evidence metadata and prompt instructions are not included in the text limit.
 Network generation adds latency beyond retrieval and reranking; the earlier local
 benchmarks do not measure `ask`. No live generation cost or latency has been
 measured in this step. See the official [Responses API reference](https://developers.openai.com/api/reference/python/resources/responses/methods/create).
