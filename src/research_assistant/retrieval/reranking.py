@@ -6,7 +6,7 @@ import numpy as np
 from sentence_transformers import CrossEncoder
 from torch import nn
 
-from research_assistant.retrieval import SearchResult, _top_k
+from research_assistant.retrieval.vector import SearchResult, _top_k
 
 RERANKER_NAME = "cross-encoder/ms-marco-MiniLM-L6-v2"
 RERANKER_REVISION = "233902d25c440f23af6f7d6e94d2946bac0bee0a"

@@ -10,10 +10,10 @@ from unittest.mock import Mock
 import numpy as np
 import pytest
 
-from research_assistant.chunking import Chunk, chunk_pages, load_tokenizer
-from research_assistant.embeddings import Embedder
-from research_assistant.ingestion import ingest_directory
-from research_assistant.retrieval import VectorIndex
+from research_assistant.ingest.chunking import Chunk, chunk_pages, load_tokenizer
+from research_assistant.ingest.ingestion import ingest_directory
+from research_assistant.retrieval.embeddings import Embedder
+from research_assistant.retrieval.vector import VectorIndex
 
 
 def corpus() -> tuple[list[Chunk], np.ndarray]:
@@ -214,7 +214,7 @@ def test_invalid_metadata_and_missing_files(tmp_path: Path) -> None:
 def test_cli_offline(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture
 ) -> None:
-    from research_assistant import __main__ as cli
+    from research_assistant.interfaces import cli
 
     chunks, vectors = corpus()
     monkeypatch.setattr(cli, "ingest_directory", lambda _: [])

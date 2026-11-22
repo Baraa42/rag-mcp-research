@@ -5,8 +5,8 @@ import re
 
 from rank_bm25 import BM25Okapi
 
-from research_assistant.chunking import Chunk
-from research_assistant.retrieval import SearchResult, _check_chunks, _top_k
+from research_assistant.ingest.chunking import Chunk
+from research_assistant.retrieval.vector import SearchResult, _check_chunks, _top_k
 
 
 def tokenize(text: str) -> list[str]:

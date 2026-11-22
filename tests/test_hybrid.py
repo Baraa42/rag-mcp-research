@@ -7,10 +7,10 @@ from unittest.mock import Mock
 import numpy as np
 import pytest
 
-from research_assistant.bm25 import BM25Index
-from research_assistant.chunking import Chunk
-from research_assistant.hybrid import HybridRetriever, reciprocal_rank_fusion
-from research_assistant.retrieval import SearchResult, VectorIndex
+from research_assistant.ingest.chunking import Chunk
+from research_assistant.retrieval.bm25 import BM25Index
+from research_assistant.retrieval.hybrid import HybridRetriever, reciprocal_rank_fusion
+from research_assistant.retrieval.vector import SearchResult, VectorIndex
 
 
 def result(key: str, score: float = 1) -> SearchResult:
@@ -124,7 +124,7 @@ def test_cli_modes(
     capsys: pytest.CaptureFixture,
     method: str | None,
 ) -> None:
-    from research_assistant import __main__ as cli
+    from research_assistant.interfaces import cli
 
     chunks = [
         Chunk(str(i), "doc", "paper.pdf", i + 1, None, 0, text)
@@ -137,6 +137,9 @@ def test_cli_modes(
     model.encode.return_value = vectors[:1]
     factory = Mock(return_value=model)
     monkeypatch.setattr(cli, "Embedder", factory)
+    from research_assistant import service
+
+    monkeypatch.setattr(service, "Embedder", factory)
     arguments = ["search", "positional", "--index", str(tmp_path), "--top-k", "1"]
     if method:
         arguments.extend(["--method", method])

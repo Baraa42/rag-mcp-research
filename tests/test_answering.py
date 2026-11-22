@@ -9,8 +9,11 @@ from unittest.mock import MagicMock, Mock
 import pytest
 from openai import OpenAI
 
-from research_assistant.answering import INSUFFICIENT_EVIDENCE, GroundedAnswerer
-from research_assistant.retrieval import SearchResult
+from research_assistant.generation.answering import (
+    INSUFFICIENT_EVIDENCE,
+    GroundedAnswerer,
+)
+from research_assistant.retrieval.vector import SearchResult
 
 
 def passage(i=1):
@@ -135,7 +138,7 @@ def test_invalid_evidence(passages):
 
 
 def test_cli_ask(monkeypatch, capsys):
-    from research_assistant import __main__ as cli
+    from research_assistant.interfaces import cli
 
     monkeypatch.setenv("OPENAI_MODEL", "test-model")
     client = client_with()
@@ -167,7 +170,7 @@ def test_cli_ask(monkeypatch, capsys):
 
 @pytest.mark.parametrize("method", ["vector", "bm25", "hybrid", "rerank"])
 def test_search_never_constructs_api_client(monkeypatch, capsys, method):
-    from research_assistant import __main__ as cli
+    from research_assistant.interfaces import cli
 
     monkeypatch.setattr(
         cli, "OpenAI", Mock(side_effect=AssertionError("No API client"))
@@ -194,7 +197,7 @@ def test_live_api():
 
 
 def test_cli_invalid_citation_does_not_print_answer(monkeypatch, capsys):
-    from research_assistant import __main__ as cli
+    from research_assistant.interfaces import cli
 
     monkeypatch.setenv("OPENAI_MODEL", "test")
     factory = MagicMock()

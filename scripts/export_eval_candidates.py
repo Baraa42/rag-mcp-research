@@ -5,11 +5,11 @@ import json
 from dataclasses import replace
 from pathlib import Path
 
-from research_assistant.bm25 import BM25Index
-from research_assistant.embeddings import Embedder
-from research_assistant.hybrid import HybridRetriever
-from research_assistant.reranking import CrossEncoderReranker
-from research_assistant.retrieval import SearchResult, VectorIndex
+from research_assistant.retrieval.bm25 import BM25Index
+from research_assistant.retrieval.embeddings import Embedder
+from research_assistant.retrieval.hybrid import HybridRetriever
+from research_assistant.retrieval.reranking import CrossEncoderReranker
+from research_assistant.retrieval.vector import SearchResult, VectorIndex
 
 METHODS = ("faiss", "bm25", "hybrid", "rerank")
 DEPTH = 20

@@ -8,13 +8,13 @@ from pathlib import Path
 import numpy as np
 from numpy.typing import NDArray
 
-from research_assistant.chunking import Chunk
-from research_assistant.embeddings import Embedder
+from research_assistant.ingest.chunking import Chunk
 from research_assistant.model_config import (
     EMBEDDING_DIMENSION,
     MODEL_NAME,
     MODEL_REVISION,
 )
+from research_assistant.retrieval.embeddings import Embedder
 
 
 @dataclass(frozen=True)

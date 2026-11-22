@@ -7,7 +7,7 @@ from dataclasses import asdict, dataclass
 
 from openai import OpenAI
 
-from research_assistant.retrieval import SearchResult
+from research_assistant.retrieval.vector import SearchResult
 
 MAX_QUESTION_CHARACTERS = 2_000
 MAX_EVIDENCE_CHARACTERS = 20_000

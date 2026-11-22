@@ -9,13 +9,13 @@ import numpy as np
 import pytest
 from torch import nn
 
-from research_assistant import reranking
-from research_assistant.reranking import (
+from research_assistant.retrieval import reranking
+from research_assistant.retrieval.reranking import (
     RERANKER_NAME,
     RERANKER_REVISION,
     CrossEncoderReranker,
 )
-from research_assistant.retrieval import SearchResult
+from research_assistant.retrieval.vector import SearchResult
 
 
 def candidate(i: int) -> SearchResult:
@@ -125,21 +125,27 @@ def test_cli_rerank_expands_depth(
     capsys: pytest.CaptureFixture,
     top_k: int,
 ) -> None:
-    from research_assistant import __main__ as cli
+    from research_assistant import service as service_module
+    from research_assistant.ingest.chunking import Chunk
+    from research_assistant.interfaces import cli
 
     index = Mock()
-    index.chunks = ("chunk",)
+    index.chunks = (Chunk("id", "doc", "paper.pdf", 1, None, 0, "text"),)
     monkeypatch.setattr(cli.VectorIndex, "load", Mock(return_value=index))
     monkeypatch.setattr(cli, "BM25Index", Mock())
+    monkeypatch.setattr(service_module, "BM25Index", Mock())
     model = Mock()
     monkeypatch.setattr(cli, "Embedder", Mock(return_value=model))
+    monkeypatch.setattr(service_module, "Embedder", Mock(return_value=model))
     first_stage = Mock()
     first_stage.search.return_value = [candidate(0)]
     hybrid_factory = Mock(return_value=first_stage)
     monkeypatch.setattr(cli, "HybridRetriever", hybrid_factory)
+    monkeypatch.setattr(service_module, "HybridRetriever", hybrid_factory)
     reranker = Mock()
     reranker.rerank.return_value = [replace(candidate(0), score=4.2)]
     monkeypatch.setattr(cli, "CrossEncoderReranker", Mock(return_value=reranker))
+    monkeypatch.setattr(service_module, "CrossEncoderReranker", Mock(return_value=reranker))
     cli.main(
         [
             "search",
@@ -165,19 +171,24 @@ def test_old_modes_do_not_load_reranker(
     capsys: pytest.CaptureFixture,
     method: str | None,
 ) -> None:
-    from research_assistant import __main__ as cli
+    from research_assistant import service as service_module
+    from research_assistant.ingest.chunking import Chunk
+    from research_assistant.interfaces import cli
 
     index = Mock()
-    index.chunks = ("chunk",)
+    index.chunks = (Chunk("id", "doc", "paper.pdf", 1, None, 0, "text"),)
     index.search.return_value = [candidate(0)]
     monkeypatch.setattr(cli.VectorIndex, "load", Mock(return_value=index))
     monkeypatch.setattr(cli, "Embedder", Mock())
+    monkeypatch.setattr(service_module, "Embedder", Mock())
     for name in ("BM25Index", "HybridRetriever"):
         service = Mock()
         service.search.return_value = [candidate(0)]
         monkeypatch.setattr(cli, name, Mock(return_value=service))
+        monkeypatch.setattr(service_module, name, Mock(return_value=service))
     factory = Mock(side_effect=AssertionError("Should not load reranker"))
     monkeypatch.setattr(cli, "CrossEncoderReranker", factory)
+    monkeypatch.setattr(service_module, "CrossEncoderReranker", factory)
     args = ["search", "q", "--index", str(tmp_path)]
     if method:
         args += ["--method", method]

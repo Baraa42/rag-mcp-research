@@ -8,7 +8,7 @@ from dataclasses import dataclass
 
 from transformers import AutoTokenizer, PreTrainedTokenizerFast
 
-from research_assistant.ingestion import DocumentPage
+from research_assistant.ingest.ingestion import DocumentPage
 from research_assistant.model_config import MODEL_NAME, MODEL_REVISION
 
 # Keep existing tokenizer constant names compatible with callers.

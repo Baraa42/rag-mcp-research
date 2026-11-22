@@ -2,9 +2,9 @@
 
 from dataclasses import replace
 
-from research_assistant.bm25 import BM25Index
-from research_assistant.embeddings import Embedder
-from research_assistant.retrieval import SearchResult, VectorIndex, _top_k
+from research_assistant.retrieval.bm25 import BM25Index
+from research_assistant.retrieval.embeddings import Embedder
+from research_assistant.retrieval.vector import SearchResult, VectorIndex, _top_k
 
 
 def reciprocal_rank_fusion(

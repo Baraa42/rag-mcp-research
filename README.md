@@ -18,6 +18,40 @@ The Python package will keep ingestion, retrieval, and answering logic separate
 from future MCP and FastAPI interfaces. Docker deployment, evaluation, and
 benchmarks will follow. No LangChain or LlamaIndex is planned.
 
+## Source organization
+
+```text
+src/research_assistant/
+├── __init__.py
+├── __main__.py              # delegates to interfaces.cli
+├── model_config.py
+├── service.py               # reusable orchestration
+├── ingest/
+│   ├── __init__.py
+│   ├── ingestion.py
+│   └── chunking.py
+├── retrieval/
+│   ├── __init__.py
+│   ├── embeddings.py
+│   ├── vector.py
+│   ├── bm25.py
+│   ├── hybrid.py
+│   └── reranking.py
+├── generation/
+│   ├── __init__.py
+│   └── answering.py
+└── interfaces/
+    ├── __init__.py
+    └── cli.py
+```
+
+Internal imports use these subpackage paths; no legacy module aliases are provided.
+Hybrid and reranked CLI searches delegate to `ResearchService`. The `ask` CLI
+retains its existing orchestration to preserve API configuration checks before
+model loading, including its empty-index configuration requirement. The service
+instead initializes generation lazily and bypasses it for empty evidence.
+MCP and FastAPI interfaces are not implemented yet.
+
 ## Requirements
 
 - Python 3.11 (the project supports `>=3.11,<3.12`)
@@ -73,7 +107,7 @@ it does not impose a universal semantic-similarity threshold.
 
 ```python
 from pathlib import Path
-from research_assistant.ingestion import ingest_directory
+from research_assistant.ingest.ingestion import ingest_directory
 
 pages = ingest_directory(Path("data/papers"))
 for page in pages:
@@ -114,7 +148,7 @@ some font encodings may be imperfect. No additional dependency was added.
 ## Token-aware chunking
 
 ```python
-from research_assistant.chunking import chunk_pages, load_tokenizer
+from research_assistant.ingest.chunking import chunk_pages, load_tokenizer
 
 tokenizer = load_tokenizer()
 chunks = chunk_pages(pages, max_tokens=180, overlap=30, tokenizer=tokenizer)
@@ -168,7 +202,7 @@ of 180. Every non-whitespace character in the ingested pages was covered.
 ## Sentence embeddings
 
 ```python
-from research_assistant.embeddings import Embedder
+from research_assistant.retrieval.embeddings import Embedder
 
 embedder = Embedder(batch_size=32)
 vectors = embedder.encode([chunk.text for chunk in chunks])
@@ -247,7 +281,7 @@ search invocation loads the model; reuse an `Embedder` for repeated library call
 
 ```python
 from pathlib import Path
-from research_assistant.retrieval import VectorIndex
+from research_assistant.retrieval.vector import VectorIndex
 
 index = VectorIndex.load(Path("data/index"))
 results = index.search("Why use positional encoding?", embedder, top_k=5)
@@ -339,7 +373,7 @@ inference, or download model files. Existing module imports and FAISS index
 loading/validation still contribute to CLI startup time.
 
 ```python
-from research_assistant.bm25 import BM25Index
+from research_assistant.retrieval.bm25 import BM25Index
 
 lexical = BM25Index(list(index.chunks), k1=1.5, b=0.75)
 results = lexical.search("positional encoding", top_k=5)
@@ -408,7 +442,7 @@ the question. It does not rebuild document embeddings or create a separate index
 For library usage, reuse all three existing instances:
 
 ```python
-from research_assistant.hybrid import HybridRetriever
+from research_assistant.retrieval.hybrid import HybridRetriever
 
 hybrid = HybridRetriever(index, lexical, embedder, candidate_k=20, rrf_k=60)
 results = hybrid.search("Why use positional encoding?", top_k=5)
@@ -459,7 +493,7 @@ modes are unchanged; vector remains the default. Persisted document embeddings
 are reused, never recomputed.
 
 ```python
-from research_assistant.reranking import CrossEncoderReranker
+from research_assistant.retrieval.reranking import CrossEncoderReranker
 
 reranker = CrossEncoderReranker(batch_size=16)
 candidates = hybrid.search(question, top_k=20)

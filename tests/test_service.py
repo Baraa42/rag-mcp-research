@@ -7,9 +7,12 @@ from unittest.mock import Mock
 import pytest
 
 from research_assistant import service
-from research_assistant.answering import INSUFFICIENT_EVIDENCE, GroundedAnswer
-from research_assistant.chunking import Chunk
-from research_assistant.retrieval import SearchResult
+from research_assistant.generation.answering import (
+    INSUFFICIENT_EVIDENCE,
+    GroundedAnswer,
+)
+from research_assistant.ingest.chunking import Chunk
+from research_assistant.retrieval.vector import SearchResult
 
 
 @pytest.fixture

@@ -4,17 +4,17 @@ from pathlib import Path
 
 from openai import OpenAI
 
-from research_assistant.answering import (
+from research_assistant.generation.answering import (
     INSUFFICIENT_EVIDENCE,
     GroundedAnswer,
     GroundedAnswerer,
 )
-from research_assistant.bm25 import BM25Index
-from research_assistant.chunking import Chunk
-from research_assistant.embeddings import Embedder
-from research_assistant.hybrid import HybridRetriever
-from research_assistant.reranking import CrossEncoderReranker
-from research_assistant.retrieval import SearchResult, VectorIndex, _top_k
+from research_assistant.ingest.chunking import Chunk
+from research_assistant.retrieval.bm25 import BM25Index
+from research_assistant.retrieval.embeddings import Embedder
+from research_assistant.retrieval.hybrid import HybridRetriever
+from research_assistant.retrieval.reranking import CrossEncoderReranker
+from research_assistant.retrieval.vector import SearchResult, VectorIndex, _top_k
 
 
 class ResearchService:

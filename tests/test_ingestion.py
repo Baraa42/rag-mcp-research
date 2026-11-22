@@ -7,7 +7,7 @@ import pytest
 from pypdf import PdfWriter
 from pypdf.generic import DictionaryObject, NameObject, StreamObject
 
-from research_assistant.ingestion import (
+from research_assistant.ingest.ingestion import (
     extract_markdown,
     extract_pdf,
     ingest_directory,

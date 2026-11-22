@@ -7,9 +7,9 @@ from unittest.mock import Mock
 import numpy as np
 import pytest
 
-from research_assistant.bm25 import BM25Index, tokenize
-from research_assistant.chunking import Chunk
-from research_assistant.retrieval import VectorIndex
+from research_assistant.ingest.chunking import Chunk
+from research_assistant.retrieval.bm25 import BM25Index, tokenize
+from research_assistant.retrieval.vector import VectorIndex
 
 
 def chunks(*texts: str) -> list[Chunk]:
@@ -146,7 +146,7 @@ def test_invalid_parameters(kwargs: dict) -> None:
 def test_cli_bm25_without_embedding(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture
 ) -> None:
-    from research_assistant import __main__ as cli
+    from research_assistant.interfaces import cli
 
     corpus = chunks("positional encoding", "memory", "attention")
     vectors = np.zeros((3, 384), dtype=np.float32)

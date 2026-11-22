@@ -6,9 +6,9 @@ from unittest.mock import Mock
 import numpy as np
 import pytest
 
-from research_assistant import embeddings
-from research_assistant.embeddings import Embedder
 from research_assistant.model_config import MODEL_NAME, MODEL_REVISION
+from research_assistant.retrieval import embeddings
+from research_assistant.retrieval.embeddings import Embedder
 
 
 @pytest.fixture

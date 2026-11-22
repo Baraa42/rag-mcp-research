@@ -10,8 +10,8 @@ from tokenizers.pre_tokenizers import BertPreTokenizer
 from tokenizers.processors import TemplateProcessing
 from transformers import PreTrainedTokenizerFast
 
-from research_assistant.chunking import chunk_pages, load_tokenizer
-from research_assistant.ingestion import DocumentPage
+from research_assistant.ingest.chunking import chunk_pages, load_tokenizer
+from research_assistant.ingest.ingestion import DocumentPage
 
 
 @pytest.fixture
