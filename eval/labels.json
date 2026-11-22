@@ -1,0 +1,908 @@
+[
+  {
+    "question_id": "Q01",
+    "chunk_id": "01ae2a9dd0ddbb5e8b7f43c724f27a21d95a696ef3033fb7e40e28b628b7fc43",
+    "grade": 1,
+    "notes": "Related context, insufficient alone"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "01d7740db246c35f7acf8b0e70075a96439152b33b6641c38a819ebfae3fc0bd",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "170b7c72efec6c90bf638fd2f61cbb3db02a39ed0e6ddf2bc108567a2f73c1dd",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "1ba11a8b7c719b2fc8ee671c47d9936e742f8860e7a11ff5d1502bfc0daa539a",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "26d9e5f44a368f513f167499ded29bd637ff2509a4102089d2faae66148c74b0",
+    "grade": 1,
+    "notes": "Related context, insufficient alone"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "2a8aa3d087dc8713a0777ab7917385ca5c7890d94943be7d527b246b3bd23cad",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "36e6b5cc40dc5729a5f28466a420098baf143e3006eeeb50d44666a3926a04c4",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "3a9c04db6dfe52aa94dcb470d73eb849d357eedd75f474dae4acc24b64038c16",
+    "grade": 1,
+    "notes": "Related context, insufficient alone"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "3c930f1ae7df782407de5e074e0c8fe0f0e02be2828e269ab32957d991dff346",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "3faa9ef937eedd5b6e0c94af2cfcba9ce055a427152f6ea4738fece24f0b0425",
+    "grade": 2,
+    "notes": "Direct rationale for positional encodings"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "614871f55105304333ae9beb781d23f8e69ec06de41773820b04d0465f85f0d4",
+    "grade": 1,
+    "notes": "Related context, insufficient alone"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "6339e97d00101670cfd6952261e058f71480562a0a63514132f4b62f711cad9c",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "7954c54ec6705978b43d3f014b42af129638aae53d7de71d14be7a30b4c4d25c",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "7b128646d4196d91ce2e6979a5051149dd5e2524e1d42307b76df3d68e889853",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "88f282e58213373f21208e6b8979139e8c1d7c2e1f50fa2be69d16197f71afa4",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "8ad9f29c744de1068f81b4e839914a4f906fbbc337a1fcf4e93410fabf708ee9",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "98659a274736619a71f6a82e4e20ea6a2e7a4e7e72878e543855ad068b83c167",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "9ef24abb4a7408c0a44b6e63725a7eb7415f75dc4e3737f57ee0bc6f369ac5c3",
+    "grade": 1,
+    "notes": "Related context, insufficient alone"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "a5df51018e7701e9059d2a0912333b2afbb243184056c324ca9f76656bf0afdb",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "a6b2e83f7c2276cae4d844a975ba8eb1304d55c915b0bbc14f670f9b682802b2",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "b0e07f2fc3ac4b30e426efe1bbf02fb1363bb404372ae2c133c157f6a7baf27a",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "b268ac3f4e1022a363a4b1d8941fd2f9799ab8acab5aa6dbea0ff548d2ce90ea",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "b67944a59a3a5790430c8876bba5041de3b0db50914c903d57d18e6411495a5f",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "c46aeab64aaa0ad62c7f6bc4c557dae40df7ada01b5a1e514d5634ad3ebce4ae",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "cb9c18599d8f85ae5967a23f5c96098f6b5678f6ce74f6d09cb9b9d3f0bd91cf",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "d06c08b3f58bd797982a3707361788e8e0c8e7e7bb757e1fbb818b6bb64b8c23",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "d27862a8ac69557c6f4a31f2924209b46ad18cfdd6cf9a4449939e1b3f68151c",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "d5fbfd6ba1fb5df0c595814cef754d07c0294583e4ebb0d47782656286a594ab",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "e0b4715969828a714d086ec0bf1fe5bcda6576d18dddd5aaa6de979377c8b7ee",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "e1017795a97ad28bd411bd5884805e6d69b593213d13818e9b66458f3b2226e9",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "e33cafc3f629595bb4844499adb6e74bb38fda01b6b96dc0c7662c733e8151a9",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "ebb8f13bbc2ea67c08a2d880563b4b62b1548842029cbed7c086563f6daebc7e",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "ed5fdb8012401fdee79757975169709c50897bacb5cc01f350c43d53ebac89a6",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "ef66a89a6fbe1db2d1f14444362a7ff39fd5df9c654f23ed229dff3171cb025c",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q01",
+    "chunk_id": "f3b77e511846e5001088ed75133d8cd3d6a083dc78ddb291f3f563e07e3d4e29",
+    "grade": 0,
+    "notes": "Does not explain why positional encoding is needed"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "0f174954919bd58560dc3e207b377f7392dbded68e31de18ea34957405be1838",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "1160e40eeb6c43616acfb8ade91f278f96580edb9e0a191ab08b133a86a12bb4",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "24d8d4024f143357dba56d185adb3be9a80fea4f9ef4d5792abf1ff2159f2386",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "26d9e5f44a368f513f167499ded29bd637ff2509a4102089d2faae66148c74b0",
+    "grade": 1,
+    "notes": "Introduces computational comparison but no complexity formula."
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "33d613b09db64ca8a486b2c17d7f71695d8fa03a167902501e7e258246e0d0d9",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "3728549fccb3ce36ef0030b083774362559b49f1f51f67c062de8ba11e9f9df7",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "40c2f1c6eb02235e71762d80a250aece4d69827a18d07068a8fb76e5ee401e9c",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "433ea8028eb6d33bb158524096ef49368a87ad8a00235ede343fbbd24223a0d8",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "474485b39d8cb346824decc1d30ceb244814869b2a2583bbdeef3a862c0d6733",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "4ba3371efad383be8da49e79169693ed8a10907d633bbb309b5b785cd0b20cc6",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "57877135f7d670847fdeddff6fda868ba0678a986ec05de19b872af427547d22",
+    "grade": 1,
+    "notes": "Discusses long sequences and restricted attention without dense self-attention formula."
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "5b844eb123ad7853b0dc28e92365cccb74bafe465a56ec1a293e3633782fed19",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "629b8e2e72e68e744da85c5265ba9770aeb05143c7b327e022f3b42d74590aed",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "6407c9afdeb0c6758df4b3daefde16392ff80a394051d8dbc0d5b815149377bc",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "755e622da4c22f588eaabc63c156edcd9ef9028bbe444af6dcaad67152570f0d",
+    "grade": 1,
+    "notes": "Sets up complexity comparison without a numerical complexity."
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "7d5256dbaad66c41970f718cc670bbf889661694e82eba18add389baf839dffe",
+    "grade": 1,
+    "notes": "Discusses path length and sequential operations rather than arithmetic complexity."
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "8ffbfcd4862eebf262ce6d6f285ee139e60bb023ea9dcfbbcb8eab83efd25696",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "9ef24abb4a7408c0a44b6e63725a7eb7415f75dc4e3737f57ee0bc6f369ac5c3",
+    "grade": 2,
+    "notes": "Explicit table gives self-attention O(n^2 d) per-layer complexity."
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "9f0c978fb81b9be88a9a072f8abe728d0c451507a1d60f479f0f2f1059b1ab50",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "a1a444474e9b5ea7e477a52eaba85417cae3789c5e9e76f24e9ec99e3129b6b0",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "b23ec92bbee16abf8b10f26c474bc1df9e740633d804bb25dc9f37b8b27fc1f7",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "b6c013339afdb8d8d9736a16a53aa75626bf848e8fdc3728781f2e72df29cd14",
+    "grade": 1,
+    "notes": "States quadratic scaling with sequence length but omits dimensional dependence."
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "bb7536c18827fb2f46a688e80adf85a3566c7ede19b9fee5b460c3d9522549c0",
+    "grade": 1,
+    "notes": "Compares self-attention with recurrence but omits formula."
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "cb9c18599d8f85ae5967a23f5c96098f6b5678f6ce74f6d09cb9b9d3f0bd91cf",
+    "grade": 1,
+    "notes": "States quadratic scaling in sequence length without full formula."
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "cd0e15af8f6af8e7d7fdc5be5efe1e3955f46982219a7acb8d02b9742fccf36c",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "d2f69f78513bf8f9784a74723cd991c535542d70095c64fab93085704567f6fc",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "e33cafc3f629595bb4844499adb6e74bb38fda01b6b96dc0c7662c733e8151a9",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "e4aaa649c5e2193a23aebf471a65507d29831c35fbf1060814c234602fb2ed70",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "eab5c0c64c08b11b55aa47d2c0d14ffd776440ccdb7a3c735c1de87d4896f482",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "ee5887f33391db5a5ec9b877ab531cbf4ee69b78c482264bccaa0c750244eee2",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q02",
+    "chunk_id": "fadae8ba135a8400e8d7f6b79a17c15c56e1f675aa002fc2788caeb210d98140",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "0dc4806386f2c342c16b7f198f9e8c12a59579149c0ca83dbdafd186a8f90f3d",
+    "grade": 1,
+    "notes": "Highlights reduced memory accesses, but does not specify the principal tiling mechanism."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "0e17d7ac2d44fa48d5a90d3e8ea9594864920bc7980994a10c0cd5a7a417eb09",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "12e5aad683abf32851dfe8e26310de99bdc33cdf9cf067b4f31bd31ea4066db0",
+    "grade": 2,
+    "notes": "Explicitly identifies SRAM/HBM tiling as the reason for fewer reads and writes."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "1c0ca5aee3b6a7c9d3e73e816a764263b0f9e5fc0893752dad2e44d4e10c309d",
+    "grade": 1,
+    "notes": "Quantifies fewer HBM transfers, not the mechanism."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "2acd7bb81899203a8d554794b7b7eac13799a16c09889e1782e6e669e80a0ae5",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "35068b910005fb4a3835daebd9e373d29a59a063dc9d70d279c8f1ffb0800cd0",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "3691d02db494d3957fc357a6579dd20841985014d0fef86464235fcb5ed54755",
+    "grade": 2,
+    "notes": "Explains tiling, avoidance of stored attention matrix, and backward recomputation."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "3ddf39474f7ce58ef944efe0ec7038b14210ded52f63d7e5ef8f2b011f74f9db",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "41b5e640790284b6600080d9a252e21177a3b9d7b33a95c2b589efb4df0bec5c",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "484a8a999debab0a911eb15219ee7ded43ece89c641852427cd4461db9cb8fe8",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "485f988c5e78f4c766593e86378debba380126c2e09576ebccf07f5ec3389f52",
+    "grade": 1,
+    "notes": "Defines IO-aware memory hierarchy without describing tiling."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "4ce0da25f0e147e9f2f73b2ccdbaf41df42bcfc3e2ede96f6ea620e113b2dbea",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "50aafa464cac29defef61522b689481c3856597aeb3de2577a69bf2fe096a854",
+    "grade": 1,
+    "notes": "Reports gains but no detail of reduced transfers."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "7b128646d4196d91ce2e6979a5051149dd5e2524e1d42307b76df3d68e889853",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "7b924eb1395277dd595f4857be30b2dc0be63e42acf6962c12315cbc85fc0244",
+    "grade": 1,
+    "notes": "Explains why IO matters, but not FlashAttention method."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "830e6f9a908b4e66bbe5b71534b4fcd833a7ce92d5bbd2f92cd313ea4a82fe11",
+    "grade": 1,
+    "notes": "Describes linear memory footprint, not reduction mechanism."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "8f0b3217600f6a2ed9c30db5dda489d78884fc213221a2fac34be607bc1f5cd5",
+    "grade": 2,
+    "notes": "Contrasts HBM reads/writes in standard attention with avoiding intermediates."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "998507b3117bb7444ee7ea6fa805e99ecce4d8e1481088c733d552f96bffb518",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "9b9a61faa9afe598b6a2831039db5a3d3a0abc6493f163e3fb11ada964b68557",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "a0fd2febb7fddbdae99bd8e0ceecca02fe5a1a97592e23b787f1e80fc3611a15",
+    "grade": 2,
+    "notes": "Describes fused CUDA kernel, recomputation and fewer HBM accesses."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "a7dc72811b382d82cdb98a188ce5626e4284ac35a3c7eba80d8558d864c00358",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "b3fd576c2ae53763570eaaddf60a4c1f7efbfa80e2ac65ee38197726ff731cba",
+    "grade": 2,
+    "notes": "Detailed tile-based movement of Q/K/V through SRAM and avoiding N\u00d7N matrix in HBM."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "b45a5f6ed349cfd883e9f38562dda902ac8f43d6faaeded9a76a37935516feb5",
+    "grade": 1,
+    "notes": "Mentions recomputation in backward pass without IO explanation."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "b604f7352181e6c0f911b1d3cbea52a01a69079d67edf946ac9418d66288ef2c",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "b6c013339afdb8d8d9736a16a53aa75626bf848e8fdc3728781f2e72df29cd14",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "bd9238056b07d92817b5a747313716646bc7d6081632ca2695eda72e43b07421",
+    "grade": 1,
+    "notes": "Describes incremental outputs and memory savings relative to another tiled method, not primary HBM IO reduction."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "e3f40d066e196d060edc87f9ed777f69182d54d57b4e183985fb8424eec2619d",
+    "grade": 1,
+    "notes": "Figure labels depict SRAM blocks, but limited standalone explanation."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "e887809bf2971045a8146e5bccaaffc5a2a90b6db38dfcc755cf0d41a124f1e7",
+    "grade": 1,
+    "notes": "Connects HBM access to runtime and block size; mechanism fragment."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "e928a548e11528dff5201325907d7af943611efa263f3bfc5a611b5f932c7a9a",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "f2d2fed1a2aaea7f9ca8cf2cefb4a0205c0018bcde56b465718c3d667e08be6e",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "f559fe8ed01a5a1f708f704eba4bc1742d0b7bc91506850be653e280377074e4",
+    "grade": 2,
+    "notes": "Explains larger blocks reduce HBM passes and hence memory transfers."
+  },
+  {
+    "question_id": "Q03",
+    "chunk_id": "fdab581e624a3eb52ffa4118faf7b317f1dd6f280437f7cb006ca8df667704ee",
+    "grade": 1,
+    "notes": "Hardware hierarchy helps explain importance of SRAM/HBM, not the method."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "05d5a33355e9b21e18e3466abed131e6a3763d25444d2024a13f35327f9f86e8",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "1c4de9aa8f6178bd75e450293210d1fed57ff7628187646965fc10ff0e1500fa",
+    "grade": 2,
+    "notes": "Describes retrieved documents used as generation context and retriever/generator roles."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "200022e12e2e2d90818978fd54157481bdd916756167769ead2d449a7381624e",
+    "grade": 1,
+    "notes": "Explains motivation for combining implicit and retrieval-based knowledge but not precise architecture."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "257653b856be7674664cf8fa08eb1245bef58b9456e91f4478c03ee23750c715",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "3fdcc221c2c6897b9893f4cd7865736cd4c52ecfdb18ba42c93a2244c83c2f93",
+    "grade": 1,
+    "notes": "Describes Wikipedia vector index and generation variants, lacking complete model combination."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "41b5e640790284b6600080d9a252e21177a3b9d7b33a95c2b589efb4df0bec5c",
+    "grade": 1,
+    "notes": "Discussion of two memories and index swapping, not mechanism."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "4c04c9415ad604e109883051f897f220065782b5ffca081fcb49fec7ad6b49a5",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "4ce0da25f0e147e9f2f73b2ccdbaf41df42bcfc3e2ede96f6ea620e113b2dbea",
+    "grade": 2,
+    "notes": "Worked example showing retrieved evidence elicits knowledge stored in parametric generator."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "4d71e455470c30a6fb36f17f81477839df5b6d1aaeec7a49f8eb73056917b53a",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "550da74074c505a076edf5928db307b3db41c30b386977dabb6e2cb2932f583d",
+    "grade": 2,
+    "notes": "Explicit DPR retrieval, BART conditioning, and latent-document marginalization."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "60bedb0f3ed247397e64a64459fe6e6abedb4827eca487a27d568686ac37a475",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "6f0ef5e1742ed072938ed6e60a3ecb9fa00fe525154dc462218f070b06a0b862",
+    "grade": 1,
+    "notes": "General discussion of aggregating retrieved content without architecture specifics."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "6f9e232c01554c17fca44d647f65cff8fadb1a0a45b2ee1d4f6c7f82ea70fcd1",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "6fb66ef959f8e18424e67f786b42d04ef28a46347c29133f628d0e9a3a165d6e",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "70b4f56bc81a406806d815f0cae20ab96802535c33e17a474b1735ba1ee56312",
+    "grade": 1,
+    "notes": "Contrasts closed-book generation and retrieval benefits without implementation details."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "892b2f0b0dfa72c7314ec22b0e22fbe5ecf7d99531eb61e937aa3dcd3b9a0708",
+    "grade": 1,
+    "notes": "Noisy diagram text with labels of index and generator."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "8a37f81ce1e1e8142ee1b361d41d201f4353a8ab9e2115cffb64cb8a562a59cf",
+    "grade": 2,
+    "notes": "Figure caption describes document index plus seq2seq generator and marginalization."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "96cd9cbafa1c08509f51b7f33011f8e3280f4d2694f7b38f9d60b59cfd3a09db",
+    "grade": 2,
+    "notes": "Identifies index as non-parametric and BART as parametric; states input-document concatenation."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "98b2781d6899c810e9bf2c7949556fdc53529210e8ffd562cce4e28af5394e26",
+    "grade": 2,
+    "notes": "States parametric seq2seq and dense Wikipedia index as two components."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "a8e0bf30821689c5f17aa7be16179839a227b181d009b7cf463ccdf37955b724",
+    "grade": 2,
+    "notes": "Explains combination of seq2seq Transformer, Wikipedia index, DPR and end-to-end learning."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "b740af2907992227049bd6dc1cb6f4a00d7ccee2cd6890758f411d2cf5c7b40a",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "bfc542f75f992783b81c3892a537e3a9b73f9e6c410a9c50e982d2a19df62a67",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "d2493bc654fbfa6bbfd13bcd88ad014b133b97e12023177e2ef523ff82fdcf3d",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "d5aee2beeb08fb778006e3cfee27fcba0c8125900772e4e906e96192b5d3e6f1",
+    "grade": 1,
+    "notes": "Describes pretrained components but not how combined."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "d5fbfd6ba1fb5df0c595814cef754d07c0294583e4ebb0d47782656286a594ab",
+    "grade": 0,
+    "notes": "Does not directly help answer this question"
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "ebb8f13bbc2ea67c08a2d880563b4b62b1548842029cbed7c086563f6daebc7e",
+    "grade": 1,
+    "notes": "Discusses external vector index but not generation coupling."
+  },
+  {
+    "question_id": "Q04",
+    "chunk_id": "edb80653361c3252ee543d5a65d5deee1734823bb36316a85450f368c0b7971a",
+    "grade": 1,
+    "notes": "Explains external index update advantage without combination details."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "05d5a33355e9b21e18e3466abed131e6a3763d25444d2024a13f35327f9f86e8",
+    "grade": 1,
+    "notes": "Comparison of retrieved-document-count effects, not the defining difference."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "0ba51ae3b5efeaa2196dba6090fcc4d13498dd56d864c4b5eb022ebbdd1c97de",
+    "grade": 1,
+    "notes": "Comparative results for both variants, without the model-definition distinction."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "1c4de9aa8f6178bd75e450293210d1fed57ff7628187646965fc10ff0e1500fa",
+    "grade": 0,
+    "notes": "General RAG architecture only, no Sequence-versus-Token distinction."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "1e4df03372bfec20f8d1aef3856b6f4a615d3c5e0ca0043ecfddd30270bc6cf7",
+    "grade": 1,
+    "notes": "Different experimental decoding/retrieval settings, not the underlying distinction."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "24da54ebd384fae6f02b986f838e6a405fb4c0a5ae07ec13b8d504a18b5e71d4",
+    "grade": 1,
+    "notes": "Comparative downstream task performance, not formulation."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "257653b856be7674664cf8fa08eb1245bef58b9456e91f4478c03ee23750c715",
+    "grade": 1,
+    "notes": "Explains a special case where the two formulations are equivalent."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "3728549fccb3ce36ef0030b083774362559b49f1f51f67c062de8ba11e9f9df7",
+    "grade": 0,
+    "notes": "Unrelated attention visualization artifacts."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "3fdcc221c2c6897b9893f4cd7865736cd4c52ecfdb18ba42c93a2244c83c2f93",
+    "grade": 2,
+    "notes": "Explicitly contrasts same-document sequence conditioning with different documents per token."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "4c04c9415ad604e109883051f897f220065782b5ffca081fcb49fec7ad6b49a5",
+    "grade": 1,
+    "notes": "Comparative benchmark table, no explanation of model definitions."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "4d71e455470c30a6fb36f17f81477839df5b6d1aaeec7a49f8eb73056917b53a",
+    "grade": 0,
+    "notes": "Acknowledgments and references unrelated to the distinction."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "59667cdb5be04c68e51a75bd4e9a7e8d733c7e2260c8216805b194f21c4fa224",
+    "grade": 1,
+    "notes": "Comparison of generation results, not model formulation."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "5dea078093847f35f09db81df1df43a43f65927bc9f1c1d35b23c161ec2c190e",
+    "grade": 1,
+    "notes": "Examples of both model outputs, insufficient to explain formulation."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "60bedb0f3ed247397e64a64459fe6e6abedb4827eca487a27d568686ac37a475",
+    "grade": 1,
+    "notes": "Defines RAG-Sequence and its sequence-level marginalization, but not RAG-Token."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "6f35427bc0b43d7706c98c52b056fbfcd44d3fc14c22b2236f09cb7bd80c9b1a",
+    "grade": 0,
+    "notes": "General RAG task setup, no direct contrast."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "721eddcaffce959e099ab6d69aa5738069842ef3407a8ddd6d793e607fac0f99",
+    "grade": 1,
+    "notes": "Mentions different decoding methods but does not fully explain the distinction."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "7bdb49d3efcc36c09e2b18c67f15bf6bc0d40899cfb9cad281d4f62ffab03e6c",
+    "grade": 0,
+    "notes": "General broader impact discussion."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "8164be9d12e4998a1082b4dbb7d9557529ac10570fd06fdc1a2c28277050c344",
+    "grade": 0,
+    "notes": "Retrieval collapse discussion, not Sequence versus Token."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "95c6e515becc4032107d3159bce2ee8be141a3a8df140ea947f6e18b5c3aa728",
+    "grade": 0,
+    "notes": "Links to implementation only."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "a2699c720998dd9bc8703651c18228cd1a7f22b9ebca9634df4c2b4d11407a88",
+    "grade": 1,
+    "notes": "Comparative benchmark results, not the mechanism."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "b259faef15bfa1b3db001f608fd0d0bfe3c8e0893fa9c6e7ef31d718583b145a",
+    "grade": 1,
+    "notes": "Notes RAG-Token can combine content from multiple documents, partial explanation."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "b740af2907992227049bd6dc1cb6f4a00d7ccee2cd6890758f411d2cf5c7b40a",
+    "grade": 0,
+    "notes": "Index updating and retrieval-count effect, not the model distinction."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "d2493bc654fbfa6bbfd13bcd88ad014b133b97e12023177e2ef523ff82fdcf3d",
+    "grade": 1,
+    "notes": "Defines per-token document marginalization, but does not fully contrast with Sequence."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "d2f69f78513bf8f9784a74723cd991c535542d70095c64fab93085704567f6fc",
+    "grade": 0,
+    "notes": "Unrelated attention visualization."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "d59232120b12eb3a32994df0f46235cec709bb1b62b507644a789d7e8a07591b",
+    "grade": 2,
+    "notes": "Directly states same-document-per-sequence versus different-document-per-token distinction."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "d5e2f1d5743bb0aa9b92572a720abd6bf4a74f0cf434816b157ad681081546b8",
+    "grade": 2,
+    "notes": "Explicitly distinguishes per-token decoding from per-document sequence decoding."
+  },
+  {
+    "question_id": "Q05",
+    "chunk_id": "f096919229d36454b13355de1686de0c5b8373b8f9903caf0eb9eafe36b4f35a",
+    "grade": 1,
+    "notes": "Comparison of generation diversity, not the defining formulation."
+  }
+]
