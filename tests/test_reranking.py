@@ -140,11 +140,9 @@ def test_cli_rerank_expands_depth(
     first_stage = Mock()
     first_stage.search.return_value = [candidate(0)]
     hybrid_factory = Mock(return_value=first_stage)
-    monkeypatch.setattr(cli, "HybridRetriever", hybrid_factory)
     monkeypatch.setattr(service_module, "HybridRetriever", hybrid_factory)
     reranker = Mock()
     reranker.rerank.return_value = [replace(candidate(0), score=4.2)]
-    monkeypatch.setattr(cli, "CrossEncoderReranker", Mock(return_value=reranker))
     monkeypatch.setattr(service_module, "CrossEncoderReranker", Mock(return_value=reranker))
     cli.main(
         [
@@ -184,10 +182,10 @@ def test_old_modes_do_not_load_reranker(
     for name in ("BM25Index", "HybridRetriever"):
         service = Mock()
         service.search.return_value = [candidate(0)]
-        monkeypatch.setattr(cli, name, Mock(return_value=service))
+        if name == "BM25Index":
+            monkeypatch.setattr(cli, name, Mock(return_value=service))
         monkeypatch.setattr(service_module, name, Mock(return_value=service))
     factory = Mock(side_effect=AssertionError("Should not load reranker"))
-    monkeypatch.setattr(cli, "CrossEncoderReranker", factory)
     monkeypatch.setattr(service_module, "CrossEncoderReranker", factory)
     args = ["search", "q", "--index", str(tmp_path)]
     if method:

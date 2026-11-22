@@ -4,7 +4,7 @@ import json
 import os
 from dataclasses import asdict, replace
 from types import SimpleNamespace
-from unittest.mock import MagicMock, Mock
+from unittest.mock import Mock
 
 import pytest
 from openai import OpenAI
@@ -137,43 +137,63 @@ def test_invalid_evidence(passages):
         GroundedAnswerer(client_with(), model="test").answer("q", passages)
 
 
-def test_cli_ask(monkeypatch, capsys):
+@pytest.fixture
+def cli_service(monkeypatch):
     from research_assistant.interfaces import cli
 
     monkeypatch.setenv("OPENAI_MODEL", "test-model")
-    client = client_with()
-    factory = MagicMock()
-    factory.return_value.__enter__.return_value = client
-    monkeypatch.setattr(cli, "OpenAI", factory)
-    index = Mock(chunks=("chunk",))
-    monkeypatch.setattr(cli.VectorIndex, "load", Mock(return_value=index))
-    monkeypatch.setattr(cli, "Embedder", Mock())
-    monkeypatch.setattr(cli, "BM25Index", Mock())
-    hybrid = Mock()
-    hybrid.search.return_value = [passage(i) for i in range(1, 21)]
-    monkeypatch.setattr(cli, "HybridRetriever", Mock(return_value=hybrid))
-    reranker = Mock()
-    reranker.rerank.return_value = hybrid.search.return_value[:5]
-    monkeypatch.setattr(cli, "CrossEncoderReranker", Mock(return_value=reranker))
-    cli.main(["ask", "q", "--index", "data/index"])
-    hybrid.search.assert_called_once_with("q", 20)
-    reranker.rerank.assert_called_once_with("q", hybrid.search.return_value, 5)
-    assert (
-        len(json.loads(client.responses.create.call_args.kwargs["input"])["evidence"])
-        == 5
+    monkeypatch.setenv("OPENAI_API_KEY", "fake-offline-key")
+    factory = Mock()
+    monkeypatch.setattr(cli, "ResearchService", factory)
+    return cli, factory
+
+
+def test_cli_ask(cli_service, capsys):
+    from research_assistant.generation.answering import CitationSource, GroundedAnswer
+
+    cli, factory = cli_service
+    factory.return_value.answer.return_value = GroundedAnswer(
+        "Supported [S1] [S2].",
+        (
+            CitationSource("S1", "1", "doc", "paper.pdf", 3, None, "text"),
+            CitationSource("S2", "2", "doc2", "notes.md", None, "Intro", "text2"),
+        ),
     )
-    output = capsys.readouterr().out
-    assert "Supported [S1]." in output
-    assert "[S1] paper.pdf | page 1 | chunk 1" in output
-    assert "[S2]" not in output
+    cli.main(["ask", "q", "--index", "data/index"])
+    from pathlib import Path
+
+    factory.assert_called_once_with(Path("data/index"))
+    factory.return_value.answer.assert_called_once_with("q")
+    factory.return_value.close.assert_called_once_with()
+    assert capsys.readouterr().out == (
+        "Supported [S1] [S2].\n"
+        "[S1] paper.pdf | page 3 | chunk 1\n"
+        "[S2] notes.md | section Intro | chunk 2\n"
+    )
+
+
+@pytest.mark.parametrize("name", ["OPENAI_MODEL", "OPENAI_API_KEY"])
+@pytest.mark.parametrize("value", [None, "", "  "])
+def test_cli_missing_config(cli_service, monkeypatch, capsys, name, value):
+    cli, factory = cli_service
+    if value is None:
+        monkeypatch.delenv(name)
+    else:
+        monkeypatch.setenv(name, value)
+    with pytest.raises(SystemExit) as exc:
+        cli.main(["ask", "q", "--index", "data/index"])
+    assert exc.value.code == 1
+    assert name in capsys.readouterr().err
+    factory.assert_not_called()
 
 
 @pytest.mark.parametrize("method", ["vector", "bm25", "hybrid", "rerank"])
 def test_search_never_constructs_api_client(monkeypatch, capsys, method):
+    from research_assistant import service
     from research_assistant.interfaces import cli
 
     monkeypatch.setattr(
-        cli, "OpenAI", Mock(side_effect=AssertionError("No API client"))
+        service, "OpenAI", Mock(side_effect=AssertionError("No API client"))
     )
     monkeypatch.setattr(cli.VectorIndex, "load", Mock(return_value=Mock(chunks=())))
     cli.main(["search", "q", "--index", "data/index", "--method", method])
@@ -196,28 +216,20 @@ def test_live_api():
     assert [s.label for s in result.sources] == ["S1"]
 
 
-def test_cli_invalid_citation_does_not_print_answer(monkeypatch, capsys):
-    from research_assistant.interfaces import cli
-
-    monkeypatch.setenv("OPENAI_MODEL", "test")
-    factory = MagicMock()
-    factory.return_value.__enter__.return_value = client_with("Invalid [S99]")
-    monkeypatch.setattr(cli, "OpenAI", factory)
-    monkeypatch.setattr(
-        cli.VectorIndex, "load", Mock(return_value=Mock(chunks=("chunk",)))
-    )
-    monkeypatch.setattr(cli, "BM25Index", Mock())
-    monkeypatch.setattr(cli, "Embedder", Mock())
-    monkeypatch.setattr(cli, "HybridRetriever", Mock())
-    reranker = Mock()
-    reranker.rerank.return_value = [passage()]
-    monkeypatch.setattr(cli, "CrossEncoderReranker", Mock(return_value=reranker))
+@pytest.mark.parametrize(
+    "error",
+    [ValueError("Invalid citation IDs: S99"), RuntimeError("Generation failed")],
+)
+def test_cli_answer_failure_cleanup(cli_service, capsys, error):
+    cli, factory = cli_service
+    factory.return_value.answer.side_effect = error
     with pytest.raises(SystemExit) as exc:
         cli.main(["ask", "q", "--index", "data/index"])
     assert exc.value.code == 1
     output = capsys.readouterr()
     assert not output.out
-    assert "Invalid citation IDs: S99" in output.err
+    assert output.err == f"Error: {error}\n"
+    factory.return_value.close.assert_called_once_with()
 
 
 def test_default_output_budget():

@@ -46,10 +46,10 @@ src/research_assistant/
 ```
 
 Internal imports use these subpackage paths; no legacy module aliases are provided.
-Hybrid and reranked CLI searches delegate to `ResearchService`. The `ask` CLI
-retains its existing orchestration to preserve API configuration checks before
-model loading, including its empty-index configuration requirement. The service
-instead initializes generation lazily and bypasses it for empty evidence.
+Hybrid and reranked CLI searches and `ask` delegate to `ResearchService`.
+The `ask` CLI checks that `OPENAI_MODEL` and `OPENAI_API_KEY` are nonempty before
+loading the index or models, and closes the service on success or failure.
+The service initializes generation lazily and bypasses it for empty evidence.
 MCP and FastAPI interfaces are not implemented yet.
 
 ## Requirements

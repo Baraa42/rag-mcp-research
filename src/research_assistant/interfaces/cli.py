@@ -1,17 +1,15 @@
 """Minimal local index/search commands; retrieval remains usable as a library."""
 
 import argparse
+import os
 from pathlib import Path
 
-from openai import OpenAI, OpenAIError
+from openai import OpenAIError
 
-from research_assistant.generation.answering import GroundedAnswerer
 from research_assistant.ingest.chunking import chunk_pages
 from research_assistant.ingest.ingestion import ingest_directory
 from research_assistant.retrieval.bm25 import BM25Index
 from research_assistant.retrieval.embeddings import Embedder
-from research_assistant.retrieval.hybrid import HybridRetriever
-from research_assistant.retrieval.reranking import CrossEncoderReranker
 from research_assistant.retrieval.vector import VectorIndex
 from research_assistant.service import ResearchService
 
@@ -45,19 +43,15 @@ def main(argv: list[str] | None = None) -> None:
         elif args.command == "ask":
             if not args.question.strip():
                 raise ValueError("Provide a nonempty question")
-            index = VectorIndex.load(args.index)
-            # Configure generation before expensive local model initialization.
-            with OpenAI(timeout=60.0, max_retries=2) as client:
-                answerer = GroundedAnswerer(client)
-                passages = []
-                if index.chunks:
-                    candidates = HybridRetriever(
-                        index, BM25Index(list(index.chunks)), Embedder()
-                    ).search(args.question, 20)
-                    passages = CrossEncoderReranker().rerank(
-                        args.question, candidates, 5
-                    )
-                answer = answerer.answer(args.question, passages)
+            # Fail before index/model loading without constructing an API client.
+            for name in ("OPENAI_MODEL", "OPENAI_API_KEY"):
+                if not os.environ.get(name, "").strip():
+                    raise ValueError(f"Set {name} to a nonempty value before using ask")
+            service = ResearchService(args.index)
+            try:
+                answer = service.answer(args.question)
+            finally:
+                service.close()
             print(answer.answer)
             for source in answer.sources:
                 location = (

@@ -18,12 +18,10 @@ from research_assistant.retrieval.vector import SearchResult, VectorIndex, _top_
 
 
 class ResearchService:
-    """Load one index snapshot; lazily reuse models for sequential requests.
+    """Handle sequential requests with lazily initialized, reused models.
 
-    Call close() when finished. All operations except close() reject subsequent
-    use. Concurrent requests and index reloads are not supported by this wrapper.
-    Lazy initialization is unsynchronized: use sequential calls only. Concurrency
-    will be addressed in S4 if needed.
+    Concurrent calls and live index reloading are unsupported. Call close() when
+    finished; subsequent operations reject use of the closed service.
     """
 
     def __init__(self, index_path: Path) -> None:
