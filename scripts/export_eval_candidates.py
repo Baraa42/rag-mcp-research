@@ -55,8 +55,17 @@ def retrieve_candidates(
     """Pool four top-20 lists; reranking operates on the hybrid top 20."""
     vector_results = index.search(question, embedder, DEPTH)
     lexical_results = bm25.search(question, DEPTH)
+    # TODO: hybrid.search() independently repeats these FAISS and BM25 searches.
+    # Compute each ranking once and reuse for RRF and evaluation, preserving
+    # identical ranking semantics and deterministic tie-breaking.
     hybrid_results = hybrid.search(question, DEPTH)
+    # TODO: Only hybrid top 20 reach the cross-encoder; rank 21 cannot be promoted.
+    # Compare depths 10, 20, 50, and possibly 100 using Recall@K, MRR@K, and
+    # inference latency; larger candidate pools need not improve quality.
     reranked = reranker.rerank(question, hybrid_results, DEPTH)
+    # TODO: Pooling FAISS/BM25 top 20 does not ensure exhaustive relevance coverage.
+    # Inspect relevant source documents beyond the pool; track unjudged passages
+    # separately from grade 0, never treating missing labels as irrelevant.
     return pool_candidates(
         {
             "faiss": vector_results,
