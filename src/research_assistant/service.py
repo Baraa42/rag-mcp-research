@@ -4,7 +4,11 @@ from pathlib import Path
 
 from openai import OpenAI
 
-from research_assistant.answering import GroundedAnswer, GroundedAnswerer
+from research_assistant.answering import (
+    INSUFFICIENT_EVIDENCE,
+    GroundedAnswer,
+    GroundedAnswerer,
+)
 from research_assistant.bm25 import BM25Index
 from research_assistant.chunking import Chunk
 from research_assistant.embeddings import Embedder
@@ -18,6 +22,8 @@ class ResearchService:
 
     Call close() when finished. All operations except close() reject subsequent
     use. Concurrent requests and index reloads are not supported by this wrapper.
+    Lazy initialization is unsynchronized: use sequential calls only. Concurrency
+    will be addressed in S4 if needed.
     """
 
     def __init__(self, index_path: Path) -> None:
@@ -76,6 +82,8 @@ class ResearchService:
         """Generate using five reranked passages and the existing citation rules."""
         self._ensure_open()
         passages = self.search(question, top_k=5, rerank=True)
+        if not passages:
+            return GroundedAnswer(INSUFFICIENT_EVIDENCE, ())
         if self._answerer is None:
             client = OpenAI(timeout=60.0, max_retries=2)
             try:
@@ -96,5 +104,7 @@ class ResearchService:
         self._answerer = None
         self._reranker = None
         self._hybrid = None
+        # The loaded FAISS index and chunk lookup are in-memory data, not open
+        # resources; their references remain until this service object is released.
         if client is not None:
             client.close()

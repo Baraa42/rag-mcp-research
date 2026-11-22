@@ -7,7 +7,7 @@ from unittest.mock import Mock
 import pytest
 
 from research_assistant import service
-from research_assistant.answering import GroundedAnswer
+from research_assistant.answering import INSUFFICIENT_EVIDENCE, GroundedAnswer
 from research_assistant.chunking import Chunk
 from research_assistant.retrieval import SearchResult
 
@@ -117,6 +117,14 @@ def test_empty_index(setup):
     instance = service.ResearchService(Path("index"))
     assert instance.search("q") == []
     assert instance.search("q", rerank=False) == []
+    for factory in setup[2].values():
+        factory.assert_not_called()
+
+
+def test_empty_index_answer_without_models_or_api(setup):
+    setup[0].chunks = ()
+    instance = service.ResearchService(Path("index"))
+    assert instance.answer("q") == GroundedAnswer(INSUFFICIENT_EVIDENCE, ())
     for factory in setup[2].values():
         factory.assert_not_called()
 
