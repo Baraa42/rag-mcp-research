@@ -95,6 +95,9 @@ service.ResearchService.close = tracked_close
     )
 
     processes, lines = [], []
+    # These private SDK hooks may change even when public MCP behavior still works.
+    # On SDK upgrades, check hook compatibility before treating a failure as a
+    # server regression. Retain this observation approach for now (see README).
     spawn = stdio._create_platform_compatible_process
     parse = stdio._parse_line
 
