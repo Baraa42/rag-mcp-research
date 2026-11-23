@@ -4,9 +4,8 @@ A production-oriented research assistant for ML papers, planned to combine
 hybrid retrieval with citation-grounded answers and expose research tools
 through MCP and FastAPI.
 
-**Status:** Session 2B, Step 4 — minimal citation-grounded answer generation is
-available after hybrid retrieval and cross-encoder reranking. MCP and FastAPI
-are not implemented.
+**Status:** S3, Step 3 — a local stdio MCP server exposes research search and
+citation-grounded answers. FastAPI is not implemented.
 
 ## Planned architecture
 
@@ -15,7 +14,7 @@ Transformer embeddings → FAISS vector search + BM25 lexical search → hybrid
 retrieval → cross-encoder reranking → citation-grounded answers.
 
 The Python package will keep ingestion, retrieval, and answering logic separate
-from future MCP and FastAPI interfaces. Docker deployment, evaluation, and
+from MCP and future FastAPI interfaces. Docker deployment, evaluation, and
 benchmarks will follow. No LangChain or LlamaIndex is planned.
 
 ## Source organization
@@ -42,7 +41,8 @@ src/research_assistant/
 │   └── answering.py
 └── interfaces/
     ├── __init__.py
-    └── cli.py
+    ├── cli.py
+    └── mcp_server.py
 ```
 
 Internal imports use these subpackage paths; no legacy module aliases are provided.
@@ -50,7 +50,7 @@ Hybrid and reranked CLI searches and `ask` delegate to `ResearchService`.
 The `ask` CLI checks that `OPENAI_MODEL` and `OPENAI_API_KEY` are nonempty before
 loading the index or models, and closes the service on success or failure.
 The service initializes generation lazily and bypasses it for empty evidence.
-MCP and FastAPI interfaces are not implemented yet.
+The MCP interface uses stdio only; FastAPI is not implemented yet.
 
 ## Requirements
 
@@ -631,6 +631,49 @@ RUN_ANSWERING_INTEGRATION=1 uv run pytest tests/test_answering.py -k live_api -v
 
 It requires both environment variables above and checks a simple citation
 contract; it is not a factual-grounding evaluation.
+
+## Local MCP server
+
+Uses the official MCP Python SDK v2 `MCPServer` API (`mcp>=2,<3`, locked to
+2.3.0), with no optional SDK extras. See the [official SDK documentation](https://py.sdk.modelcontextprotocol.io/).
+
+```sh
+uv run python -m research_assistant.interfaces.mcp_server --index data/index
+```
+
+The process waits for an MCP host on stdin/stdout; stdout is reserved for the
+protocol and diagnostics go to stderr. There is no HTTP listener. Configure a
+local host to launch this command from the repository root (or use absolute
+paths). As with `ask`, answer generation needs `OPENAI_API_KEY` and `OPENAI_MODEL`
+in the process environment. `.env` is not automatically loaded; optionally use
+`uv run --env-file .env python -m research_assistant.interfaces.mcp_server --index data/index`.
+Search alone needs neither OpenAI configuration nor paid API calls. Models may
+be downloaded on first search. Answer calls with evidence can incur API charges.
+
+Exactly two tools are registered:
+
+- `search_papers(question, top_k=5, rerank=True)` returns a structured `results`
+  list with 1-based `rank`, `chunk_id`, `document_id`, `source`, `page_number`,
+  `section`, full `text`, and method-specific `score`. Order and metadata are
+  preserved; empty searches return an empty list. Invalid top_k is not clamped.
+- `answer_question(question)` returns `answer` and `sources`, each containing
+  `label`, `chunk_id`, `document_id`, `source`, `page_number`, `section`, and
+  evidence `text`. Citation-ID validity does not prove factual support.
+
+The SDK lifespan loads one persisted index through one `ResearchService`, reuses
+it across requests, and closes it in `finally`. Imports and tool registration do
+not load models or indexes. An AnyIO lock serializes both tools; synchronous
+service work runs in a worker thread without abandoning it on cancellation.
+Shutdown waits for active service work before closing owned resources. Expected
+input errors are reported safely; backend errors are sanitized rather than
+returning provider messages, environment values, or stack traces. Deliberate
+service prints are redirected to stderr. Forced process termination cannot
+promise cleanup, and an active inference/API request can delay shutdown.
+
+Offline tests use the SDK's in-memory client and a fake service to verify schemas,
+structured output, reuse, serialization, errors, and cleanup. No paid API calls
+are made. A real MCP host/subprocess integration smoke test remains Step 4; no
+HTTP transport, authentication, or passage-lookup tool is exposed here.
 
 ## Five-session roadmap (10 hours total)
 
