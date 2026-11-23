@@ -4,7 +4,7 @@ import argparse
 import logging
 import sys
 from collections.abc import AsyncIterator, Callable
-from contextlib import asynccontextmanager, redirect_stdout
+from contextlib import asynccontextmanager
 from dataclasses import asdict, dataclass
 from functools import partial
 from pathlib import Path
@@ -18,6 +18,8 @@ from pydantic import Field
 
 from research_assistant.service import ResearchService
 
+logger = logging.getLogger(__name__)
+
 
 @dataclass
 class ServerState:
@@ -26,10 +28,9 @@ class ServerState:
 
 
 def _invoke(operation: Callable[[], Any]) -> Any:
-    """Keep incidental prints off stdout and never expose raw backend errors."""
+    """Report safe errors without modifying process-wide output streams."""
     try:
-        with redirect_stdout(sys.stderr):
-            return operation()
+        return operation()
     except ValueError as exc:
         # Only fixed validation messages are safe to expose, never user/provider data.
         safe = {
@@ -43,8 +44,10 @@ def _invoke(operation: Callable[[], Any]) -> Any:
         message = (
             str(exc) if str(exc) in safe else "Research request or evidence is invalid."
         )
+        logger.warning("Research request rejected: %s", message)
         raise ToolError(message) from None
     except Exception:
+        logger.error("Research operation failed; backend details withheld.")
         raise ToolError(
             "Research operation failed. Check the index, model configuration and API access."
         ) from None
@@ -55,8 +58,7 @@ def create_server(index_path: Path) -> MCPServer:
 
     @asynccontextmanager
     async def lifespan(server: MCPServer) -> AsyncIterator[ServerState]:
-        with redirect_stdout(sys.stderr):
-            service = ResearchService(index_path)
+        service = ResearchService(index_path)
         state = ServerState(service, anyio.Lock())
         try:
             yield state
@@ -64,8 +66,7 @@ def create_server(index_path: Path) -> MCPServer:
             # Wait for active non-abandoned worker calls before closing API resources.
             with anyio.CancelScope(shield=True):
                 async with state.lock:
-                    with redirect_stdout(sys.stderr):
-                        service.close()
+                    service.close()
 
     server = MCPServer("rag-mcp-research", lifespan=lifespan, log_level="WARNING")
 

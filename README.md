@@ -666,14 +666,32 @@ not load models or indexes. An AnyIO lock serializes both tools; synchronous
 service work runs in a worker thread without abandoning it on cancellation.
 Shutdown waits for active service work before closing owned resources. Expected
 input errors are reported safely; backend errors are sanitized rather than
-returning provider messages, environment values, or stack traces. Deliberate
-service prints are redirected to stderr. Forced process termination cannot
-promise cleanup, and an active inference/API request can delay shutdown.
+returning provider messages, environment values, or stack traces. Our
+application diagnostics use Python logging to stderr. Application code never
+redirects process-wide stdout or file descriptors; third-party/native stdout
+writes are not intercepted by our code. Such writes can still affect protocol
+reliability (including before SDK transport startup); configure those libraries
+to use stderr rather than relying on SDK-specific transport handling. Forced
+process termination cannot promise cleanup, and an active inference/API request can delay shutdown.
 
 Offline tests use the SDK's in-memory client and a fake service to verify schemas,
 structured output, reuse, serialization, errors, and cleanup. No paid API calls
-are made. A real MCP host/subprocess integration smoke test remains Step 4; no
-HTTP transport, authentication, or passage-lookup tool is exposed here.
+are made. The real stdio smoke tests launch the actual `uv run python -m` server
+command through the official SDK subprocess transport. They exercise nonempty FAISS +
+BM25 hybrid retrieval twice with a deterministic test embedder, plus empty-index
+answering without API access. They check JSON-RPC stdout, stderr diagnostics,
+service reuse, cleanup, and zero-exit EOF shutdown. Test-only Python startup
+hooks inject dependencies; production code has no test mode. The tests observe
+two private SDK transport helpers, so SDK upgrades may require test adjustments.
+They do not validate real model quality or paid answer generation. Run them with:
+
+```sh
+uv run pytest tests/test_mcp_stdio.py -v
+```
+
+The tests require `uv` on PATH and installed project dependencies; no model
+downloads or API credentials are needed. No HTTP transport, authentication, or
+passage-lookup tool is exposed here.
 
 ## Five-session roadmap (10 hours total)
 

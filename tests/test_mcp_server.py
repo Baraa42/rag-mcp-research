@@ -190,11 +190,11 @@ async def test_cleanup_on_session_exception(setup):
 
 
 @pytest.mark.anyio
-async def test_incidental_stdout_goes_to_stderr(setup, capsys):
+async def test_application_diagnostics_use_logging(setup, capsys, caplog):
     server, service, _ = setup
 
     def search(*args):
-        print("diagnostic")
+        mcp_server.logger.warning("diagnostic")
         return []
 
     service.search.side_effect = search
@@ -203,7 +203,7 @@ async def test_incidental_stdout_goes_to_stderr(setup, capsys):
         assert not result.is_error
     captured = capsys.readouterr()
     assert "diagnostic" not in captured.out
-    assert "diagnostic" in captured.err
+    assert "diagnostic" in caplog.text
 
 
 def test_startup_failure_is_sanitized(monkeypatch, capsys):
