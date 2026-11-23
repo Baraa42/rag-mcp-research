@@ -80,10 +80,10 @@ def create_server(index_path: Path) -> MCPServer:
         """Retrieve research passages; scores are method-specific relevance values."""
         state = ctx.request_context.lifespan_context
         async with state.lock:
+            search_operation = partial(state.service.search, question, top_k, rerank)
+            safe_operation = partial(_invoke, search_operation)
             results = await anyio.to_thread.run_sync(
-                partial(
-                    _invoke, partial(state.service.search, question, top_k, rerank)
-                ),
+                safe_operation,
                 abandon_on_cancel=False,
             )
         return {
@@ -100,8 +100,10 @@ def create_server(index_path: Path) -> MCPServer:
         """Answer from evidence with validated source IDs, not proof of factual support."""
         state = ctx.request_context.lifespan_context
         async with state.lock:
+            answer_operation = partial(state.service.answer, question)
+            safe_operation = partial(_invoke, answer_operation)
             answer = await anyio.to_thread.run_sync(
-                partial(_invoke, partial(state.service.answer, question)),
+                safe_operation,
                 abandon_on_cancel=False,
             )
         return {"answer": answer.answer, "sources": [asdict(s) for s in answer.sources]}
