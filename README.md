@@ -693,6 +693,47 @@ The tests require `uv` on PATH and installed project dependencies; no model
 downloads or API credentials are needed. No HTTP transport, authentication, or
 passage-lookup tool is exposed here.
 
+### Opt-in real-model MCP smoke test
+
+Run manually against the existing three-paper index (never run this script in CI):
+
+```sh
+uv run python scripts/smoke_mcp.py --index data/index
+# Require cached models and prohibit Hugging Face downloads:
+HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 uv run python scripts/smoke_mcp.py
+```
+
+The script starts the actual server through the official SDK stdio transport,
+initializes MCP, checks the exact two tools, and searches for
+"Why do Transformers need positional encoding?" with and without reranking.
+Both queries are repeated on the same connection. It prints top-five passages
+and validates IDs and metadata against local chunks, finite descending scores,
+sequential ranks, unique results, and unchanged repeated results. The SDK context
+managers close the session and subprocess, including on failure. A 180-second
+overall timeout bounds the run. Dependencies must already be installed.
+
+The first hybrid call includes lazy embedder initialization; the first reranked
+call includes lazy cross-encoder initialization. Subsequent calls use warmed
+models. Times are client-observed round trips including serialization, not isolated
+inference benchmarks. On the local cached corpus (2026-11-23), startup + MCP
+initialization took 3.178s, cold hybrid 0.204s, first reranked 0.198s, warm hybrid
+0.005s, and warm reranked 0.093s. These are single-run observations, not a latency
+distribution. The direct positional-encoding explanation from Attention page 6
+was hybrid rank 2 (RRF 0.030478) and reranked rank 1 (raw score 2.534949).
+
+Generation is disabled by default; the script does not forward OpenAI credentials
+to the child unless explicitly enabled. To opt into a potentially paid call,
+export `OPENAI_API_KEY` and `OPENAI_MODEL` and run:
+
+```sh
+uv run python scripts/smoke_mcp.py --with-answer
+```
+
+This checks returned citation labels and source metadata, not factual support.
+The generation path was not executed during the retrieval-only verification.
+A legitimate insufficient-evidence response may have no sources. Errors fail
+with diagnostics without printing API credentials or raw provider exceptions.
+
 ## Five-session roadmap (10 hours total)
 
 | Session | Time | Scope |
