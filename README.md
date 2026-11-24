@@ -706,16 +706,21 @@ HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 uv run python scripts/smoke_mcp.py
 The script starts the actual server through the official SDK stdio transport,
 initializes MCP, checks the exact two tools, and searches for
 "Why do Transformers need positional encoding?" with and without reranking.
-Both queries are repeated on the same connection. It prints top-five passages
-and validates IDs and metadata against local chunks, finite descending scores,
+Both queries are repeated on the same connection. The parent uses
+`VectorIndex.load()` to validate the manifest, checksums, vector dimensions, and
+chunk alignment, then builds a lookup of the original `Chunk` objects. This loads
+the index without initializing embedding or reranking models in the parent.
+It prints top-five passages and validates exact IDs, document IDs, source, text,
+physical page, and section against those chunks, plus finite descending scores,
 sequential ranks, unique results, and unchanged repeated results. The SDK context
 managers close the session and subprocess, including on failure. A 180-second
 overall timeout bounds the run. Dependencies must already be installed.
 
 The first hybrid call includes lazy embedder initialization; the first reranked
 call includes lazy cross-encoder initialization. Subsequent calls use warmed
-models. Times are client-observed round trips including serialization, not isolated
-inference benchmarks. On the local cached corpus (2026-11-23), startup + MCP
+models. Times are explicitly labeled single-run, client-observed round-trip latencies
+including serialization, not rigorous inference benchmarks. Parent index validation
+is excluded from MCP startup and request timings. On the local cached corpus (2026-11-23), startup + MCP
 initialization took 3.178s, cold hybrid 0.204s, first reranked 0.198s, warm hybrid
 0.005s, and warm reranked 0.093s. These are single-run observations, not a latency
 distribution. The direct positional-encoding explanation from Attention page 6

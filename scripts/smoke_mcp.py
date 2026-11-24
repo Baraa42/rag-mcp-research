@@ -1,7 +1,6 @@
 """Opt-in real-model MCP stdio smoke test; generation requires --with-answer."""
 
 import argparse
-import json
 import math
 import os
 import re
@@ -12,6 +11,9 @@ from time import perf_counter
 import anyio
 from mcp import ClientSession
 from mcp.client.stdio import StdioServerParameters, stdio_client
+
+from research_assistant.ingest.chunking import Chunk
+from research_assistant.retrieval.vector import VectorIndex
 
 QUESTION = "Why do Transformers need positional encoding?"
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,12 +28,12 @@ def check(condition: bool, message: str) -> None:
         raise SmokeFailure(message)
 
 
-def validate_passage(record: dict, chunks: dict) -> None:
+def validate_passage(record: dict, chunks: dict[str, Chunk]) -> None:
     chunk = chunks.get(record.get("chunk_id"))
     check(chunk is not None, "Returned passage ID is absent from the local index.")
     for field in ("document_id", "source", "text", "page_number", "section"):
         check(
-            record.get(field) == chunk[field],
+            field in record and record[field] == getattr(chunk, field),
             f"Passage {field} differs from local metadata.",
         )
     check(
@@ -48,7 +50,7 @@ def validate_passage(record: dict, chunks: dict) -> None:
     )
 
 
-def validate_search(data: dict, chunks: dict) -> list[dict]:
+def validate_search(data: dict, chunks: dict[str, Chunk]) -> list[dict]:
     results = data.get("results")
     check(
         isinstance(results, list) and 0 < len(results) <= 5,
@@ -74,7 +76,7 @@ def validate_search(data: dict, chunks: dict) -> list[dict]:
     return results
 
 
-def validate_answer(data: dict, chunks: dict) -> None:
+def validate_answer(data: dict, chunks: dict[str, Chunk]) -> None:
     answer, sources = data.get("answer"), data.get("sources")
     check(isinstance(answer, str) and bool(answer.strip()), "Empty generated answer.")
     check(isinstance(sources, list), "Missing citation sources.")
@@ -114,14 +116,9 @@ def validate_answer(data: dict, chunks: dict) -> None:
 async def run(index: Path, with_answer: bool) -> None:
     uv = shutil.which("uv")
     check(uv is not None, "uv must be installed and on PATH.")
-    chunks_list = [
-        json.loads(line) for line in (index / "chunks.jsonl").read_text().splitlines()
-    ]
-    chunks = {c["chunk_id"]: c for c in chunks_list}
-    check(
-        bool(chunks) and len(chunks) == len(chunks_list),
-        "Index must have unique, nonempty chunks.",
-    )
+    validated_index = VectorIndex.load(index)
+    chunks = {chunk.chunk_id: chunk for chunk in validated_index.chunks}
+    check(bool(chunks), "Index must contain passages for the retrieval smoke test.")
     env = {
         name: os.environ[name]
         for name in ("HF_HUB_OFFLINE", "TRANSFORMERS_OFFLINE", "HF_HOME")
@@ -147,6 +144,8 @@ async def run(index: Path, with_answer: bool) -> None:
         cwd=ROOT,
         env=env,
     )
+    print("Single-run, client-observed round-trip latencies; not inference benchmarks.")
+    print("Parent index validation is excluded from startup/request timings.")
     start = perf_counter()
     with anyio.fail_after(180):
         async with stdio_client(params) as (reader, writer):
@@ -161,8 +160,14 @@ async def run(index: Path, with_answer: bool) -> None:
                 )
                 previous = {}
                 for rerank, phase in (
-                    (False, "cold hybrid: embedder loads"),
-                    (True, "first reranked: cross-encoder loads"),
+                    (
+                        False,
+                        "first hybrid (includes lazy embedding-model initialization)",
+                    ),
+                    (
+                        True,
+                        "first reranked (includes lazy cross-encoder initialization)",
+                    ),
                     (False, "warm hybrid"),
                     (True, "warm reranked"),
                 ):
