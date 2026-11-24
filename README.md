@@ -1,21 +1,25 @@
 # rag-mcp-research
 
-A production-oriented research assistant for ML papers, planned to combine
-hybrid retrieval with citation-grounded answers and expose research tools
-through MCP and FastAPI.
+A production-oriented research assistant for ML papers combining hybrid
+retrieval with citation-grounded answers and local MCP research tools.
+FastAPI deployment is planned for S4.
 
-**Status:** S3, Step 3 — a local stdio MCP server exposes research search and
-citation-grounded answers. FastAPI is not implemented.
+**Status:** S3 complete — the local MCP server, automated stdio subprocess tests,
+and real-model retrieval smoke test are implemented and verified. `answer_question`
+is tested offline; a live paid API call over MCP has **not** been verified.
+S4 (FastAPI, Docker, reliability, logging) and S5 remain upcoming.
 
-## Planned architecture
+## Architecture
 
 PDF/Markdown → text with source metadata → token-aware chunks → Sentence
 Transformer embeddings → FAISS vector search + BM25 lexical search → hybrid
 retrieval → cross-encoder reranking → citation-grounded answers.
 
-The Python package will keep ingestion, retrieval, and answering logic separate
-from MCP and future FastAPI interfaces. Docker deployment, evaluation, and
-benchmarks will follow. No LangChain or LlamaIndex is planned.
+The Python package separates ingestion, retrieval, and answering logic from MCP
+and future FastAPI interfaces. Initial [offline retrieval evaluation](docs/evaluation.md)
+uses 151 manual judgments across five questions; component timing measurements
+are also available below. Broader evaluation and benchmarking remain S5 work.
+Docker deployment remains S4 work. No LangChain or LlamaIndex is used.
 
 ## Source organization
 
@@ -650,6 +654,52 @@ in the process environment. `.env` is not automatically loaded; optionally use
 Search alone needs neither OpenAI configuration nor paid API calls. Models may
 be downloaded on first search. Answer calls with evidence can incur API charges.
 
+### Local host example: VS Code Copilot
+
+This native user configuration follows the [official VS Code MCP reference](https://code.visualstudio.com/docs/agents/reference/mcp-configuration)
+(checked 2026-11-24). Merge it into `/Users/baraa/.copilot/mcp-config.json`
+when `COPILOT_HOME` is unset; otherwise use `$COPILOT_HOME/mcp-config.json`.
+Replace the absolute paths for your machine (`command -v uv` locates uv).
+
+```json
+{
+  "mcpServers": {
+    "researchAssistant": {
+      "type": "stdio",
+      "command": "/Users/baraa/.local/bin/uv",
+      "args": [
+        "run", "python", "-m", "research_assistant.interfaces.mcp_server",
+        "--index", "/Users/baraa/Projects/rag-mcp-research/data/index"
+      ],
+      "cwd": "/Users/baraa/Projects/rag-mcp-research",
+      "env": {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "OPENAI_MODEL": "${OPENAI_MODEL}"
+      },
+      "tools": ["search_papers", "answer_question"]
+    }
+  }
+}
+```
+
+`cwd` selects the uv project. Install dependencies with `uv sync --locked` there
+first; the local index must exist. For answering, export credentials before
+launching a fresh VS Code process from that shell:
+
+```sh
+export OPENAI_API_KEY='your-api-key'
+export OPENAI_MODEL='your-model-id'
+code /Users/baraa/Projects/rag-mcp-research
+```
+
+Do not store secrets in the configuration. For retrieval-only use, omit `env`.
+Select the Copilot harness and manage the server through **Chat: Open Customizations →
+MCP Servers**. This format does not load `.env` automatically. The example is
+verified against documentation, not an executed VS Code host session. Calling
+`answer_question` with evidence may incur OpenAI charges.
+
+### Tools and lifecycle
+
 Exactly two tools are registered:
 
 - `search_papers(question, top_k=5, rerank=True)` returns a structured `results`
@@ -736,19 +786,24 @@ uv run python scripts/smoke_mcp.py --with-answer
 
 This checks returned citation labels and source metadata, not factual support.
 The generation path was not executed during the retrieval-only verification.
+`answer_question` has offline mocked and empty-index stdio coverage, but no live
+paid API generation over MCP has been verified.
 A legitimate insufficient-evidence response may have no sources. Errors fail
 with diagnostics without printing API credentials or raw provider exceptions.
 
 ## Five-session roadmap (10 hours total)
 
-| Session | Time | Scope |
-| --- | --- | --- |
-| 1 | ~2 hours | PDF/Markdown ingestion, chunking, Sentence Transformer embeddings, FAISS vector search |
-| 2 | ~2 hours | BM25 hybrid retrieval, reranking, citation-grounded answers |
-| 3 | ~2 hours | MCP server and research tools |
-| 4 | ~2 hours | FastAPI, Docker, reliability, logging |
-| 5 | ~2 hours | Evaluation, benchmarking, GitHub documentation |
+The original budget was approximately two hours per session; this is a scope
+roadmap, not a record of measured time spent.
 
-Next steps will be implemented separately after reviewing answer generation.
+| Session | Planned time | Status | Scope |
+| --- | --- | --- | --- |
+| 1 | ~2 hours | Complete | PDF/Markdown ingestion, chunking, Sentence Transformer embeddings, FAISS vector search |
+| 2 | ~2 hours | Complete | BM25 hybrid retrieval, reranking, citation-grounded answers; initial pooled offline evaluation completed in S2C |
+| 3 | ~2 hours | Complete | ResearchService, two-tool stdio MCP server, automated subprocess tests, real-model retrieval smoke test, documentation; live paid MCP answering remains unverified |
+| 4 | ~2 hours | Upcoming | FastAPI, Docker, reliability, logging |
+| 5 | ~2 hours | Upcoming | Broader evaluation, benchmarking, and GitHub documentation building on the existing five-question evaluation and timing measurements |
+
+Next: S4 implementation after review; no S4 code is included in this milestone.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
