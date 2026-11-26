@@ -277,6 +277,7 @@ def create_app(index_path: Path, *, queue_wait_timeout: float = 30.0) -> FastAPI
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--index", type=Path, required=True)
+    parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument(
         "--queue-wait-timeout", type=float, default=30.0, metavar="SECONDS"
     )
@@ -286,7 +287,7 @@ def main(argv: list[str] | None = None) -> None:
     except ValueError:
         parser.error("--queue-wait-timeout must be a positive finite number")
     uvicorn.run(
-        app, host="127.0.0.1", port=8000, workers=1, reload=False, access_log=False
+        app, host=args.host, port=8000, workers=1, reload=False, access_log=False
     )
 
 

@@ -440,3 +440,18 @@ def test_queue_cli_configuration(monkeypatch):
     monkeypatch.setattr(api.uvicorn, "run", run)
     api.main(["--index", "index", "--queue-wait-timeout", "2.5"])
     factory.assert_called_once_with(Path("index"), queue_wait_timeout=2.5)
+
+
+def test_explicit_bind_host(monkeypatch):
+    factory, run = Mock(), Mock()
+    monkeypatch.setattr(api, "create_app", factory)
+    monkeypatch.setattr(api.uvicorn, "run", run)
+    api.main(["--index", "index", "--host", "0.0.0.0"])
+    run.assert_called_once_with(
+        factory.return_value,
+        host="0.0.0.0",
+        port=8000,
+        workers=1,
+        reload=False,
+        access_log=False,
+    )

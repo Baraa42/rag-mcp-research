@@ -2,13 +2,13 @@
 
 A production-oriented research assistant for ML papers combining hybrid
 retrieval with citation-grounded answers and local MCP research tools.
-A local FastAPI interface is available; Docker deployment remains upcoming.
+A local FastAPI interface and CPU Docker packaging are available.
 
-**Status:** S4 Step 3 implemented — the local FastAPI interface and offline HTTP
+**Status:** S4 Step 4 packaging implemented — the local FastAPI interface and offline HTTP
 tests are available. S3 MCP integration and real-model retrieval verification are complete. `answer_question`
 is tested offline; a live paid API call over MCP has **not** been verified.
-S4 is not complete: Docker and further production reliability work
-remain upcoming, along with S5.
+Docker build/runtime verification is pending a running Docker daemon. Further
+production reliability work and S5 remain.
 
 ## Architecture
 
@@ -20,7 +20,7 @@ The Python package separates ingestion, retrieval, and answering logic from MCP
 and FastAPI interfaces. Initial [offline retrieval evaluation](docs/evaluation.md)
 uses 151 manual judgments across five questions; component timing measurements
 are also available below. Broader evaluation and benchmarking remain S5 work.
-Docker deployment remains S4 work. No LangChain or LlamaIndex is used.
+CPU Docker packaging is included in S4. No LangChain or LlamaIndex is used.
 
 ## Source organization
 
@@ -865,11 +865,93 @@ interrupted. The existing OpenAI client retains its 60-second SDK timeout and tw
 retries, so total API time can exceed 60 seconds. Shutdown still waits for active
 operations; waiting requests recheck availability after acquiring the lock.
 
-This is a local, single-process API with no authentication, Docker packaging,
-hard inference timeout, bounded queue capacity, or rate limiting. Do not expose
+This is a local, single-process API with no authentication, hard inference
+timeout, bounded queue capacity, or rate limiting. Do not expose
 it publicly or add workers as a workaround for serialized service access.
 Active inference/API calls can delay shutdown. Offline tests mock ResearchService;
 no paid HTTP answer-generation call has been verified.
+
+## CPU Docker deployment (S4 Step 4)
+
+Prerequisites: a running Docker Engine/Desktop, network access for dependency
+installation, and a trusted persisted index built with this project. Run these
+commands from the repository root. The image uses digest-pinned Python 3.11.17
+and uv 0.13.5, installs locked runtime dependencies without the development group,
+and runs as UID/GID `10001:10001`. Linux PyTorch uses the official CPU wheel index;
+its existing 2.15.0 version is now an explicit dependency to select that source
+using [uv's PyTorch configuration](https://docs.astral.sh/uv/guides/integration/pytorch/).
+The build asserts that PyTorch has no CUDA runtime. No model weights are downloaded
+at build time. Debian's `libgomp1` supplies OpenMP support; OS package repositories
+and the package build backend are not snapshot-pinned, so this is not a claim of
+bit-for-bit image reproducibility. Image digests require deliberate security updates.
+
+```sh
+docker build -t rag-mcp-research:local .
+docker volume create rag-mcp-hf-cache
+docker run -d --name rag-mcp-api \
+  -p 127.0.0.1:8000:8000 \
+  --mount "type=bind,src=$(pwd)/data/index,dst=/data/index,readonly" \
+  --mount type=volume,src=rag-mcp-hf-cache,dst=/home/app/.cache/huggingface \
+  rag-mcp-research:local
+```
+
+The index directory must contain `manifest.json`, `chunks.jsonl`, and
+`vectors.faiss`. Startup validates their checksums and compatibility. The mount
+is read-only and must be readable/traversable by UID 10001. No papers, local
+indexes, credentials, caches, or benchmark outputs are copied into the image.
+Only the installed application and runtime dependencies are copied from the build stage.
+
+The fresh named volume inherits ownership from the image's cache directory.
+[`HF_HOME`](https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables)
+sets `/home/app/.cache/huggingface` as the download location; model
+loading remains lazy. The first search may download embedding weights, and the
+first reranked search may download cross-encoder weights. The cache persists across
+container recreation. For a bind-mounted cache instead, provision a writable
+directory owned by UID/GID 10001 on the host; Docker does not fix bind-mount
+permissions. If overriding `HF_HOME`, mount a writable directory at that same path.
+
+For optional paid `/answer` generation, export `OPENAI_API_KEY` and `OPENAI_MODEL`
+in the calling shell, then add `-e OPENAI_API_KEY -e OPENAI_MODEL` before the image
+name in `docker run`. Never pass secrets as image build arguments or copy `.env`
+into the image. The application does not automatically load `.env`. Docker
+administrators can inspect runtime environment variables; this is local development
+credential handling, not a production secret store.
+
+The container binds to `0.0.0.0:8000` internally; the published port above is
+restricted to host loopback. Direct Python startup still defaults to `127.0.0.1`.
+One Uvicorn worker owns one service. Exec-form startup forwards SIGTERM to Python;
+shutdown waits for active non-abandoned operations before closing the service.
+Queue waiting still defaults to 30 seconds. Override it by appending
+`--index /data/index --host 0.0.0.0 --queue-wait-timeout 10` after the image name.
+
+Smoke checks (wait for startup to finish; no paid call or model download required):
+
+```sh
+curl --fail -i http://127.0.0.1:8000/health
+curl --fail -i http://127.0.0.1:8000/ready
+curl -i -X POST http://127.0.0.1:8000/search \
+  -H 'Content-Type: application/json' \
+  -d '{"question":"test","top_k":0}'
+docker logs rag-mcp-api
+docker stop --timeout 120 rag-mcp-api
+docker logs rag-mcp-api
+docker inspect --format '{{.State.ExitCode}}' rag-mcp-api
+docker rm rag-mcp-api
+```
+
+Expect 200 for health/readiness, 422 for the invalid request, `X-Request-ID` on
+all three responses, and JSON request records in stderr logs. `/ready` confirms
+index initialization only, not model warm-up or provider availability. After an
+idle stop, expect completed application shutdown and exit code 0. Docker may
+force-kill work that outlasts the stop grace period; adjust it to workload needs.
+This unauthenticated single-process service must not be exposed publicly. No
+Compose file is needed for this single-container setup.
+
+Verification on the development machine: the Docker client is installed but its
+daemon is unavailable (`Cannot connect to the Docker daemon`). Image build,
+container permissions, HTTP checks, and container shutdown are therefore **not yet
+verified**. The commands above are the required follow-up checks, not recorded
+successful results. No paid API generation was run.
 
 ## Five-session roadmap (10 hours total)
 
@@ -881,9 +963,9 @@ roadmap, not a record of measured time spent.
 | 1 | ~2 hours | Complete | PDF/Markdown ingestion, chunking, Sentence Transformer embeddings, FAISS vector search |
 | 2 | ~2 hours | Complete | BM25 hybrid retrieval, reranking, citation-grounded answers; initial pooled offline evaluation completed in S2C |
 | 3 | ~2 hours | Complete | ResearchService, two-tool stdio MCP server, automated subprocess tests, real-model retrieval smoke test, documentation; live paid MCP answering remains unverified |
-| 4 | ~2 hours | In progress: Step 3 implemented | Local FastAPI, request logging, request IDs, and queue-wait limits complete; Docker and further production reliability work remain |
+| 4 | ~2 hours | In progress: Step 4 packaging implemented | Local FastAPI, observability, queue-wait limits, and CPU Docker packaging; Docker runtime verification remains pending |
 | 5 | ~2 hours | Upcoming | Broader evaluation, benchmarking, and GitHub documentation building on the existing five-question evaluation and timing measurements |
 
-Next: S4 Step 4 after review. Docker is not implemented.
+Next: integration verification after review; no new benchmarking is included here.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
