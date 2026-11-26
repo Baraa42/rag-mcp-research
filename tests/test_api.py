@@ -238,7 +238,12 @@ def test_entry_point(monkeypatch):
     monkeypatch.setattr(api.uvicorn, "run", run)
     api.main(["--index", "index"])
     run.assert_called_once_with(
-        factory.return_value, host="127.0.0.1", port=8000, workers=1, reload=False
+        factory.return_value,
+        host="127.0.0.1",
+        port=8000,
+        workers=1,
+        reload=False,
+        access_log=False,
     )
 
 
@@ -287,3 +292,151 @@ async def test_shutdown_marks_unready_and_waits_for_worker(setup):
             release.set()
             await stopped.wait()
     service.close.assert_called_once()
+
+
+def test_request_logs_and_sensitive_content(setup, capsys):
+    import json
+
+    app, service, _ = setup
+    with TestClient(app) as client:
+        responses = [
+            client.post(
+                "/search?secret-query",
+                json={"question": "secret-question"},
+                headers={"Authorization": "secret-key", "X-Request-ID": "untrusted"},
+            ),
+            client.post("/search", json={"question": "secret-question", "top_k": 0}),
+            client.get("/secret-path"),
+        ]
+    output = capsys.readouterr().err
+    records = [json.loads(line) for line in output.splitlines()]
+    assert len(records) == 3
+    assert len({r["request_id"] for r in records}) == 3
+    for record, response in zip(records, responses, strict=True):
+        assert record["request_id"] == response.headers["X-Request-ID"]
+        assert len(record["request_id"]) == 32
+        assert record["request_id"] != "untrusted"
+        assert record["status"] == response.status_code
+        assert record["duration_ms"] >= 0
+    assert records[0]["method"] == "POST"
+    assert records[0]["path"] == "/search"
+    assert records[0]["error_category"] is None
+    assert records[1]["error_category"] == "invalid_request"
+    assert records[2]["path"] == "[unmatched]"
+    for secret in (
+        "secret-query",
+        "secret-question",
+        "secret-key",
+        "secret-path",
+        "second text",
+    ):
+        assert secret not in output
+
+
+@pytest.mark.anyio
+async def test_queue_timeout_does_not_release_active_lock(setup, capsys):
+    import json
+
+    _, service, _ = setup
+    app = api.create_app(Path("index"), queue_wait_timeout=0.03)
+    entered, release = threading.Event(), threading.Event()
+    result = service.search.return_value
+    responses = []
+
+    def search(*args):
+        entered.set()
+        assert release.wait(5)
+        return result
+
+    service.search.side_effect = search
+    async with app.router.lifespan_context(app):
+        async with httpx.AsyncClient(
+            transport=httpx.ASGITransport(app=app), base_url="http://test"
+        ) as client:
+            async with anyio.create_task_group() as group:
+
+                async def first():
+                    responses.append(
+                        await client.post("/search", json={"question": "q"})
+                    )
+
+                group.start_soon(first)
+                assert await anyio.to_thread.run_sync(entered.wait, 5)
+                try:
+                    for _ in range(2):
+                        response = await client.post("/answer", json={"question": "q"})
+                        responses.append(response)
+                        assert response.status_code == 503
+                        assert "queue wait timed out" in response.json()["detail"]
+                        service.answer.assert_not_called()
+                finally:
+                    release.set()
+            response = await client.post("/answer", json={"question": "q"})
+            responses.append(response)
+            assert response.status_code == 200
+    assert len({r.headers["X-Request-ID"] for r in responses}) == 4
+    assert sum(r.status_code == 200 for r in responses) == 2
+    records = [json.loads(line) for line in capsys.readouterr().err.splitlines()]
+    assert len(records) == 4
+    assert sum(r["error_category"] == "queue_timeout" for r in records) == 2
+    service.close.assert_called_once()
+
+
+@pytest.mark.parametrize(
+    "kind,status,category",
+    [
+        ("timeout", 504, "upstream_timeout"),
+        ("connection", 503, "upstream_unavailable"),
+        ("rate", 503, "upstream_unavailable"),
+        ("server", 503, "upstream_unavailable"),
+        ("auth", 502, "upstream_error"),
+        ("unexpected", 500, "internal_error"),
+    ],
+)
+def test_safe_provider_errors(setup, capsys, kind, status, category):
+    import json
+
+    from openai import AuthenticationError, InternalServerError
+
+    app, service, _ = setup
+    request = httpx.Request("POST", "https://example.test/secret-path")
+    errors = {
+        "timeout": api.APITimeoutError(request=request),
+        "connection": api.APIConnectionError(request=request, message="secret-key"),
+        "rate": api.RateLimitError(
+            "secret-key", response=httpx.Response(429, request=request), body=None
+        ),
+        "server": InternalServerError(
+            "secret-key", response=httpx.Response(500, request=request), body=None
+        ),
+        "auth": AuthenticationError(
+            "secret-key", response=httpx.Response(401, request=request), body=None
+        ),
+        "unexpected": RuntimeError("secret-key"),
+    }
+    service.answer.side_effect = errors[kind]
+    with TestClient(app) as client:
+        response = client.post("/answer", json={"question": "secret-question"})
+    assert response.status_code == status
+    output = capsys.readouterr().err
+    record = json.loads(output)
+    assert record["error_category"] == category
+    assert record["request_id"] == response.headers["X-Request-ID"]
+    for secret in ("secret-key", "secret-path", "secret-question", "Traceback"):
+        assert secret not in output + response.text
+
+
+@pytest.mark.parametrize(
+    "timeout", [0, -1, True, "30", None, float("nan"), float("inf")]
+)
+def test_invalid_queue_configuration(timeout):
+    with pytest.raises(ValueError, match="positive finite"):
+        api.create_app(Path("index"), queue_wait_timeout=timeout)
+
+
+def test_queue_cli_configuration(monkeypatch):
+    factory, run = Mock(), Mock()
+    monkeypatch.setattr(api, "create_app", factory)
+    monkeypatch.setattr(api.uvicorn, "run", run)
+    api.main(["--index", "index", "--queue-wait-timeout", "2.5"])
+    factory.assert_called_once_with(Path("index"), queue_wait_timeout=2.5)

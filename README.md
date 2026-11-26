@@ -4,10 +4,10 @@ A production-oriented research assistant for ML papers combining hybrid
 retrieval with citation-grounded answers and local MCP research tools.
 A local FastAPI interface is available; Docker deployment remains upcoming.
 
-**Status:** S4 Step 2 implemented — the local FastAPI interface and offline HTTP
+**Status:** S4 Step 3 implemented — the local FastAPI interface and offline HTTP
 tests are available. S3 MCP integration and real-model retrieval verification are complete. `answer_question`
 is tested offline; a live paid API call over MCP has **not** been verified.
-S4 is not complete: Docker, production logging, and further reliability work
+S4 is not complete: Docker and further production reliability work
 remain upcoming, along with S5.
 
 ## Architecture
@@ -793,7 +793,7 @@ paid API generation over MCP has been verified.
 A legitimate insufficient-evidence response may have no sources. Errors fail
 with diagnostics without printing API credentials or raw provider exceptions.
 
-## Local HTTP API (S4 Step 2)
+## Local HTTP API (S4 Step 3)
 
 ```sh
 uv run python -m research_assistant.interfaces.api --index data/index
@@ -826,15 +826,47 @@ curl -X POST http://127.0.0.1:8000/answer \
 | `POST /answer` | Required nonblank string `question`, maximum 2,000 characters. Returns `answer` and complete citation `sources`, including labels and evidence text |
 
 Request types are strict; unknown fields and invalid bodies return 422.
-Unavailable service returns 503; backend/output failures return generic 500
-messages without provider exception bodies or internal paths. A failed startup
+Unavailable service and queue-wait expiry return 503. OpenAI timeouts return 504;
+connection failures, rate limits, and provider 5xx responses return 503; other
+OpenAI API errors return 502. Unexpected backend/output failures return 500.
+Messages are generic, without provider exception bodies or internal paths. A failed startup
 aborts server startup rather than claiming readiness. Readiness confirms index
 loading only, not warmed models, API credentials, or external API availability.
 `.env` is not automatically loaded; export variables or explicitly use uv's
 `--env-file .env` option. Citation validity is not proof of factual support.
 
+Every HTTP response includes a server-generated `X-Request-ID` (client-supplied
+IDs are ignored). Standard Python logging writes one JSON request record to
+stderr; Uvicorn access logging is disabled by the entry point to avoid duplicate
+request records. Logs contain no request bodies, headers, passage text, query
+strings, or raw provider errors. Paths use matched route templates; unknown
+paths are recorded as `[unmatched]`. Example record (illustrative, not a benchmark):
+
+```json
+{"request_id":"a891e9b4732d4e618f075a1b209cd638","method":"POST","path":"/search","status":200,"duration_ms":125.4,"error_category":null}
+```
+
+Error categories are `invalid_request`, `service_unavailable`, `queue_timeout`,
+`upstream_timeout`, `upstream_unavailable`, `upstream_error`, and `internal_error`.
+Other HTTP errors use `http_error`. Cancelled requests log `request_cancelled`;
+499 denotes cancellation before a response starts, not a delivered response.
+
+`/search` and `/answer` wait at most 30 seconds to acquire the shared service
+lock. Configure this positive finite duration at startup:
+
+```sh
+uv run python -m research_assistant.interfaces.api --index data/index --queue-wait-timeout 10
+```
+
+Python callers can use `create_app(index_path, queue_wait_timeout=10)`.
+This bounds **queue waiting only**, not model execution or end-to-end latency.
+Workers remain non-abandoned; Python threads and native inference are not forcibly
+interrupted. The existing OpenAI client retains its 60-second SDK timeout and two
+retries, so total API time can exceed 60 seconds. Shutdown still waits for active
+operations; waiting requests recheck availability after acquiring the lock.
+
 This is a local, single-process API with no authentication, Docker packaging,
-production structured logging, request timeouts, or rate limiting. Do not expose
+hard inference timeout, bounded queue capacity, or rate limiting. Do not expose
 it publicly or add workers as a workaround for serialized service access.
 Active inference/API calls can delay shutdown. Offline tests mock ResearchService;
 no paid HTTP answer-generation call has been verified.
@@ -849,9 +881,9 @@ roadmap, not a record of measured time spent.
 | 1 | ~2 hours | Complete | PDF/Markdown ingestion, chunking, Sentence Transformer embeddings, FAISS vector search |
 | 2 | ~2 hours | Complete | BM25 hybrid retrieval, reranking, citation-grounded answers; initial pooled offline evaluation completed in S2C |
 | 3 | ~2 hours | Complete | ResearchService, two-tool stdio MCP server, automated subprocess tests, real-model retrieval smoke test, documentation; live paid MCP answering remains unverified |
-| 4 | ~2 hours | In progress: Step 2 implemented | Local FastAPI interface complete; Docker, production logging, and further reliability work remain |
+| 4 | ~2 hours | In progress: Step 3 implemented | Local FastAPI, request logging, request IDs, and queue-wait limits complete; Docker and further production reliability work remain |
 | 5 | ~2 hours | Upcoming | Broader evaluation, benchmarking, and GitHub documentation building on the existing five-question evaluation and timing measurements |
 
-Next: S4 Step 3 after review. Docker and Step 3 reliability features are not implemented.
+Next: S4 Step 4 after review. Docker is not implemented.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
