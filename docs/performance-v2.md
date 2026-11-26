@@ -116,7 +116,8 @@ The reference asks for its log-Mel spectrogram input. S5E found that the
 grade-2 spectral-feature passage fell to reranked position 6, outside the
 five chunks used for generation. The cited chunks were both judged grade 1.
 The remaining answer records are available for claim-level review.
-[S5E passage analysis](evaluation-v2.md#passage-level-examples).
+[S5E passage analysis](evaluation-v2.md#passage-level-examples) ·
+[S5G AI-assisted assessment of all 12 responses](answer-assessment-v2.md).
 
 ## Limitations
 
