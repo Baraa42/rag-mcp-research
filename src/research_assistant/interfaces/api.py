@@ -25,6 +25,7 @@ from openai import (
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from starlette.datastructures import MutableHeaders
 from starlette.responses import JSONResponse
+from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
 from research_assistant.generation.answering import MAX_QUESTION_CHARACTERS
 from research_assistant.service import ResearchService
@@ -86,14 +87,14 @@ class AnswerResponse(BaseModel):
 class RequestLoggingMiddleware:
     """One safe JSON record per HTTP request; no body/header/provider logging."""
 
-    def __init__(self, app):
+    def __init__(self, app: ASGIApp) -> None:
         self.app = app
         self.logger = logging.Logger("research_assistant.http", logging.INFO)
         handler = logging.StreamHandler(sys.stderr)
         handler.setFormatter(logging.Formatter("%(message)s"))
         self.logger.addHandler(handler)
 
-    async def __call__(self, scope, receive, send):
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
         if scope["type"] != "http":
             return await self.app(scope, receive, send)
         request_id = uuid4().hex
@@ -102,7 +103,7 @@ class RequestLoggingMiddleware:
         status = 500
         started = False
 
-        async def send_response(message):
+        async def send_response(message: Message) -> None:
             nonlocal status, started
             if message["type"] == "http.response.start":
                 status = message["status"]
