@@ -4,11 +4,12 @@ A production-oriented research assistant for ML papers combining hybrid
 retrieval with citation-grounded answers and local MCP research tools.
 A local FastAPI interface and CPU Docker packaging are available.
 
-**Status:** S4 Step 4 packaging implemented — the local FastAPI interface and offline HTTP
-tests are available. S3 MCP integration and real-model retrieval verification are complete. `answer_question`
-is tested offline; a live paid API call over MCP has **not** been verified.
-Docker build/runtime verification is pending a running Docker daemon. Further
-production reliability work and S5 remain.
+**Status:** S1–S4 complete. FastAPI reliability, CPU Docker deployment, and manual
+HTTP retrieval integration were verified on November 26, 2026; see
+[integration evidence and limitations](docs/integration.md). S3 MCP integration
+and real-model retrieval verification are complete. Answer generation is tested
+offline; live paid HTTP/MCP generation remains unverified. S5 expanded evaluation
+is next. This remains a local, unauthenticated service.
 
 ## Architecture
 
@@ -924,19 +925,25 @@ shutdown waits for active non-abandoned operations before closing the service.
 Queue waiting still defaults to 30 seconds. Override it by appending
 `--index /data/index --host 0.0.0.0 --queue-wait-timeout 10` after the image name.
 
-Smoke checks (wait for startup to finish; no paid call or model download required):
+Smoke checks (no paid call or model download required):
 
 ```sh
+# Poll for index initialization (60 attempts); fail visibly if it never succeeds.
+ready=0
+for attempt in $(seq 1 60); do
+  if curl --fail --silent --max-time 1 http://127.0.0.1:8000/ready >/dev/null; then
+    ready=1
+    break
+  fi
+  sleep 1
+done
+[ "$ready" -eq 1 ] || { docker logs rag-mcp-api; exit 1; }
 curl --fail -i http://127.0.0.1:8000/health
 curl --fail -i http://127.0.0.1:8000/ready
 curl -i -X POST http://127.0.0.1:8000/search \
   -H 'Content-Type: application/json' \
   -d '{"question":"test","top_k":0}'
 docker logs rag-mcp-api
-docker stop --timeout 120 rag-mcp-api
-docker logs rag-mcp-api
-docker inspect --format '{{.State.ExitCode}}' rag-mcp-api
-docker rm rag-mcp-api
 ```
 
 Expect 200 for health/readiness, 422 for the invalid request, `X-Request-ID` on
@@ -947,11 +954,36 @@ force-kill work that outlasts the stop grace period; adjust it to workload needs
 This unauthenticated single-process service must not be exposed publicly. No
 Compose file is needed for this single-container setup.
 
-Verification on the development machine: the Docker client is installed but its
-daemon is unavailable (`Cannot connect to the Docker daemon`). Image build,
-container permissions, HTTP checks, and container shutdown are therefore **not yet
-verified**. The commands above are the required follow-up checks, not recorded
-successful results. No paid API generation was run.
+Manual Docker Desktop verification on November 26, 2026 confirmed build/startup,
+health/readiness 200, invalid search 422, request IDs, JSON logs, CPU embedding and
+reranking, and shutdown exit code 0. The build took 52.2 seconds. See the
+[compact results table, latency observations and native/Docker comparison](docs/integration.md).
+These supplied manual observations supersede the earlier daemon-unavailable check;
+they were not rerun in the documentation audit.
+
+Optional real retrieval after readiness (may download weights; no OpenAI call):
+
+```sh
+for rerank in false true; do
+  curl --fail -i -w '\nClient total: %{time_total} s\n' \
+    http://127.0.0.1:8000/search \
+    -H 'Content-Type: application/json' \
+    -d "{\"question\":\"How does FlashAttention reduce GPU memory access?\",\"top_k\":3,\"rerank\":$rerank}"
+done
+```
+
+Repeat to observe warmed requests. First hybrid and first reranked calls initialize
+different models; a persisted disk cache does not preserve in-memory models across
+restart. Individual times are not rigorous benchmarks or performance guarantees.
+
+When finished, stop and remove the container (the named model-cache volume remains):
+
+```sh
+docker stop --timeout 120 rag-mcp-api
+docker logs rag-mcp-api
+docker inspect --format '{{.State.ExitCode}}' rag-mcp-api
+docker rm rag-mcp-api
+```
 
 ## Five-session roadmap (10 hours total)
 
@@ -963,9 +995,9 @@ roadmap, not a record of measured time spent.
 | 1 | ~2 hours | Complete | PDF/Markdown ingestion, chunking, Sentence Transformer embeddings, FAISS vector search |
 | 2 | ~2 hours | Complete | BM25 hybrid retrieval, reranking, citation-grounded answers; initial pooled offline evaluation completed in S2C |
 | 3 | ~2 hours | Complete | ResearchService, two-tool stdio MCP server, automated subprocess tests, real-model retrieval smoke test, documentation; live paid MCP answering remains unverified |
-| 4 | ~2 hours | In progress: Step 4 packaging implemented | Local FastAPI, observability, queue-wait limits, and CPU Docker packaging; Docker runtime verification remains pending |
+| 4 | ~2 hours | Complete | Local FastAPI, observability, queue-wait limits, CPU Docker deployment, manual HTTP retrieval integration and final documentation audit |
 | 5 | ~2 hours | Upcoming | Broader evaluation, benchmarking, and GitHub documentation building on the existing five-question evaluation and timing measurements |
 
-Next: integration verification after review; no new benchmarking is included here.
+Next: S5 expanded retrieval evaluation after review. No new experiments are included in this S4 documentation audit.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
