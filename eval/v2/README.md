@@ -9,6 +9,9 @@ The five-question benchmark and its original evaluation artifacts remain in plac
 - `rankings.json` records the method-specific ordered chunk IDs and fingerprints
   for the questions, metadata, index files, index manifest and pinned models.
   Array positions are 1-based ranks. BM25 may return fewer than 20 results.
+- `labels.json` records AI-generated semantic relevance judgments for the
+  blinded pool. The [labeling report](labeling.md) describes the rubric, grade
+  distributions, and cases flagged for human audit.
 
 Question text, evidence and splits were frozen before batch retrieval. Reference
 passages were selected by inspecting local paper sections and source-ordered
@@ -95,8 +98,9 @@ flags. Keep metadata and rankings separate from the labeling view.
 
 Use grade **2** for direct support, **1** for relevant context or partial evidence,
 and **0** for irrelevant or misleading passages. Save judgments separately and
-key them by question ID and chunk ID. All candidates are currently unjudged.
-Leave unjudged passages distinct from grade 0. For expected-unanswerable
-questions, grade the evidence that is present and flag any passage that actually
-answers the question. Later metric calculations need completed judgments and
-an explicit policy for questions with zero relevant passages.
+key them by question ID and chunk ID. Human auditing remains necessary before
+using the AI-generated labels for evaluation. Leave unjudged passages distinct
+from grade 0. For expected-unanswerable questions, grade the evidence that is
+present and flag any passage that actually answers the question. Later metric
+calculations need completed judgments and an explicit policy for questions with
+zero relevant passages.
