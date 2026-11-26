@@ -8,8 +8,9 @@ A local FastAPI interface and CPU Docker packaging are available.
 HTTP retrieval integration were verified on November 26, 2026; see
 [integration evidence and limitations](docs/integration.md). S3 MCP integration
 and real-model retrieval verification are complete. Answer generation is tested
-offline; live paid HTTP/MCP generation remains unverified. S5 expanded evaluation
-is next. This remains a local, unauthenticated service.
+offline; live paid HTTP/MCP generation remains unverified. The ten-paper S5B
+corpus is available for retrieval. This remains a local, unauthenticated service.
+[Corpus inventory and smoke tests](docs/corpus-v2.md).
 
 ## Architecture
 
@@ -272,11 +273,15 @@ Face cache and are not committed.
 
 ## Exact semantic retrieval
 
+Use `data/index_v2` for the expanded corpus. The baseline remains at
+`data/index` with its original evaluation artifacts.
+[Build instructions and fingerprints](docs/corpus-v2.md).
+
 ```sh
-uv run python -m research_assistant index data/papers --out data/index
+uv run python -m research_assistant index data/papers --out data/index_v2
 uv run python -m research_assistant search \
   "How does FlashAttention reduce memory usage?" \
-  --index data/index --top-k 5
+  --index data/index_v2 --top-k 5
 ```
 
 The current executable pipeline is PDF/Markdown ingestion → per-page/section
@@ -996,8 +1001,8 @@ roadmap, not a record of measured time spent.
 | 2 | ~2 hours | Complete | BM25 hybrid retrieval, reranking, citation-grounded answers; initial pooled offline evaluation completed in S2C |
 | 3 | ~2 hours | Complete | ResearchService, two-tool stdio MCP server, automated subprocess tests, real-model retrieval smoke test, documentation; live paid MCP answering remains unverified |
 | 4 | ~2 hours | Complete | Local FastAPI, observability, queue-wait limits, CPU Docker deployment, manual HTTP retrieval integration and final documentation audit |
-| 5 | ~2 hours | Upcoming | Broader evaluation, benchmarking, and GitHub documentation building on the existing five-question evaluation and timing measurements |
+| 5 | ~2 hours | In progress | Broader evaluation, benchmarking, and GitHub documentation building on the existing five-question evaluation and timing measurements |
 
-Next: S5 expanded retrieval evaluation after review. No new experiments are included in this S4 documentation audit.
+The expanded corpus is ready for the next evaluation stage. The 50-question set is pending.
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.
