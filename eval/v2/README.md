@@ -12,6 +12,9 @@ The five-question benchmark and its original evaluation artifacts remain in plac
 - `labels.json` records AI-generated semantic relevance judgments for the
   blinded pool. The [labeling report](labeling.md) describes the rubric, grade
   distributions, and cases flagged for human audit.
+- `results.json` records per-question metrics, split and category averages,
+  and paired bootstrap intervals. See the [evaluation report](../../docs/evaluation-v2.md)
+  for the results, failure analysis, and reproduction commands.
 
 Question text, evidence and splits were frozen before batch retrieval. Reference
 passages were selected by inspecting local paper sections and source-ordered

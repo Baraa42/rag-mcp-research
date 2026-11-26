@@ -28,7 +28,7 @@ The counts cover the exported pool. Passages outside it remain unjudged.
 | Question | Grade 0 | Grade 1 | Grade 2 | Total |
 | --- | ---: | ---: | ---: | ---: |
 | Q01 | 21 | 12 | 2 | 35 |
-| Q02 | 16 | 12 | 5 | 33 |
+| Q02 | 16 | 13 | 4 | 33 |
 | Q03 | 13 | 14 | 7 | 34 |
 | Q04 | 4 | 10 | 13 | 27 |
 | Q05 | 7 | 12 | 6 | 25 |
@@ -46,7 +46,7 @@ The counts cover the exported pool. Passages outside it remain unjudged.
 | Q17 | 17 | 14 | 2 | 33 |
 | Q18 | 8 | 14 | 18 | 40 |
 | Q19 | 18 | 11 | 3 | 32 |
-| Q20 | 18 | 15 | 2 | 35 |
+| Q20 | 18 | 16 | 1 | 35 |
 | Q21 | 13 | 14 | 10 | 37 |
 | Q22 | 21 | 11 | 1 | 33 |
 | Q23 | 20 | 13 | 6 | 39 |
@@ -77,23 +77,30 @@ The counts cover the exported pool. Passages outside it remain unjudged.
 | Q48 | 17 | 17 | 0 | 34 |
 | Q49 | 36 | 0 | 0 | 36 |
 | Q50 | 24 | 9 | 0 | 33 |
-| **Total** | **875** | **530** | **260** | **1,665** |
+| **Total** | **875** | **532** | **258** | **1,665** |
 
-## Human audit shortlist
+## S5E review of the six flagged judgments
 
-Notes prefixed with `Review:` flag uncertain judgments or cases where the
-source context could change how a passage is graded. Chunk IDs below use
-their first 12 characters. Consult the original PDF page for the Q20
-inequalities, where the extracted wording appears to reverse row and column.
+This was an AI review with the requested Q02 correction. Human auditing remains
+necessary. Chunk IDs below use their first 12 characters. The three unchanged
+notes for Q01, Q05, and Q50 retain their `Review:` markers.
 
-| Question | Chunk ID prefix | Source | Grade | Reason to review |
-| --- | --- | --- | ---: | --- |
-| Q01 | `9ef24abb4a74` | attention_is_all_you_need.pdf, p. 6 | 1 | identifies the architectural premise, but cuts off before explaining the token-order consequence. |
-| Q02 | `629b8e2e72e6` | attention_is_all_you_need.pdf, p. 5 | 2 | the all-positions interaction directly establishes the quadratic number of pairs, although the per-pair dimension is omitted. |
-| Q05 | `5dea07809384` | rag_2020.pdf, p. 7 | 1 | qualitative examples and different document posteriors are suggestive, but the excerpt does not independently identify the distinction. |
-| Q20 | `5461e5af2f56` | flashattention2.pdf, p. 6 | 2 | explicitly describes masking only the boundary tile for square tiles, despite a potentially reversed inequality in the extracted prose. |
-| Q20 | `520f1e8871c6` | flashattention2.pdf, p. 6 | 2 | explicitly skips wholly future tiles. The following row/column inequality in the same excerpt appears reversed. |
-| Q50 | `d0b63074348e` | pagedattention.pdf, p. 12 | 1 | Gives 16 as the original vLLM default and reports workload-dependent results. The experiments do not establish an optimum for GPT-5 on a B200. |
+| Question | Chunk ID prefix | Source | Grade before → after | Decision |
+| --- | --- | --- | --- | --- |
+| Q01 | `9ef24abb4a74` | attention_is_all_you_need.pdf, p. 6 | 1 → 1 | The passage ends after the premise that recurrence and convolution are absent. The consequence for token order is cut off. |
+| Q02 | `629b8e2e72e6` | attention_is_all_you_need.pdf, p. 5 | 2 → 1 | All-pairs attention establishes the number of token pairs. The passage omits the per-pair dimension needed for the full O(n²d) complexity. |
+| Q05 | `5dea07809384` | rag_2020.pdf, p. 7 | 1 → 1 | A generation example shows changing document preferences. It leaves the distinction in marginalization between the two models implicit. |
+| Q20 | `5461e5af2f56` | flashattention2.pdf, p. 6 | 2 → 1 | The single masked square tile per row is useful context. The same passage gives the reversed condition for fully allowed tiles. |
+| Q20 | `520f1e8871c6` | flashattention2.pdf, p. 6 | 2 → 2 | The passage directly explains skipping wholly future tiles using the correct rule. The note now identifies the repeated inequality in the next bullet. |
+| Q50 | `d0b63074348e` | pagedattention.pdf, p. 12 | 1 → 1 | The historical vLLM default and workload comparison provide context. The experiments use other models and hardware. |
+
+The rendered FlashAttention-2 PDF, physical page 6, sets future entries with
+column `j > i` to negative infinity and correctly skips tiles whose entries
+all satisfy that inequality. The next bullet repeats `i < j` for tiles that
+can be computed without masking. Fully allowed tiles instead satisfy `j <= i`
+for all entries. A tile that straddles that boundary needs elementwise masking.
+The repeated inequality is visible on the PDF page itself.
+[Paper and PDF fingerprint](../../docs/corpus-v2.md#source-inventory).
 
 ### Out-of-corpus questions
 

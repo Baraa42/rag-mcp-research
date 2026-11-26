@@ -1,0 +1,2825 @@
+{
+  "input_sha256": {
+    "questions": "4030c79be79503c316e57b655acfef1d5b31f286cd03e55b4b83aa43cd627fc0",
+    "metadata": "fcf8b72e502efa85b1e16a87c37e7f8f5d4044ca9cd30c68c2b4df2a65319c56",
+    "rankings": "2d3513c183ec992a401f28c473bc9d3c8f9305a789f47db8bf5ee23db022d2d0",
+    "labels": "0968d8fc889a971eb5c266f2589f2474bf1eb7408bd88b24ffd4a13869ef7201"
+  },
+  "per_question": [
+    {
+      "question_id": "Q01",
+      "question": "Why does the Transformer need positional encoding?",
+      "split": "development",
+      "category": "transformer",
+      "answerable": true,
+      "grade_counts": {
+        "0": 21,
+        "1": 12,
+        "2": 2
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.3319646600749862,
+          "ndcg_at_10": 0.30269180349652736
+        },
+        "bm25": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.6357901029964336,
+          "ndcg_at_10": 0.7217518578256715
+        },
+        "hybrid": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.6779553320147448,
+          "ndcg_at_10": 0.7052009582970936
+        },
+        "rerank": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7968124369890611,
+          "ndcg_at_10": 0.7979193153878842
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q02",
+      "question": "What is the computational complexity of self-attention?",
+      "split": "development",
+      "category": "transformer",
+      "answerable": true,
+      "grade_counts": {
+        "0": 16,
+        "1": 13,
+        "2": 4
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.75,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5044397086786034,
+          "ndcg_at_10": 0.4580514516084538
+        },
+        "bm25": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.566384745093778,
+          "ndcg_at_10": 0.6132221751957067
+        },
+        "hybrid": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.75,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7197780609280466,
+          "ndcg_at_10": 0.7115543662177884
+        },
+        "rerank": {
+          "recall_at_5": 0.25,
+          "recall_at_20": 0.75,
+          "rr_at_5": 0.2,
+          "ndcg_at_5": 0.34583767333988835,
+          "ndcg_at_10": 0.5353984384924988
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q03",
+      "question": "How does FlashAttention reduce GPU memory transfers?",
+      "split": "development",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 13,
+        "1": 14,
+        "2": 7
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.14285714285714285,
+          "recall_at_20": 0.42857142857142855,
+          "rr_at_5": 0.25,
+          "ndcg_at_5": 0.43071223322847096,
+          "ndcg_at_10": 0.5175596675659685
+        },
+        "bm25": {
+          "recall_at_5": 0.42857142857142855,
+          "recall_at_20": 0.7142857142857143,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7994765465672333,
+          "ndcg_at_10": 0.7238308443652786
+        },
+        "hybrid": {
+          "recall_at_5": 0.2857142857142857,
+          "recall_at_20": 0.7142857142857143,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.543765634986343,
+          "ndcg_at_10": 0.6462087499886485
+        },
+        "rerank": {
+          "recall_at_5": 0.14285714285714285,
+          "recall_at_20": 0.7142857142857143,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.5594401368490773,
+          "ndcg_at_10": 0.7137460568389812
+        }
+      },
+      "grade_2_missed_by_all": [
+        "0fd4561dd2946cc6847f7ab6eca0914bd39271707fedf5d062e3978b4142c218"
+      ]
+    },
+    {
+      "question_id": "Q04",
+      "question": "How does RAG combine parametric and non-parametric memory?",
+      "split": "development",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 4,
+        "1": 10,
+        "2": 13
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.23076923076923078,
+          "recall_at_20": 0.7692307692307693,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7599635902818439,
+          "ndcg_at_10": 0.6988885181496467
+        },
+        "bm25": {
+          "recall_at_5": 0.23076923076923078,
+          "recall_at_20": 0.7692307692307693,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8151510484299677,
+          "ndcg_at_10": 0.7836106837038426
+        },
+        "hybrid": {
+          "recall_at_5": 0.15384615384615385,
+          "recall_at_20": 0.7692307692307693,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6724935386069494,
+          "ndcg_at_10": 0.7352052034243989
+        },
+        "rerank": {
+          "recall_at_5": 0.23076923076923078,
+          "recall_at_20": 0.7692307692307693,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7599635902818439,
+          "ndcg_at_10": 0.7490360318138382
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q05",
+      "question": "What distinguishes RAG-Sequence from RAG-Token?",
+      "split": "development",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 7,
+        "1": 12,
+        "2": 6
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.8333333333333334,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5634608948312462,
+          "ndcg_at_10": 0.5995762498869086
+        },
+        "bm25": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.5338567867660998,
+          "ndcg_at_10": 0.6261991643507794
+        },
+        "hybrid": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.8333333333333334,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.543765634986343,
+          "ndcg_at_10": 0.7366727740712836
+        },
+        "rerank": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.8333333333333334,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5890442449142237,
+          "ndcg_at_10": 0.73064125515648
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q06",
+      "question": "Why does the Transformer use multiple attention heads instead of a single head?",
+      "split": "held_out",
+      "category": "transformer",
+      "answerable": true,
+      "grade_counts": {
+        "0": 20,
+        "1": 8,
+        "2": 7
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.42857142857142855,
+          "recall_at_20": 0.7142857142857143,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7599635902818439,
+          "ndcg_at_10": 0.6846123914376181
+        },
+        "bm25": {
+          "recall_at_5": 0.42857142857142855,
+          "recall_at_20": 0.8571428571428571,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.6278248466415494,
+          "ndcg_at_10": 0.6035847761416928
+        },
+        "hybrid": {
+          "recall_at_5": 0.5714285714285714,
+          "recall_at_20": 0.8571428571428571,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9026211001048622,
+          "ndcg_at_10": 0.8947619134698703
+        },
+        "rerank": {
+          "recall_at_5": 0.5714285714285714,
+          "recall_at_20": 0.8571428571428571,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8869465982421278,
+          "ndcg_at_10": 0.8520967369427099
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q07",
+      "question": "Why is scaled dot-product attention divided by the square root of the key dimension?",
+      "split": "held_out",
+      "category": "transformer",
+      "answerable": true,
+      "grade_counts": {
+        "0": 24,
+        "1": 5,
+        "2": 2
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.937708058067494,
+          "ndcg_at_10": 0.8923079473697084
+        },
+        "bm25": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5463148455053497,
+          "ndcg_at_10": 0.6709140698056464
+        },
+        "hybrid": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.7543604792360173,
+          "ndcg_at_10": 0.7305984100597498
+        },
+        "rerank": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.7766857240748665,
+          "ndcg_at_10": 0.7930979332688972
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q08",
+      "question": "How does the Transformer prevent decoder positions from attending to future tokens?",
+      "split": "held_out",
+      "category": "transformer",
+      "answerable": true,
+      "grade_counts": {
+        "0": 25,
+        "1": 10,
+        "2": 4
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.25,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.13152248326683885,
+          "ndcg_at_10": 0.14666876434217196
+        },
+        "bm25": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6835984833202855,
+          "ndcg_at_10": 0.6333357493453117
+        },
+        "hybrid": {
+          "recall_at_5": 0.25,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.3652848149752749,
+          "ndcg_at_10": 0.4481894860351666
+        },
+        "rerank": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6307534724409957,
+          "ndcg_at_10": 0.5961563039549798
+        }
+      },
+      "grade_2_missed_by_all": [
+        "93af9ce7d1a9306ae66444930d39135308370d90785ffa015b8d735c71b7aa57"
+      ]
+    },
+    {
+      "question_id": "Q09",
+      "question": "How does FlashAttention compute softmax without materializing the entire attention matrix?",
+      "split": "development",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 7,
+        "1": 18,
+        "2": 7
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.2857142857142857,
+          "recall_at_20": 0.5714285714285714,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5733697430514892,
+          "ndcg_at_10": 0.6693624133715248
+        },
+        "bm25": {
+          "recall_at_5": 0.2857142857142857,
+          "recall_at_20": 0.5714285714285714,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.543765634986343,
+          "ndcg_at_10": 0.5698023446163129
+        },
+        "hybrid": {
+          "recall_at_5": 0.2857142857142857,
+          "recall_at_20": 0.7142857142857143,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5890442449142237,
+          "ndcg_at_10": 0.5964871780029557
+        },
+        "rerank": {
+          "recall_at_5": 0.2857142857142857,
+          "recall_at_20": 0.7142857142857143,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7020976466720956,
+          "ndcg_at_10": 0.7740359238177695
+        }
+      },
+      "grade_2_missed_by_all": [
+        "0fd4561dd2946cc6847f7ab6eca0914bd39271707fedf5d062e3978b4142c218"
+      ]
+    },
+    {
+      "question_id": "Q10",
+      "question": "Why does FlashAttention recompute certain intermediate values during backpropagation?",
+      "split": "held_out",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 19,
+        "1": 9,
+        "2": 9
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.1111111111111111,
+          "recall_at_20": 0.3333333333333333,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.4273013932087828,
+          "ndcg_at_10": 0.33478036386952237
+        },
+        "bm25": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.7777777777777778,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7429498456882974,
+          "ndcg_at_10": 0.6465301631006092
+        },
+        "hybrid": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6877623875401735,
+          "ndcg_at_10": 0.5880219157694287
+        },
+        "rerank": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8151510484299677,
+          "ndcg_at_10": 0.7162484911507632
+        }
+      },
+      "grade_2_missed_by_all": [
+        "242a811e9b1d03c0b03ba022140b3448b785948e2d16a388d0300f4739c0a3a0"
+      ]
+    },
+    {
+      "question_id": "Q11",
+      "question": "How does FlashAttention-2 reduce non-matrix-multiplication operations?",
+      "split": "held_out",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 19,
+        "1": 14,
+        "2": 3
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.3333333333333333,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.156848790217105,
+          "ndcg_at_10": 0.3182814885612182
+        },
+        "bm25": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.0,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.40892216721717317,
+          "ndcg_at_10": 0.3752991611270279
+        },
+        "hybrid": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.3333333333333333,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.32141844008722237,
+          "ndcg_at_10": 0.36970329963439547
+        },
+        "rerank": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.3333333333333333,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.40892216721717317,
+          "ndcg_at_10": 0.4413557405529952
+        }
+      },
+      "grade_2_missed_by_all": [
+        "2408e83902c0f80eceb4f803eed17b59a6c5b45951732717c39245d994352683",
+        "81a83de75dd1e4da4bf2332e9f9f6b46888e21e9ed4e6f949b3c6dfe7a41c865"
+      ]
+    },
+    {
+      "question_id": "Q12",
+      "question": "How does FlashAttention-2 improve parallelism when batch size and number of heads are small?",
+      "split": "held_out",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 23,
+        "1": 6,
+        "2": 3
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5621593015028927,
+          "ndcg_at_10": 0.5490314084742347
+        },
+        "bm25": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8076572091794476,
+          "ndcg_at_10": 0.8484171392357265
+        },
+        "hybrid": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.6092364968256234,
+          "ndcg_at_10": 0.5888890256590691
+        },
+        "rerank": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.9238173743507854
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q13",
+      "question": "What is the difference between split-K and split-Q warp partitioning in FlashAttention-2's comparison?",
+      "split": "held_out",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 28,
+        "1": 4,
+        "2": 2
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8571968910711802,
+          "ndcg_at_10": 0.9045819448939068
+        },
+        "bm25": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9306514554231109,
+          "ndcg_at_10": 0.926010532305237
+        },
+        "hybrid": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9306514554231109,
+          "ndcg_at_10": 0.9282087847042276
+        },
+        "rerank": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.9457540871314698
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q14",
+      "question": "Why does inefficient KV-cache allocation limit LLM serving throughput?",
+      "split": "development",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 0,
+        "1": 18,
+        "2": 10
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.1,
+          "recall_at_20": 0.7,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.5594401368490773,
+          "ndcg_at_10": 0.6194274225257377
+        },
+        "bm25": {
+          "recall_at_5": 0.2,
+          "recall_at_20": 0.6,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6724935386069494,
+          "ndcg_at_10": 0.5958389584307145
+        },
+        "hybrid": {
+          "recall_at_5": 0.2,
+          "recall_at_20": 0.7,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.656819036744215,
+          "ndcg_at_10": 0.5955189330975375
+        },
+        "rerank": {
+          "recall_at_5": 0.4,
+          "recall_at_20": 0.7,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8869465982421278,
+          "ndcg_at_10": 0.6925904614552043
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q15",
+      "question": "How does PagedAttention enable KV-cache sharing between sequences?",
+      "split": "development",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 7,
+        "1": 16,
+        "2": 6
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 0.2,
+          "ndcg_at_5": 0.37211393506065904,
+          "ndcg_at_10": 0.47200226258831424
+        },
+        "bm25": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.3750579801796961,
+          "ndcg_at_10": 0.5520923121455015
+        },
+        "hybrid": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.3750579801796961,
+          "ndcg_at_10": 0.5609283888264471
+        },
+        "rerank": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5634608948312462,
+          "ndcg_at_10": 0.5616175258363489
+        }
+      },
+      "grade_2_missed_by_all": [
+        "4394eab264ea0b4e168536b4249e1dddd4e255f1030a3426c2dc56725d1c413f"
+      ]
+    },
+    {
+      "question_id": "Q16",
+      "question": "What happens to KV-cache memory requirements as a generated sequence grows?",
+      "split": "development",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 3,
+        "1": 16,
+        "2": 9
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.7777777777777778,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.6312356866612375,
+          "ndcg_at_10": 0.695517398499577
+        },
+        "bm25": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7442890884191096,
+          "ndcg_at_10": 0.7765402189214731
+        },
+        "hybrid": {
+          "recall_at_5": 0.4444444444444444,
+          "recall_at_20": 0.7777777777777778,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.7738931964842558,
+          "ndcg_at_10": 0.7411171407097606
+        },
+        "rerank": {
+          "recall_at_5": 0.4444444444444444,
+          "recall_at_20": 0.7777777777777778,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9026211001048622,
+          "ndcg_at_10": 0.7822268824750288
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q17",
+      "question": "How does FlashAttention-2 parallelize its backward pass across sequence blocks?",
+      "split": "held_out",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 17,
+        "1": 14,
+        "2": 2
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.23323426801486458,
+          "ndcg_at_10": 0.35410322629307045
+        },
+        "bm25": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8955428290491828,
+          "ndcg_at_10": 0.8285482353536453
+        },
+        "hybrid": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.45464105608961125,
+          "ndcg_at_10": 0.6098879585633877
+        },
+        "rerank": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.8166524211685232,
+          "ndcg_at_10": 0.7339655998654304
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q18",
+      "question": "How do FlashAttention and PagedAttention address different memory bottlenecks?",
+      "split": "development",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 8,
+        "1": 14,
+        "2": 18
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.1111111111111111,
+          "recall_at_20": 0.3888888888888889,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.473108016335106,
+          "ndcg_at_10": 0.6091738736110454
+        },
+        "bm25": {
+          "recall_at_5": 0.1111111111111111,
+          "recall_at_20": 0.5555555555555556,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7020976466720956,
+          "ndcg_at_10": 0.6909039756611975
+        },
+        "hybrid": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 0.6111111111111112,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.6312356866612375,
+          "ndcg_at_10": 0.5234813733505249
+        },
+        "rerank": {
+          "recall_at_5": 0.1111111111111111,
+          "recall_at_20": 0.6111111111111112,
+          "rr_at_5": 0.25,
+          "ndcg_at_5": 0.46165558402442947,
+          "ndcg_at_10": 0.5593281698709955
+        }
+      },
+      "grade_2_missed_by_all": [
+        "0fd4561dd2946cc6847f7ab6eca0914bd39271707fedf5d062e3978b4142c218"
+      ]
+    },
+    {
+      "question_id": "Q19",
+      "question": "How is the original Transformer's position-wise feed-forward network applied across token positions?",
+      "split": "held_out",
+      "category": "transformer",
+      "answerable": true,
+      "grade_counts": {
+        "0": 18,
+        "1": 11,
+        "2": 3
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.5390681062563235,
+          "ndcg_at_10": 0.6159096296152579
+        },
+        "bm25": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9444537180991301,
+          "ndcg_at_10": 0.9186896977456552
+        },
+        "hybrid": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9130689212173096,
+          "ndcg_at_10": 0.8239460315187842
+        },
+        "rerank": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.946347335353756,
+          "ndcg_at_10": 0.9560665069959677
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q20",
+      "question": "How does FlashAttention-2's tiled forward pass handle tiles that overlap or lie entirely beyond the causal boundary?",
+      "split": "held_out",
+      "category": "attention_systems",
+      "answerable": true,
+      "grade_counts": {
+        "0": 18,
+        "1": 16,
+        "2": 1
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.0,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.2802595260297114,
+          "ndcg_at_10": 0.2579456708024025
+        },
+        "bm25": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.5176573656780945,
+          "ndcg_at_10": 0.4838553226405725
+        },
+        "hybrid": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.0,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.3155742573859003,
+          "ndcg_at_10": 0.4364102757604226
+        },
+        "rerank": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.0,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.5088013258915567,
+          "ndcg_at_10": 0.536153627657983
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q21",
+      "question": "What architecture does the original RAG model use for dense document retrieval?",
+      "split": "held_out",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 13,
+        "1": 14,
+        "2": 10
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.21826955258437686,
+          "ndcg_at_10": 0.2586648128282748
+        },
+        "bm25": {
+          "recall_at_5": 0.2,
+          "recall_at_20": 0.6,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.5268919836648939,
+          "ndcg_at_10": 0.5412230785794993
+        },
+        "hybrid": {
+          "recall_at_5": 0.3,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7994765465672333,
+          "ndcg_at_10": 0.5882300016820778
+        },
+        "rerank": {
+          "recall_at_5": 0.3,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7442890884191096,
+          "ndcg_at_10": 0.5768717582272421
+        }
+      },
+      "grade_2_missed_by_all": [
+        "8a37f81ce1e1e8142ee1b361d41d201f4353a8ab9e2115cffb64cb8a562a59cf",
+        "fd7fe01f0c7edae6eb043f897a17325b7b874dfb5bb89117ff1aeab0c2f6e1a4"
+      ]
+    },
+    {
+      "question_id": "Q22",
+      "question": "Why does the original RAG training procedure keep the document encoder fixed?",
+      "split": "held_out",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 21,
+        "1": 11,
+        "2": 1
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7854672967601968,
+          "ndcg_at_10": 0.6931473809602011
+        },
+        "bm25": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6062493248765826,
+          "ndcg_at_10": 0.6540225466456135
+        },
+        "hybrid": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7943233365467345,
+          "ndcg_at_10": 0.6448694305909738
+        },
+        "rerank": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8347911247384279,
+          "ndcg_at_10": 0.7848840188402676
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q23",
+      "question": "Why can an external document index make factual knowledge easier to update?",
+      "split": "held_out",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 20,
+        "1": 13,
+        "2": 6
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 0.16666666666666666,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.33916020527361607,
+          "ndcg_at_10": 0.2689885290230043
+        },
+        "bm25": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5733697430514892,
+          "ndcg_at_10": 0.8240289401420434
+        },
+        "hybrid": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.600292335865279,
+          "ndcg_at_10": 0.5916740779781953
+        },
+        "rerank": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.6608397947263838,
+          "ndcg_at_10": 0.7825403551249911
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q24",
+      "question": "Which representations does ColBERT precompute before receiving a query?",
+      "split": "development",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 7,
+        "1": 12,
+        "2": 12
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.8333333333333334,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.7738931964842558,
+          "ndcg_at_10": 0.6443070912473784
+        },
+        "bm25": {
+          "recall_at_5": 0.4166666666666667,
+          "recall_at_20": 0.5833333333333334,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.8101238658574905
+        },
+        "hybrid": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.8333333333333334,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9026211001048622,
+          "ndcg_at_10": 0.7469316229444566
+        },
+        "rerank": {
+          "recall_at_5": 0.4166666666666667,
+          "recall_at_20": 0.8333333333333334,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.8988252059479765
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q25",
+      "question": "How is ColBERT's MaxSim relevance score calculated?",
+      "split": "development",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 15,
+        "1": 13,
+        "2": 6
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.16666666666666666,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "ndcg_at_10": 0.14378618750270467
+        },
+        "bm25": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6724935386069494,
+          "ndcg_at_10": 0.6504586025088643
+        },
+        "hybrid": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.14895117666395208,
+          "ndcg_at_10": 0.40835824660023246
+        },
+        "rerank": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7020976466720956,
+          "ndcg_at_10": 0.6739376703878849
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q26",
+      "question": "How does ColBERT's query augmentation use BERT mask tokens?",
+      "split": "held_out",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 19,
+        "1": 7,
+        "2": 3
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8613098738256916,
+          "ndcg_at_10": 0.7381117884994258
+        },
+        "bm25": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6777582324306319,
+          "ndcg_at_10": 0.6282636769353086
+        },
+        "hybrid": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8076572091794476,
+          "ndcg_at_10": 0.6955371370856006
+        },
+        "rerank": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8076572091794476,
+          "ndcg_at_10": 0.6613502345707919
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q27",
+      "question": "How does ColBERT's document encoder reduce the number of stored token vectors using punctuation?",
+      "split": "held_out",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 18,
+        "1": 13,
+        "2": 1
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.850834274847108,
+          "ndcg_at_10": 0.7920797256947045
+        },
+        "bm25": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6844257426140997,
+          "ndcg_at_10": 0.5635897242395775
+        },
+        "hybrid": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9129675424759451,
+          "ndcg_at_10": 0.7890284640927944
+        },
+        "rerank": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.945563695734425
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q28",
+      "question": "How does the position of relevant information affect language model performance on long contexts?",
+      "split": "held_out",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 2,
+        "1": 12,
+        "2": 15
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.13333333333333333,
+          "recall_at_20": 0.5333333333333333,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.5338567867660998,
+          "ndcg_at_10": 0.5157248465128909
+        },
+        "bm25": {
+          "recall_at_5": 0.2,
+          "recall_at_20": 0.7333333333333333,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7599635902818439,
+          "ndcg_at_10": 0.6543566603620867
+        },
+        "hybrid": {
+          "recall_at_5": 0.06666666666666667,
+          "recall_at_20": 0.6,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.5594401368490773,
+          "ndcg_at_10": 0.5764961724874296
+        },
+        "rerank": {
+          "recall_at_5": 0.2,
+          "recall_at_20": 0.6,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7698724385020871,
+          "ndcg_at_10": 0.7079404827433219
+        }
+      },
+      "grade_2_missed_by_all": [
+        "e0050053a2f0bad7ab54cd6cb6210f9010fa69c3c5bea5648c6e37c1bdfe7862"
+      ]
+    },
+    {
+      "question_id": "Q29",
+      "question": "What experimental tasks are used in Lost in the Middle to investigate context utilization?",
+      "split": "held_out",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 17,
+        "1": 12,
+        "2": 8
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.375,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.04373502583744726,
+          "ndcg_at_10": 0.16429630145431592
+        },
+        "bm25": {
+          "recall_at_5": 0.375,
+          "recall_at_20": 0.875,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7330409974680542,
+          "ndcg_at_10": 0.5681800466034302
+        },
+        "hybrid": {
+          "recall_at_5": 0.25,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.5800690628219334,
+          "ndcg_at_10": 0.5070956995045217
+        },
+        "rerank": {
+          "recall_at_5": 0.375,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8151510484299677,
+          "ndcg_at_10": 0.7112645204000069
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q30",
+      "question": "Why might increasing the number of retrieved documents fail to improve answer accuracy?",
+      "split": "held_out",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 8,
+        "1": 13,
+        "2": 8
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.375,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7557415207297861,
+          "ndcg_at_10": 0.6953559360083779
+        },
+        "bm25": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9125299483251055,
+          "ndcg_at_10": 0.726427231826566
+        },
+        "hybrid": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.625,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9125299483251055,
+          "ndcg_at_10": 0.7764170909501532
+        },
+        "rerank": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.625,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8869465982421278,
+          "ndcg_at_10": 0.7340633803557359
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q31",
+      "question": "How does ColBERT's relevance computation differ from the dense retriever used by RAG?",
+      "split": "development",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 16,
+        "1": 12,
+        "2": 7
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.5714285714285714,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.16958010263680803,
+          "ndcg_at_10": 0.1825141913267869
+        },
+        "bm25": {
+          "recall_at_5": 0.14285714285714285,
+          "recall_at_20": 0.5714285714285714,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.39769728514363656,
+          "ndcg_at_10": 0.40416735428210565
+        },
+        "hybrid": {
+          "recall_at_5": 0.14285714285714285,
+          "recall_at_20": 0.2857142857142857,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.16958010263680803,
+          "ndcg_at_10": 0.2374061065968486
+        },
+        "rerank": {
+          "recall_at_5": 0.14285714285714285,
+          "recall_at_20": 0.2857142857142857,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.4759908431563516,
+          "ndcg_at_10": 0.3844180740323404
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q32",
+      "question": "How does Lost in the Middle construct the answer-bearing document and distractors for its multi-document QA experiment?",
+      "split": "held_out",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 21,
+        "1": 10,
+        "2": 3
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6863024195657901,
+          "ndcg_at_10": 0.8176487867856513
+        },
+        "bm25": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.3333333333333333,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6265718333862743,
+          "ndcg_at_10": 0.553521624988188
+        },
+        "hybrid": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6863024195657901,
+          "ndcg_at_10": 0.7729585876115854
+        },
+        "rerank": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5302769568308306,
+          "ndcg_at_10": 0.6200046886518008
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q33",
+      "question": "What happened when Lost in the Middle placed the query both before and after the provided context?",
+      "split": "held_out",
+      "category": "retrieval_and_context",
+      "answerable": true,
+      "grade_counts": {
+        "0": 11,
+        "1": 19,
+        "2": 3
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.6689670830051391,
+          "ndcg_at_10": 0.7225473851344187
+        },
+        "bm25": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.5839296214770747,
+          "ndcg_at_10": 0.6188475249050033
+        },
+        "hybrid": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.7033907938361063,
+          "ndcg_at_10": 0.7242934432941966
+        },
+        "rerank": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.7226197476513831,
+          "ndcg_at_10": 0.7728671361177625
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q34",
+      "question": "How many hours of audio were used to train the original Whisper models?",
+      "split": "development",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 23,
+        "1": 7,
+        "2": 3
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.3333333333333333,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.12299772773339822,
+          "ndcg_at_10": 0.24864854962413177
+        },
+        "bm25": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.285924439483775,
+          "ndcg_at_10": 0.45517436619981394
+        },
+        "hybrid": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.3467253154357711,
+          "ndcg_at_10": 0.35459961809110474
+        },
+        "rerank": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.6666666666666666,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.45485397221040474,
+          "ndcg_at_10": 0.5910726265887982
+        }
+      },
+      "grade_2_missed_by_all": [
+        "450a044f81e68340d9fcc3bc1e7aefbe6ca940b2a60a9ef3aa552db519acfdb7"
+      ]
+    },
+    {
+      "question_id": "Q35",
+      "question": "What audio input representation does Whisper use?",
+      "split": "held_out",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 31,
+        "1": 4,
+        "2": 1
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.38130108017580844,
+          "ndcg_at_10": 0.38130108017580844
+        },
+        "bm25": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.25,
+          "ndcg_at_5": 0.26109737257216487,
+          "ndcg_at_10": 0.26109737257216487
+        },
+        "hybrid": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.6327080164462338,
+          "ndcg_at_10": 0.6911231350464957
+        },
+        "rerank": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.3031246624382913,
+          "ndcg_at_10": 0.5828251519965904
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q36",
+      "question": "How does Whisper specify different speech-processing tasks within one decoder architecture?",
+      "split": "held_out",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 25,
+        "1": 8,
+        "2": 4
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.25,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.5597084104899364,
+          "ndcg_at_10": 0.5298886002871431
+        },
+        "bm25": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6061680178534535,
+          "ndcg_at_10": 0.5686819742703765
+        },
+        "hybrid": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.75,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.40778270975506287,
+          "ndcg_at_10": 0.5181572469828041
+        },
+        "rerank": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.75,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6835984833202855,
+          "ndcg_at_10": 0.6813447289793251
+        }
+      },
+      "grade_2_missed_by_all": [
+        "f33763a85091f1840894c425487986801073b237c7f668517c9b6acbfd847c4d"
+      ]
+    },
+    {
+      "question_id": "Q37",
+      "question": "Why does Whisper filter machine-generated transcripts from its training dataset?",
+      "split": "held_out",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 20,
+        "1": 9,
+        "2": 3
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.5729191687400303,
+          "ndcg_at_10": 0.614469091404121
+        },
+        "bm25": {
+          "recall_at_5": 1.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9686152031181796,
+          "ndcg_at_10": 0.8996604722804965
+        },
+        "hybrid": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7713398810938545,
+          "ndcg_at_10": 0.8229844454637414
+        },
+        "rerank": {
+          "recall_at_5": 0.6666666666666666,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8249925457400985,
+          "ndcg_at_10": 0.8655590968775666
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q38",
+      "question": "What is the contrastive learning objective used by wav2vec 2.0?",
+      "split": "held_out",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 17,
+        "1": 9,
+        "2": 5
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.4,
+          "recall_at_20": 0.8,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6455709457931597,
+          "ndcg_at_10": 0.6077003574718964
+        },
+        "bm25": {
+          "recall_at_5": 0.6,
+          "recall_at_20": 0.8,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.8151510484299677,
+          "ndcg_at_10": 0.7566568759976167
+        },
+        "hybrid": {
+          "recall_at_5": 0.6,
+          "recall_at_20": 0.8,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7408782483994214,
+          "ndcg_at_10": 0.8056252806801824
+        },
+        "rerank": {
+          "recall_at_5": 0.4,
+          "recall_at_20": 0.8,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6018359199557124,
+          "ndcg_at_10": 0.6862156247326017
+        }
+      },
+      "grade_2_missed_by_all": [
+        "a84f64b500a7097b869cd84f3c2da1f1510e050c5937972a9789d9f27b5c35eb"
+      ]
+    },
+    {
+      "question_id": "Q39",
+      "question": "Where is masking applied during wav2vec 2.0 pretraining?",
+      "split": "held_out",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 19,
+        "1": 7,
+        "2": 8
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.25,
+          "recall_at_20": 0.75,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.4582447440047413,
+          "ndcg_at_10": 0.5895772028532963
+        },
+        "bm25": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.10521615082650483,
+          "ndcg_at_10": 0.07475020500347415
+        },
+        "hybrid": {
+          "recall_at_5": 0.25,
+          "recall_at_20": 0.75,
+          "rr_at_5": 0.25,
+          "ndcg_at_5": 0.4468535299918563,
+          "ndcg_at_10": 0.5250558975593338
+        },
+        "rerank": {
+          "recall_at_5": 0.25,
+          "recall_at_20": 0.75,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.6096731708870796,
+          "ndcg_at_10": 0.5674043551142375
+        }
+      },
+      "grade_2_missed_by_all": [
+        "9574b2e1f569d84e81478dcf486d7b70195f062e5d4c2158b0b162beed601874"
+      ]
+    },
+    {
+      "question_id": "Q40",
+      "question": "How does wav2vec 2.0 learn discrete speech representations?",
+      "split": "held_out",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 13,
+        "1": 10,
+        "2": 6
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 0.3333333333333333,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.5029134359701414,
+          "ndcg_at_10": 0.5488809907525732
+        },
+        "bm25": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.25,
+          "ndcg_at_5": 0.30285677743802575,
+          "ndcg_at_10": 0.41707429443769556
+        },
+        "hybrid": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.48811138193756815,
+          "ndcg_at_10": 0.5299217368198169
+        },
+        "rerank": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 0.5,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.4104889601851253,
+          "ndcg_at_10": 0.494277637764743
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q41",
+      "question": "How does the Conformer architecture capture both local and global audio dependencies?",
+      "split": "held_out",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 12,
+        "1": 12,
+        "2": 10
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.3,
+          "recall_at_20": 0.6,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.7994765465672333,
+          "ndcg_at_10": 0.6388241937675281
+        },
+        "bm25": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.7,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.8645073774981995
+        },
+        "hybrid": {
+          "recall_at_5": 0.4,
+          "recall_at_20": 0.8,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.9125299483251055,
+          "ndcg_at_10": 0.7978936452173031
+        },
+        "rerank": {
+          "recall_at_5": 0.5,
+          "recall_at_20": 0.8,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.9053206285482487
+        }
+      },
+      "grade_2_missed_by_all": [
+        "6724c20256661c3bd203dc336654de0c2b3eabab26314ece699fc2ddcd4bf0f4"
+      ]
+    },
+    {
+      "question_id": "Q42",
+      "question": "What is the Macaron-style feed-forward structure used in Conformer blocks?",
+      "split": "held_out",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 11,
+        "1": 8,
+        "2": 9
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.5555555555555556,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.9489244055493045
+        },
+        "bm25": {
+          "recall_at_5": 0.5555555555555556,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.9470910211381396
+        },
+        "hybrid": {
+          "recall_at_5": 0.5555555555555556,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.9538741420719156
+        },
+        "rerank": {
+          "recall_at_5": 0.5555555555555556,
+          "recall_at_20": 1.0,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.9489244055493045
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q43",
+      "question": "How do Whisper and wav2vec 2.0 differ in their pretraining supervision?",
+      "split": "development",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 21,
+        "1": 12,
+        "2": 6
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.2577212905719748,
+          "ndcg_at_10": 0.2586030407150311
+        },
+        "bm25": {
+          "recall_at_5": 0.16666666666666666,
+          "recall_at_20": 0.3333333333333333,
+          "rr_at_5": 1.0,
+          "ndcg_at_5": 0.33916020527361607,
+          "ndcg_at_10": 0.32189810840600247
+        },
+        "hybrid": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.3333333333333333,
+          "ndcg_at_5": 0.3156484524795145,
+          "ndcg_at_10": 0.3461569656399636
+        },
+        "rerank": {
+          "recall_at_5": 0.3333333333333333,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.5,
+          "ndcg_at_5": 0.360054614577234,
+          "ndcg_at_10": 0.3154475345067749
+        }
+      },
+      "grade_2_missed_by_all": [
+        "39830a82ceb08aee7748219c0133d6b39b387141aa2ac8d5ee9d7b54dc2f5f88",
+        "9574b2e1f569d84e81478dcf486d7b70195f062e5d4c2158b0b162beed601874"
+      ]
+    },
+    {
+      "question_id": "Q44",
+      "question": "What operations make up the Conformer convolution module?",
+      "split": "held_out",
+      "category": "speech",
+      "answerable": true,
+      "grade_counts": {
+        "0": 6,
+        "1": 19,
+        "2": 2
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.0,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.47476776900380596,
+          "ndcg_at_10": 0.5393978322287293
+        },
+        "bm25": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 1.0,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.47476776900380596,
+          "ndcg_at_10": 0.5416870696036744
+        },
+        "hybrid": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.47476776900380596,
+          "ndcg_at_10": 0.5393978322287293
+        },
+        "rerank": {
+          "recall_at_5": 0.0,
+          "recall_at_20": 0.5,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.47476776900380596,
+          "ndcg_at_10": 0.5416870696036744
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q45",
+      "question": "What does global workspace theory predict about conscious access?",
+      "split": "held_out",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "grade_counts": {
+        "0": 40,
+        "1": 0,
+        "2": 0
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "bm25": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "hybrid": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "rerank": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q46",
+      "question": "What was the total electrical energy consumed during GPT-4 training?",
+      "split": "held_out",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "grade_counts": {
+        "0": 35,
+        "1": 0,
+        "2": 0
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "bm25": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "hybrid": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "rerank": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q47",
+      "question": "What is the exact training dataset composition of ElevenLabs Scribe v2?",
+      "split": "held_out",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "grade_counts": {
+        "0": 40,
+        "1": 0,
+        "2": 0
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "bm25": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "hybrid": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "rerank": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q48",
+      "question": "What WER does Whisper achieve on Moroccan Darija telephone conversations using the Scribe v2 benchmark?",
+      "split": "held_out",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "grade_counts": {
+        "0": 17,
+        "1": 17,
+        "2": 0
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.8687949224876582,
+          "ndcg_at_10": 0.914856882358379
+        },
+        "bm25": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.6164336326286644,
+          "ndcg_at_10": 0.6848374495230163
+        },
+        "hybrid": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.8643145546088337
+        },
+        "rerank": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 1.0,
+          "ndcg_at_10": 0.9305687780632227
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q49",
+      "question": "What is the exact architecture of GPT-5.2's attention layers?",
+      "split": "held_out",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "grade_counts": {
+        "0": 36,
+        "1": 0,
+        "2": 0
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "bm25": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "hybrid": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "rerank": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        }
+      },
+      "grade_2_missed_by_all": []
+    },
+    {
+      "question_id": "Q50",
+      "question": "What is the optimal PagedAttention block size when serving GPT-5 on NVIDIA B200 GPUs?",
+      "split": "held_out",
+      "category": "out_of_corpus",
+      "answerable": false,
+      "grade_counts": {
+        "0": 24,
+        "1": 9,
+        "2": 0
+      },
+      "methods": {
+        "faiss": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.21398626473452756,
+          "ndcg_at_10": 0.29996554548763327
+        },
+        "bm25": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.0,
+          "ndcg_at_10": 0.21284777692444587
+        },
+        "hybrid": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.14606834984270645,
+          "ndcg_at_10": 0.3374506539680633
+        },
+        "rerank": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "rr_at_5": 0.0,
+          "ndcg_at_5": 0.34519134224686937,
+          "ndcg_at_10": 0.4616493368276927
+        }
+      },
+      "grade_2_missed_by_all": []
+    }
+  ],
+  "aggregates": {
+    "development": {
+      "question_count": 15,
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.18025234025234024,
+          "recall_at_20": 0.5860439560439561,
+          "mrr_at_5": 0.38555555555555554,
+          "ndcg_at_5": 0.43493339483194376,
+          "ndcg_at_10": 0.4746740081146491
+        },
+        "bm25": {
+          "recall_at_5": 0.2766015466015466,
+          "recall_at_20": 0.7354619454619454,
+          "mrr_at_5": 0.6777777777777778,
+          "ndcg_at_5": 0.6055759058150455,
+          "ndcg_at_10": 0.6197076554980503
+        },
+        "hybrid": {
+          "recall_at_5": 0.27861619861619863,
+          "recall_at_20": 0.6881603581603581,
+          "mrr_at_5": 0.5222222222222223,
+          "ndcg_at_5": 0.5378222995884642,
+          "ndcg_at_10": 0.576388508390603
+        },
+        "rerank": {
+          "recall_at_5": 0.30607244607244605,
+          "recall_at_20": 0.6881603581603581,
+          "mrr_at_5": 0.73,
+          "ndcg_at_5": 0.6373917988576627,
+          "ndcg_at_10": 0.650682744840587
+        }
+      },
+      "categories": {
+        "attention_systems": {
+          "question_count": 6,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.18994708994708995,
+              "recall_at_20": 0.5888888888888889,
+              "mrr_at_5": 0.4638888888888889,
+              "ndcg_at_5": 0.50666329186434,
+              "ndcg_at_10": 0.5971738396936946
+            },
+            "bm25": {
+              "recall_at_5": 0.2542328042328042,
+              "recall_at_20": 0.6846560846560846,
+              "mrr_at_5": 0.7777777777777778,
+              "ndcg_at_5": 0.6395300725719045,
+              "ndcg_at_10": 0.6515014423567463
+            },
+            "hybrid": {
+              "recall_at_5": 0.2582010582010582,
+              "recall_at_20": 0.6973544973544974,
+              "mrr_at_5": 0.5,
+              "ndcg_at_5": 0.5949692966616619,
+              "ndcg_at_10": 0.6106236273293124
+            },
+            "rerank": {
+              "recall_at_5": 0.28624338624338624,
+              "recall_at_20": 0.6973544973544974,
+              "mrr_at_5": 0.7916666666666666,
+              "ndcg_at_5": 0.6793703267873065,
+              "ndcg_at_10": 0.6805908367157214
+            }
+          }
+        },
+        "retrieval_and_context": {
+          "question_count": 5,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.1794871794871795,
+              "recall_at_20": 0.6347985347985348,
+              "mrr_at_5": 0.4,
+              "ndcg_at_5": 0.4533795568468308,
+              "ndcg_at_10": 0.4538144476226851
+            },
+            "bm25": {
+              "recall_at_5": 0.2913919413919414,
+              "recall_at_20": 0.7847985347985348,
+              "mrr_at_5": 0.7333333333333333,
+              "ndcg_at_5": 0.6838397317893307,
+              "ndcg_at_10": 0.6549119341406164
+            },
+            "hybrid": {
+              "recall_at_5": 0.19267399267399266,
+              "recall_at_20": 0.6443223443223444,
+              "mrr_at_5": 0.5333333333333333,
+              "ndcg_at_5": 0.4874823105997829,
+              "ndcg_at_10": 0.572914790727444
+            },
+            "rerank": {
+              "recall_at_5": 0.2913919413919414,
+              "recall_at_20": 0.6443223443223444,
+              "mrr_at_5": 0.8,
+              "ndcg_at_5": 0.7054192650049029,
+              "ndcg_at_10": 0.687371647467704
+            }
+          }
+        },
+        "speech": {
+          "question_count": 2,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.08333333333333333,
+              "recall_at_20": 0.41666666666666663,
+              "mrr_at_5": 0.25,
+              "ndcg_at_5": 0.1903595091526865,
+              "ndcg_at_10": 0.25362579516958145
+            },
+            "bm25": {
+              "recall_at_5": 0.08333333333333333,
+              "recall_at_20": 0.5,
+              "mrr_at_5": 0.5,
+              "ndcg_at_5": 0.3125423223786955,
+              "ndcg_at_10": 0.3885362373029082
+            },
+            "hybrid": {
+              "recall_at_5": 0.3333333333333333,
+              "recall_at_20": 0.5833333333333333,
+              "mrr_at_5": 0.3333333333333333,
+              "ndcg_at_5": 0.33118688395764284,
+              "ndcg_at_10": 0.35037829186553415
+            },
+            "rerank": {
+              "recall_at_5": 0.3333333333333333,
+              "recall_at_20": 0.5833333333333333,
+              "mrr_at_5": 0.5,
+              "ndcg_at_5": 0.40745429339381933,
+              "ndcg_at_10": 0.45326008054778655
+            }
+          }
+        },
+        "transformer": {
+          "question_count": 2,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.25,
+              "recall_at_20": 0.625,
+              "mrr_at_5": 0.25,
+              "ndcg_at_5": 0.4182021843767948,
+              "ndcg_at_10": 0.38037162755249054
+            },
+            "bm25": {
+              "recall_at_5": 0.5,
+              "recall_at_20": 1.0,
+              "mrr_at_5": 0.41666666666666663,
+              "ndcg_at_5": 0.6010874240451058,
+              "ndcg_at_10": 0.6674870165106891
+            },
+            "hybrid": {
+              "recall_at_5": 0.5,
+              "recall_at_20": 0.875,
+              "mrr_at_5": 0.75,
+              "ndcg_at_5": 0.6988666964713957,
+              "ndcg_at_10": 0.708377662257441
+            },
+            "rerank": {
+              "recall_at_5": 0.375,
+              "recall_at_20": 0.875,
+              "mrr_at_5": 0.6,
+              "ndcg_at_5": 0.5713250551644747,
+              "ndcg_at_10": 0.6666588769401915
+            }
+          }
+        }
+      }
+    },
+    "held_out_answerable": {
+      "question_count": 29,
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.3495484400656814,
+          "recall_at_20": 0.655952380952381,
+          "mrr_at_5": 0.6149425287356322,
+          "ndcg_at_5": 0.5525451223399016,
+          "ndcg_at_10": 0.555991451139682
+        },
+        "bm25": {
+          "recall_at_5": 0.5066365626710454,
+          "recall_at_20": 0.8049397920087575,
+          "mrr_at_5": 0.7413793103448276,
+          "ndcg_at_5": 0.6663509007799922,
+          "ndcg_at_10": 0.6413397436148373
+        },
+        "hybrid": {
+          "recall_at_5": 0.5026546250684182,
+          "recall_at_20": 0.7706486042692939,
+          "mrr_at_5": 0.7327586206896551,
+          "ndcg_at_5": 0.6719324215817472,
+          "ndcg_at_10": 0.6644569161559432
+        },
+        "rerank": {
+          "recall_at_5": 0.5167350848385331,
+          "recall_at_20": 0.7706486042692939,
+          "mrr_at_5": 0.7758620689655172,
+          "ndcg_at_5": 0.7403857107265217,
+          "ndcg_at_10": 0.7264007369587799
+        }
+      },
+      "categories": {
+        "attention_systems": {
+          "question_count": 6,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.2962962962962963,
+              "recall_at_20": 0.4722222222222222,
+              "mrr_at_5": 0.3333333333333333,
+              "ndcg_at_5": 0.4195000283407561,
+              "ndcg_at_10": 0.45312068381572584
+            },
+            "bm25": {
+              "recall_at_5": 0.5,
+              "recall_at_20": 0.7962962962962963,
+              "mrr_at_5": 0.6666666666666666,
+              "ndcg_at_5": 0.717230145372551,
+              "ndcg_at_10": 0.6847767589604697
+            },
+            "hybrid": {
+              "recall_at_5": 0.41666666666666663,
+              "recall_at_20": 0.6666666666666666,
+              "mrr_at_5": 0.5,
+              "ndcg_at_5": 0.5532140155586069,
+              "ndcg_at_10": 0.5868535433484885
+            },
+            "rerank": {
+              "recall_at_5": 0.5555555555555556,
+              "recall_at_20": 0.6666666666666666,
+              "mrr_at_5": 0.5833333333333334,
+              "ndcg_at_5": 0.7582544937845368,
+              "ndcg_at_10": 0.7162158201182378
+            }
+          }
+        },
+        "retrieval_and_context": {
+          "question_count": 10,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.43416666666666665,
+              "recall_at_20": 0.7241666666666666,
+              "mrr_at_5": 0.6333333333333333,
+              "ndcg_at_5": 0.5743644039195251,
+              "ndcg_at_10": 0.5666565492901265
+            },
+            "bm25": {
+              "recall_at_5": 0.49416666666666664,
+              "recall_at_20": 0.7708333333333334,
+              "mrr_at_5": 0.9,
+              "ndcg_at_5": 0.668473101757605,
+              "ndcg_at_10": 0.6332461055227316
+            },
+            "hybrid": {
+              "recall_at_5": 0.5116666666666666,
+              "recall_at_20": 0.7891666666666667,
+              "mrr_at_5": 0.95,
+              "ndcg_at_5": 0.7356449332032652,
+              "ndcg_at_10": 0.6666600105277528
+            },
+            "rerank": {
+              "recall_at_5": 0.5541666666666667,
+              "recall_at_20": 0.7891666666666667,
+              "mrr_at_5": 0.85,
+              "ndcg_at_5": 0.7772444006719765,
+              "ndcg_at_10": 0.7297350270766345
+            }
+          }
+        },
+        "speech": {
+          "question_count": 9,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.2506172839506173,
+              "recall_at_20": 0.6648148148148149,
+              "mrr_at_5": 0.7222222222222222,
+              "ndcg_at_5": 0.5994335667494285,
+              "ndcg_at_10": 0.5998848616100445
+            },
+            "bm25": {
+              "recall_at_5": 0.4802469135802469,
+              "recall_at_20": 0.8333333333333334,
+              "mrr_at_5": 0.6111111111111112,
+              "ndcg_at_5": 0.6148747043602336,
+              "ndcg_at_10": 0.5923562958668709
+            },
+            "hybrid": {
+              "recall_at_5": 0.45987654320987653,
+              "recall_at_20": 0.7888888888888889,
+              "mrr_at_5": 0.6574074074074074,
+              "ndcg_at_5": 0.6527746094392121,
+              "ndcg_at_10": 0.6871148180078136
+            },
+            "rerank": {
+              "recall_at_5": 0.3376543209876543,
+              "recall_at_20": 0.7888888888888889,
+              "mrr_at_5": 0.7777777777777778,
+              "ndcg_at_5": 0.6564979457255998,
+              "ndcg_at_10": 0.6970620776851435
+            }
+          }
+        },
+        "transformer": {
+          "question_count": 4,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.44047619047619047,
+              "recall_at_20": 0.7410714285714286,
+              "mrr_at_5": 0.75,
+              "ndcg_at_5": 0.5920655594681251,
+              "ndcg_at_10": 0.5848746831911891
+            },
+            "bm25": {
+              "recall_at_5": 0.6071428571428571,
+              "recall_at_20": 0.8392857142857143,
+              "mrr_at_5": 0.75,
+              "ndcg_at_5": 0.7005479733915787,
+              "ndcg_at_10": 0.7066310732595765
+            },
+            "hybrid": {
+              "recall_at_5": 0.7053571428571428,
+              "recall_at_20": 0.8392857142857143,
+              "mrr_at_5": 0.7083333333333334,
+              "ndcg_at_5": 0.733833828883366,
+              "ndcg_at_10": 0.7243739602708927
+            },
+            "rerank": {
+              "recall_at_5": 0.7678571428571428,
+              "recall_at_20": 0.8392857142857143,
+              "mrr_at_5": 0.875,
+              "ndcg_at_5": 0.8101832825279365,
+              "ndcg_at_10": 0.7993543702906387
+            }
+          }
+        }
+      }
+    },
+    "all_answerable": {
+      "question_count": 44,
+      "methods": {
+        "faiss": {
+          "recall_at_5": 0.29183386058386057,
+          "recall_at_20": 0.6321199633699633,
+          "mrr_at_5": 0.5367424242424242,
+          "ndcg_at_5": 0.512450215234916,
+          "ndcg_at_10": 0.5282695955629663
+        },
+        "bm25": {
+          "recall_at_5": 0.42821553446553445,
+          "recall_at_20": 0.7812541625041625,
+          "mrr_at_5": 0.7196969696969697,
+          "ndcg_at_5": 0.6456321524964876,
+          "ndcg_at_10": 0.6339651681204781
+        },
+        "hybrid": {
+          "recall_at_5": 0.42627788877788875,
+          "recall_at_20": 0.7425276112776112,
+          "mrr_at_5": 0.6609848484848485,
+          "ndcg_at_5": 0.6262130618113098,
+          "ndcg_at_10": 0.63443359532685
+        },
+        "rerank": {
+          "recall_at_5": 0.44491827616827617,
+          "recall_at_20": 0.7425276112776112,
+          "mrr_at_5": 0.7602272727272728,
+          "ndcg_at_5": 0.705274149862138,
+          "ndcg_at_10": 0.7005877851003051
+        }
+      },
+      "categories": {
+        "attention_systems": {
+          "question_count": 12,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.24312169312169313,
+              "recall_at_20": 0.5305555555555556,
+              "mrr_at_5": 0.39861111111111114,
+              "ndcg_at_5": 0.4630816601025481,
+              "ndcg_at_10": 0.5251472617547102
+            },
+            "bm25": {
+              "recall_at_5": 0.3771164021164021,
+              "recall_at_20": 0.7404761904761905,
+              "mrr_at_5": 0.7222222222222222,
+              "ndcg_at_5": 0.6783801089722278,
+              "ndcg_at_10": 0.668139100658608
+            },
+            "hybrid": {
+              "recall_at_5": 0.3374338624338624,
+              "recall_at_20": 0.682010582010582,
+              "mrr_at_5": 0.5,
+              "ndcg_at_5": 0.5740916561101344,
+              "ndcg_at_10": 0.5987385853389005
+            },
+            "rerank": {
+              "recall_at_5": 0.4208994708994709,
+              "recall_at_20": 0.682010582010582,
+              "mrr_at_5": 0.6875,
+              "ndcg_at_5": 0.7188124102859216,
+              "ndcg_at_10": 0.6984033284169796
+            }
+          }
+        },
+        "retrieval_and_context": {
+          "question_count": 15,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.3492735042735043,
+              "recall_at_20": 0.6943772893772894,
+              "mrr_at_5": 0.5555555555555556,
+              "ndcg_at_5": 0.5340361215619603,
+              "ndcg_at_10": 0.5290425154009794
+            },
+            "bm25": {
+              "recall_at_5": 0.42657509157509155,
+              "recall_at_20": 0.7754884004884005,
+              "mrr_at_5": 0.8444444444444444,
+              "ndcg_at_5": 0.6735953117681802,
+              "ndcg_at_10": 0.64046804839536
+            },
+            "hybrid": {
+              "recall_at_5": 0.4053357753357753,
+              "recall_at_20": 0.7408852258852259,
+              "mrr_at_5": 0.8111111111111111,
+              "ndcg_at_5": 0.6529240590021045,
+              "ndcg_at_10": 0.63541160392765
+            },
+            "rerank": {
+              "recall_at_5": 0.4665750915750916,
+              "recall_at_20": 0.7408852258852259,
+              "mrr_at_5": 0.8333333333333334,
+              "ndcg_at_5": 0.753302688782952,
+              "ndcg_at_10": 0.7156139005403244
+            }
+          }
+        },
+        "speech": {
+          "question_count": 11,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.2202020202020202,
+              "recall_at_20": 0.6196969696969697,
+              "mrr_at_5": 0.6363636363636364,
+              "ndcg_at_5": 0.5250564653682027,
+              "ndcg_at_10": 0.5369286677117785
+            },
+            "bm25": {
+              "recall_at_5": 0.4080808080808081,
+              "recall_at_20": 0.7727272727272727,
+              "mrr_at_5": 0.5909090909090909,
+              "ndcg_at_5": 0.5599051803635903,
+              "ndcg_at_10": 0.5552981034006959
+            },
+            "hybrid": {
+              "recall_at_5": 0.43686868686868685,
+              "recall_at_20": 0.7515151515151515,
+              "mrr_at_5": 0.5984848484848485,
+              "ndcg_at_5": 0.5943041138971086,
+              "ndcg_at_10": 0.6258899950728537
+            },
+            "rerank": {
+              "recall_at_5": 0.3368686868686869,
+              "recall_at_20": 0.7515151515151515,
+              "mrr_at_5": 0.7272727272727273,
+              "ndcg_at_5": 0.6112172816652761,
+              "ndcg_at_10": 0.6527344418419877
+            }
+          }
+        },
+        "transformer": {
+          "question_count": 6,
+          "methods": {
+            "faiss": {
+              "recall_at_5": 0.376984126984127,
+              "recall_at_20": 0.7023809523809523,
+              "mrr_at_5": 0.5833333333333334,
+              "ndcg_at_5": 0.5341111011043483,
+              "ndcg_at_10": 0.5167069979782896
+            },
+            "bm25": {
+              "recall_at_5": 0.5714285714285714,
+              "recall_at_20": 0.8928571428571428,
+              "mrr_at_5": 0.6388888888888888,
+              "ndcg_at_5": 0.6673944569427543,
+              "ndcg_at_10": 0.6935830543432807
+            },
+            "hybrid": {
+              "recall_at_5": 0.6369047619047619,
+              "recall_at_20": 0.8511904761904762,
+              "mrr_at_5": 0.7222222222222222,
+              "ndcg_at_5": 0.7221781180793759,
+              "ndcg_at_10": 0.7190418609330755
+            },
+            "rerank": {
+              "recall_at_5": 0.6369047619047619,
+              "recall_at_20": 0.8511904761904762,
+              "mrr_at_5": 0.7833333333333333,
+              "ndcg_at_5": 0.7305638734067825,
+              "ndcg_at_10": 0.755122539173823
+            }
+          }
+        }
+      }
+    },
+    "expected_unanswerable": {
+      "question_count": 6,
+      "methods": {
+        "faiss": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "mrr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "bm25": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "mrr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "hybrid": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "mrr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        },
+        "rerank": {
+          "recall_at_5": null,
+          "recall_at_20": null,
+          "mrr_at_5": 0.0,
+          "ndcg_at_5": null,
+          "ndcg_at_10": null
+        }
+      },
+      "categories": {
+        "out_of_corpus": {
+          "question_count": 6,
+          "methods": {
+            "faiss": {
+              "recall_at_5": null,
+              "recall_at_20": null,
+              "mrr_at_5": 0.0,
+              "ndcg_at_5": null,
+              "ndcg_at_10": null
+            },
+            "bm25": {
+              "recall_at_5": null,
+              "recall_at_20": null,
+              "mrr_at_5": 0.0,
+              "ndcg_at_5": null,
+              "ndcg_at_10": null
+            },
+            "hybrid": {
+              "recall_at_5": null,
+              "recall_at_20": null,
+              "mrr_at_5": 0.0,
+              "ndcg_at_5": null,
+              "ndcg_at_10": null
+            },
+            "rerank": {
+              "recall_at_5": null,
+              "recall_at_20": null,
+              "mrr_at_5": 0.0,
+              "ndcg_at_5": null,
+              "ndcg_at_10": null
+            }
+          }
+        }
+      }
+    }
+  },
+  "held_out_ndcg_at_5_bootstrap": {
+    "seed": 42,
+    "resamples": 10000,
+    "question_count": 29,
+    "comparisons": [
+      {
+        "method": "bm25",
+        "baseline": "faiss",
+        "difference": 0.11380577844009061,
+        "ci_95": [
+          0.015733343858903796,
+          0.21339430927749298
+        ]
+      },
+      {
+        "method": "hybrid",
+        "baseline": "faiss",
+        "difference": 0.11938729924184555,
+        "ci_95": [
+          0.05882182940450646,
+          0.18440361437330494
+        ]
+      },
+      {
+        "method": "rerank",
+        "baseline": "faiss",
+        "difference": 0.18784058838662018,
+        "ci_95": [
+          0.1062592064524569,
+          0.27195401616494336
+        ]
+      },
+      {
+        "method": "hybrid",
+        "baseline": "bm25",
+        "difference": 0.005581520801754934,
+        "ci_95": [
+          -0.06514491691517568,
+          0.07600658505728206
+        ]
+      },
+      {
+        "method": "rerank",
+        "baseline": "bm25",
+        "difference": 0.07403480994652957,
+        "ci_95": [
+          0.023397035955028078,
+          0.12776522530183604
+        ]
+      },
+      {
+        "method": "rerank",
+        "baseline": "hybrid",
+        "difference": 0.06845328914477464,
+        "ci_95": [
+          0.013956780893762264,
+          0.12459943740478725
+        ]
+      }
+    ]
+  }
+}

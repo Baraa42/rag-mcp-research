@@ -21,7 +21,8 @@ retrieval → cross-encoder reranking → citation-grounded answers.
 The Python package separates ingestion, retrieval, and answering logic from MCP
 and FastAPI interfaces. Initial [offline retrieval evaluation](docs/evaluation.md)
 uses 151 manual judgments across five questions; component timing measurements
-are also available below. Broader evaluation and benchmarking remain S5 work.
+are also available below. The [expanded retrieval evaluation](docs/evaluation-v2.md)
+covers 50 questions and ten papers using AI-generated relevance judgments.
 CPU Docker packaging is included in S4. No LangChain or LlamaIndex is used.
 
 ## Source organization

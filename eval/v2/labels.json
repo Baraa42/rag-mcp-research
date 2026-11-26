@@ -242,8 +242,8 @@
   {
     "question_id": "Q02",
     "chunk_id": "629b8e2e72e68e744da85c5265ba9770aeb05143c7b327e022f3b42d74590aed",
-    "grade": 2,
-    "notes": "Review: the all-positions interaction directly establishes the quadratic number of pairs, although the per-pair dimension is omitted."
+    "grade": 1,
+    "notes": "Explains all-pairs attention but omits the per-pair dimension and does not establish O(n²d) complexity."
   },
   {
     "question_id": "Q02",
@@ -3770,8 +3770,8 @@
   {
     "question_id": "Q20",
     "chunk_id": "5461e5af2f56041c51ed50feb6ea0380baf455a1fa9c9d573247dcfd907d05de",
-    "grade": 2,
-    "notes": "Review: explicitly describes masking only the boundary tile for square tiles, despite a potentially reversed inequality in the extracted prose."
+    "grade": 1,
+    "notes": "States that only one square tile per row needs masking, but the original PDF reverses the inequality for fully allowed tiles. Partial support only."
   },
   {
     "question_id": "Q20",
@@ -3825,7 +3825,7 @@
     "question_id": "Q20",
     "chunk_id": "520f1e8871c627ff6435601ac3e4c0e19083770d9d33066d5b4d910b63cccaa7",
     "grade": 2,
-    "notes": "Review: explicitly skips wholly future tiles. The following row/column inequality in the same excerpt appears reversed."
+    "notes": "Directly explains skipping wholly future tiles and gives the correct j > i masking rule. The next bullet in the original PDF repeats that inequality where it should describe fully allowed tiles."
   },
   {
     "question_id": "Q20",
