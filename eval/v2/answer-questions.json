@@ -1,0 +1,4 @@
+{
+  "answerable": ["Q06", "Q13", "Q21", "Q33", "Q35", "Q38"],
+  "expected_unanswerable": ["Q45", "Q46", "Q47", "Q48", "Q49", "Q50"]
+}

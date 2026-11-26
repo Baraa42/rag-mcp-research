@@ -1,0 +1,1051 @@
+{
+  "run": {
+    "started_at_utc": "2026-11-26T13:11:11.789228+00:00",
+    "configured_model": "gpt-5-mini",
+    "input_sha256": {
+      "questions": "4030c79be79503c316e57b655acfef1d5b31f286cd03e55b4b83aa43cd627fc0",
+      "metadata": "fcf8b72e502efa85b1e16a87c37e7f8f5d4044ca9cd30c68c2b4df2a65319c56",
+      "rankings": "2d3513c183ec992a401f28c473bc9d3c8f9305a789f47db8bf5ee23db022d2d0",
+      "answer-questions": "884b67c782a06a267f16464e1eb04056b6498574f29b782b4914fb9ce244245a"
+    },
+    "index_manifest_sha256": "d71f40939505b30e335b69201a6b34c918589b5921b7ed70854edd28d81a5321",
+    "api_attempt_limit": 12,
+    "max_attempts_per_question": 1,
+    "pricing_source": "https://developers.openai.com/api/docs/models/gpt-5-mini",
+    "gpt_5_mini_standard_usd_per_million": {
+      "input": 0.25,
+      "cached_input": 0.025,
+      "output": 2.0
+    },
+    "review_status": "pending independent assessment"
+  },
+  "api_attempts": 12,
+  "api_http_responses": 12,
+  "statuses": {
+    "answered": 6,
+    "abstained": 5,
+    "error": 1
+  },
+  "estimated_cost_usd": 0.01585475,
+  "responses_with_cost_estimate": 12,
+  "responses": [
+    {
+      "question_id": "Q06",
+      "question": "Why does the Transformer use multiple attention heads instead of a single head?",
+      "expected_answerable": true,
+      "status": "answered",
+      "answer": "The Transformer uses multiple attention heads so the model can jointly attend to information from different representation subspaces at different positions—something averaging in a single head inhibits [S2]. Multi‑head attention also counteracts the reduced effective resolution caused by averaging attention‑weighted positions [S4], while keeping total computational cost similar to a single full‑dimension head by using smaller per‑head dimensions (dk = dv = dmodel/h) [S1]. Empirically, single‑head attention performed worse (about 0.9 BLEU lower) than the best multi‑head setting, though too many heads can also hurt performance [S5].",
+      "generation_latency_ms": 11994.170959000257,
+      "service_latency_ms": 12326.143750000483,
+      "usage": {
+        "input_tokens": 1659,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 656,
+        "output_tokens_details": {
+          "reasoning_tokens": 512
+        },
+        "total_tokens": 2315
+      },
+      "estimated_cost_usd": 0.00172675,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "b268ac3f4e1022a363a4b1d8941fd2f9799ab8acab5aa6dbea0ff548d2ce90ea",
+          "document_id": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+          "label": "S1",
+          "page_number": 5,
+          "section": null,
+          "source": "attention_is_all_you_need.pdf"
+        },
+        {
+          "chunk_id": "e98dc7e99fa597f864a45396255260eeebafa6ab8b0378b484f55015c1d0d782",
+          "document_id": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+          "label": "S2",
+          "page_number": 5,
+          "section": null,
+          "source": "attention_is_all_you_need.pdf"
+        },
+        {
+          "chunk_id": "a98843786d667332f264bc9b451b9fbfbe2f49855c5685b3dad5202f45dac12b",
+          "document_id": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+          "label": "S3",
+          "page_number": 7,
+          "section": null,
+          "source": "flashattention2.pdf"
+        },
+        {
+          "chunk_id": "7d5256dbaad66c41970f718cc670bbf889661694e82eba18add389baf839dffe",
+          "document_id": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+          "label": "S4",
+          "page_number": 2,
+          "section": null,
+          "source": "attention_is_all_you_need.pdf"
+        },
+        {
+          "chunk_id": "624ac6a4c09ad659c1682f5273f4090c724ff210263a4d2b0f2858961066155b",
+          "document_id": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+          "label": "S5",
+          "page_number": 9,
+          "section": null,
+          "source": "attention_is_all_you_need.pdf"
+        }
+      ],
+      "citations": [
+        {
+          "label": "S1",
+          "chunk_id": "b268ac3f4e1022a363a4b1d8941fd2f9799ab8acab5aa6dbea0ff548d2ce90ea",
+          "document_id": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+          "source": "attention_is_all_you_need.pdf",
+          "page_number": 5,
+          "section": null
+        },
+        {
+          "label": "S2",
+          "chunk_id": "e98dc7e99fa597f864a45396255260eeebafa6ab8b0378b484f55015c1d0d782",
+          "document_id": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+          "source": "attention_is_all_you_need.pdf",
+          "page_number": 5,
+          "section": null
+        },
+        {
+          "label": "S4",
+          "chunk_id": "7d5256dbaad66c41970f718cc670bbf889661694e82eba18add389baf839dffe",
+          "document_id": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+          "source": "attention_is_all_you_need.pdf",
+          "page_number": 2,
+          "section": null
+        },
+        {
+          "label": "S5",
+          "chunk_id": "624ac6a4c09ad659c1682f5273f4090c724ff210263a4d2b0f2858961066155b",
+          "document_id": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+          "source": "attention_is_all_you_need.pdf",
+          "page_number": 9,
+          "section": null
+        }
+      ]
+    },
+    {
+      "question_id": "Q13",
+      "question": "What is the difference between split-K and split-Q warp partitioning in FlashAttention-2's comparison?",
+      "expected_answerable": true,
+      "status": "answered",
+      "answer": "Split-K: FlashAttention splits K and V across warps while keeping Q accessible to all warps; each warp computes a slice of QK⊤, then must write intermediate results to shared memory, synchronize, and add them up (requiring inter-warp communication) [S2]. Split-Q (FlashAttention-2): FlashAttention-2 instead splits Q across warps while keeping K and V accessible to all warps; each warp computes its slice of QK⊤ and then multiplies with the shared slice of V to produce its output slice with no inter-warp communication, reducing shared-memory reads/writes and yielding a speedup [S1].",
+      "generation_latency_ms": 7075.473832999705,
+      "service_latency_ms": 7257.76841699917,
+      "usage": {
+        "input_tokens": 1634,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 656,
+        "output_tokens_details": {
+          "reasoning_tokens": 512
+        },
+        "total_tokens": 2290
+      },
+      "estimated_cost_usd": 0.0017205,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "ee4fff2ec6bbbb24cebe3140e0099bfda278195b54736968c60e74e905a35194",
+          "document_id": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+          "label": "S1",
+          "page_number": 9,
+          "section": null,
+          "source": "flashattention2.pdf"
+        },
+        {
+          "chunk_id": "45ffbfecf9c92e6cf94a6c55b177dadb86b7ea9281e55993b547e84979375dec",
+          "document_id": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+          "label": "S2",
+          "page_number": 9,
+          "section": null,
+          "source": "flashattention2.pdf"
+        },
+        {
+          "chunk_id": "9c2335c71b578dbb967028e5d6fb5356544a3bc501ef75968da8cf383158cff5",
+          "document_id": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+          "label": "S3",
+          "page_number": 9,
+          "section": null,
+          "source": "flashattention2.pdf"
+        },
+        {
+          "chunk_id": "0742ca3268e4747cd4e4ed669311237e6b7fd3613085612125634dbaee501fdc",
+          "document_id": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+          "label": "S4",
+          "page_number": 1,
+          "section": null,
+          "source": "flashattention2.pdf"
+        },
+        {
+          "chunk_id": "34e6512acea1a700eb44ddcb90f13b9c5e85b571802ea9e1126222270e226028",
+          "document_id": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+          "label": "S5",
+          "page_number": 2,
+          "section": null,
+          "source": "flashattention2.pdf"
+        }
+      ],
+      "citations": [
+        {
+          "label": "S1",
+          "chunk_id": "ee4fff2ec6bbbb24cebe3140e0099bfda278195b54736968c60e74e905a35194",
+          "document_id": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+          "source": "flashattention2.pdf",
+          "page_number": 9,
+          "section": null
+        },
+        {
+          "label": "S2",
+          "chunk_id": "45ffbfecf9c92e6cf94a6c55b177dadb86b7ea9281e55993b547e84979375dec",
+          "document_id": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+          "source": "flashattention2.pdf",
+          "page_number": 9,
+          "section": null
+        }
+      ]
+    },
+    {
+      "question_id": "Q21",
+      "question": "What architecture does the original RAG model use for dense document retrieval?",
+      "expected_answerable": true,
+      "status": "answered",
+      "answer": "The original RAG uses the Dense Passage Retriever (DPR) bi-encoder architecture: separate BERT-based encoders for documents and queries (d(z)=BERTd(z), q(x)=BERTq(x)) that produce dense vectors scored by their dot product [S1][S4].",
+      "generation_latency_ms": 6047.135000000708,
+      "service_latency_ms": 6244.032874999903,
+      "usage": {
+        "input_tokens": 1607,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 517,
+        "output_tokens_details": {
+          "reasoning_tokens": 448
+        },
+        "total_tokens": 2124
+      },
+      "estimated_cost_usd": 0.00143575,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "257653b856be7674664cf8fa08eb1245bef58b9456e91f4478c03ee23750c715",
+          "document_id": "23e3249e9a1e75418d82efecab0ea8c4d033b89c93742f63208d47ce01f21233",
+          "label": "S1",
+          "page_number": 3,
+          "section": null,
+          "source": "rag_2020.pdf"
+        },
+        {
+          "chunk_id": "70b4f56bc81a406806d815f0cae20ab96802535c33e17a474b1735ba1ee56312",
+          "document_id": "23e3249e9a1e75418d82efecab0ea8c4d033b89c93742f63208d47ce01f21233",
+          "label": "S2",
+          "page_number": 5,
+          "section": null,
+          "source": "rag_2020.pdf"
+        },
+        {
+          "chunk_id": "1c4de9aa8f6178bd75e450293210d1fed57ff7628187646965fc10ff0e1500fa",
+          "document_id": "23e3249e9a1e75418d82efecab0ea8c4d033b89c93742f63208d47ce01f21233",
+          "label": "S3",
+          "page_number": 2,
+          "section": null,
+          "source": "rag_2020.pdf"
+        },
+        {
+          "chunk_id": "a8e0bf30821689c5f17aa7be16179839a227b181d009b7cf463ccdf37955b724",
+          "document_id": "23e3249e9a1e75418d82efecab0ea8c4d033b89c93742f63208d47ce01f21233",
+          "label": "S4",
+          "page_number": 2,
+          "section": null,
+          "source": "rag_2020.pdf"
+        },
+        {
+          "chunk_id": "98b2781d6899c810e9bf2c7949556fdc53529210e8ffd562cce4e28af5394e26",
+          "document_id": "23e3249e9a1e75418d82efecab0ea8c4d033b89c93742f63208d47ce01f21233",
+          "label": "S5",
+          "page_number": 1,
+          "section": null,
+          "source": "rag_2020.pdf"
+        }
+      ],
+      "citations": [
+        {
+          "label": "S1",
+          "chunk_id": "257653b856be7674664cf8fa08eb1245bef58b9456e91f4478c03ee23750c715",
+          "document_id": "23e3249e9a1e75418d82efecab0ea8c4d033b89c93742f63208d47ce01f21233",
+          "source": "rag_2020.pdf",
+          "page_number": 3,
+          "section": null
+        },
+        {
+          "label": "S4",
+          "chunk_id": "a8e0bf30821689c5f17aa7be16179839a227b181d009b7cf463ccdf37955b724",
+          "document_id": "23e3249e9a1e75418d82efecab0ea8c4d033b89c93742f63208d47ce01f21233",
+          "source": "rag_2020.pdf",
+          "page_number": 2,
+          "section": null
+        }
+      ]
+    },
+    {
+      "question_id": "Q33",
+      "question": "What happened when Lost in the Middle placed the query both before and after the provided context?",
+      "expected_answerable": true,
+      "status": "answered",
+      "answer": "For multi-document QA, placing the query before and after the documents did not substantially improve robustness and only slightly increased performance when relevant information was at the very beginning but otherwise slightly decreased [S2]. For the key-value retrieval task, query-aware contextualization dramatically improved performance [S3].",
+      "generation_latency_ms": 4898.823416999221,
+      "service_latency_ms": 5093.47116599929,
+      "usage": {
+        "input_tokens": 1564,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 402,
+        "output_tokens_details": {
+          "reasoning_tokens": 320
+        },
+        "total_tokens": 1966
+      },
+      "estimated_cost_usd": 0.001195,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "f43302e05bacec7e9441289549151df0d3b2741fe7e89c3f44a75cc9a65c345a",
+          "document_id": "f37f6fabe0fe0d8c73b67579cd115dbf14e282cfb7b7af655ae8109638402c9b",
+          "label": "S1",
+          "page_number": 8,
+          "section": null,
+          "source": "lost_in_the_middle.pdf"
+        },
+        {
+          "chunk_id": "de20887e94370d1d368ad5d8dcba909f8e2a36242945248f778a35be35d09dd3",
+          "document_id": "f37f6fabe0fe0d8c73b67579cd115dbf14e282cfb7b7af655ae8109638402c9b",
+          "label": "S2",
+          "page_number": 9,
+          "section": null,
+          "source": "lost_in_the_middle.pdf"
+        },
+        {
+          "chunk_id": "695158e71e8afd1c068ab18755473945c294d22a4a722009883bebc86bad97a2",
+          "document_id": "f37f6fabe0fe0d8c73b67579cd115dbf14e282cfb7b7af655ae8109638402c9b",
+          "label": "S3",
+          "page_number": 8,
+          "section": null,
+          "source": "lost_in_the_middle.pdf"
+        },
+        {
+          "chunk_id": "9a11b59b9aef5c9e78fe7d2c91baed3ef6e2ed924dabbe27a8920c8885600e93",
+          "document_id": "f37f6fabe0fe0d8c73b67579cd115dbf14e282cfb7b7af655ae8109638402c9b",
+          "label": "S4",
+          "page_number": 2,
+          "section": null,
+          "source": "lost_in_the_middle.pdf"
+        },
+        {
+          "chunk_id": "e0050053a2f0bad7ab54cd6cb6210f9010fa69c3c5bea5648c6e37c1bdfe7862",
+          "document_id": "f37f6fabe0fe0d8c73b67579cd115dbf14e282cfb7b7af655ae8109638402c9b",
+          "label": "S5",
+          "page_number": 2,
+          "section": null,
+          "source": "lost_in_the_middle.pdf"
+        }
+      ],
+      "citations": [
+        {
+          "label": "S2",
+          "chunk_id": "de20887e94370d1d368ad5d8dcba909f8e2a36242945248f778a35be35d09dd3",
+          "document_id": "f37f6fabe0fe0d8c73b67579cd115dbf14e282cfb7b7af655ae8109638402c9b",
+          "source": "lost_in_the_middle.pdf",
+          "page_number": 9,
+          "section": null
+        },
+        {
+          "label": "S3",
+          "chunk_id": "695158e71e8afd1c068ab18755473945c294d22a4a722009883bebc86bad97a2",
+          "document_id": "f37f6fabe0fe0d8c73b67579cd115dbf14e282cfb7b7af655ae8109638402c9b",
+          "source": "lost_in_the_middle.pdf",
+          "page_number": 8,
+          "section": null
+        }
+      ]
+    },
+    {
+      "question_id": "Q35",
+      "question": "What audio input representation does Whisper use?",
+      "expected_answerable": true,
+      "status": "answered",
+      "answer": "Whisper uses 30-second audio chunks as its input representation [S1]. It predicts timestamps quantized to the nearest 20 milliseconds (the model’s time resolution) when producing alignments [S3].",
+      "generation_latency_ms": 5368.555166000078,
+      "service_latency_ms": 5551.725749999605,
+      "usage": {
+        "input_tokens": 1676,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 412,
+        "output_tokens_details": {
+          "reasoning_tokens": 320
+        },
+        "total_tokens": 2088
+      },
+      "estimated_cost_usd": 0.001243,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "57d1fa2c2db16122ffe0f1090194fed71501f20a6056a9081624b72e7ae6f581",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S1",
+          "page_number": 14,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "f900fdc9ea135774b65d0905372a2be17a428248d1aebbd88074c35e13335f05",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S2",
+          "page_number": 15,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "0dc41eb68db85b6d8c5a261b2d53e040ff3aef7b140584625b2542f1d0995b38",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S3",
+          "page_number": 4,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "dbb93a0a78f11b26acb16f033aeb171c2545bbb1dae66eaec9353d7e338d0df5",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S4",
+          "page_number": 27,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "2fa219e0cb3ff5e71494a9ae93e5f0a8f7fe4e9d59b86717700d1916e5f2cf14",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S5",
+          "page_number": 7,
+          "section": null,
+          "source": "whisper.pdf"
+        }
+      ],
+      "citations": [
+        {
+          "label": "S1",
+          "chunk_id": "57d1fa2c2db16122ffe0f1090194fed71501f20a6056a9081624b72e7ae6f581",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "source": "whisper.pdf",
+          "page_number": 14,
+          "section": null
+        },
+        {
+          "label": "S3",
+          "chunk_id": "0dc41eb68db85b6d8c5a261b2d53e040ff3aef7b140584625b2542f1d0995b38",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "source": "whisper.pdf",
+          "page_number": 4,
+          "section": null
+        }
+      ]
+    },
+    {
+      "question_id": "Q38",
+      "question": "What is the contrastive learning objective used by wav2vec 2.0?",
+      "expected_answerable": true,
+      "status": "answered",
+      "answer": "wav2vec 2.0 masks latent speech representations and trains by solving a contrastive task defined over a quantization of those latent representations, where the quantization is learned jointly with the model [S2][S1]. The provided excerpts do not give the exact mathematical form of the contrastive loss.",
+      "generation_latency_ms": 9632.963457999722,
+      "service_latency_ms": 9827.5172499998,
+      "usage": {
+        "input_tokens": 1527,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 871,
+        "output_tokens_details": {
+          "reasoning_tokens": 768
+        },
+        "total_tokens": 2398
+      },
+      "estimated_cost_usd": 0.00212375,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "dbeab9afc82aef14c4ed5723c7c0915fe8b04bccd168333615cbd702ab25f4ed",
+          "document_id": "4a881708378143547a5c053f62090104afb49782a4c71d78441dde0a818758ff",
+          "label": "S1",
+          "page_number": 8,
+          "section": null,
+          "source": "wav2vec2.pdf"
+        },
+        {
+          "chunk_id": "6d0e477a11ed2e0dc14f80171820e406a11c49b28608eba090fa450e7f5e331d",
+          "document_id": "4a881708378143547a5c053f62090104afb49782a4c71d78441dde0a818758ff",
+          "label": "S2",
+          "page_number": 1,
+          "section": null,
+          "source": "wav2vec2.pdf"
+        },
+        {
+          "chunk_id": "e118369c4a6d9b25982edcc4fd543007a0cce8f9c7a461f71fae99bd6a6c78e4",
+          "document_id": "4a881708378143547a5c053f62090104afb49782a4c71d78441dde0a818758ff",
+          "label": "S3",
+          "page_number": 9,
+          "section": null,
+          "source": "wav2vec2.pdf"
+        },
+        {
+          "chunk_id": "c4a824293b90bbabcc0e4c316f21e6ee6e8c6c38a708f2d558ecfec1921864d9",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S4",
+          "page_number": 1,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "c3880defb391655edc6a1cf0161c5a50ce982392c22282b6025ef4506574eec3",
+          "document_id": "4a881708378143547a5c053f62090104afb49782a4c71d78441dde0a818758ff",
+          "label": "S5",
+          "page_number": 8,
+          "section": null,
+          "source": "wav2vec2.pdf"
+        }
+      ],
+      "citations": [
+        {
+          "label": "S1",
+          "chunk_id": "dbeab9afc82aef14c4ed5723c7c0915fe8b04bccd168333615cbd702ab25f4ed",
+          "document_id": "4a881708378143547a5c053f62090104afb49782a4c71d78441dde0a818758ff",
+          "source": "wav2vec2.pdf",
+          "page_number": 8,
+          "section": null
+        },
+        {
+          "label": "S2",
+          "chunk_id": "6d0e477a11ed2e0dc14f80171820e406a11c49b28608eba090fa450e7f5e331d",
+          "document_id": "4a881708378143547a5c053f62090104afb49782a4c71d78441dde0a818758ff",
+          "source": "wav2vec2.pdf",
+          "page_number": 1,
+          "section": null
+        }
+      ]
+    },
+    {
+      "question_id": "Q45",
+      "question": "What does global workspace theory predict about conscious access?",
+      "expected_answerable": false,
+      "status": "abstained",
+      "answer": "The provided evidence is insufficient to answer this question.",
+      "generation_latency_ms": 2581.910250000874,
+      "service_latency_ms": 2756.8637500007753,
+      "usage": {
+        "input_tokens": 1629,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 174,
+        "output_tokens_details": {
+          "reasoning_tokens": 128
+        },
+        "total_tokens": 1803
+      },
+      "estimated_cost_usd": 0.00075525,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "2a2badb5db680dc8044e6fa191aee2db0492dfebc378e5554a476d36a4ced305",
+          "document_id": "4d53a2d87f7b68b3b5a86d8e4301c5092ae61e260f9c76dab48af34faac9a81f",
+          "label": "S1",
+          "page_number": 1,
+          "section": null,
+          "source": "conformer.pdf"
+        },
+        {
+          "chunk_id": "5776ec84d9218141403567ec86c3fb22b784049a17f69938c437c22de40b9b9a",
+          "document_id": "f37f6fabe0fe0d8c73b67579cd115dbf14e282cfb7b7af655ae8109638402c9b",
+          "label": "S2",
+          "page_number": 11,
+          "section": null,
+          "source": "lost_in_the_middle.pdf"
+        },
+        {
+          "chunk_id": "22816c3576f1104fca197b7dbf3175ec5cb56e54b8c483561ddd3c45b0210695",
+          "document_id": "f37f6fabe0fe0d8c73b67579cd115dbf14e282cfb7b7af655ae8109638402c9b",
+          "label": "S3",
+          "page_number": 2,
+          "section": null,
+          "source": "lost_in_the_middle.pdf"
+        },
+        {
+          "chunk_id": "b39f0bf79b44439e358cc525a5113a30e0d2b6f61b82b76c1762e936b19b2653",
+          "document_id": "4a881708378143547a5c053f62090104afb49782a4c71d78441dde0a818758ff",
+          "label": "S4",
+          "page_number": 9,
+          "section": null,
+          "source": "wav2vec2.pdf"
+        },
+        {
+          "chunk_id": "a87f3e12b4080ceb3d1e2483ee227aa9153e8301c7aa6d9638b4d677c2359d6b",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S5",
+          "page_number": 4,
+          "section": null,
+          "source": "whisper.pdf"
+        }
+      ],
+      "citations": []
+    },
+    {
+      "question_id": "Q46",
+      "question": "What was the total electrical energy consumed during GPT-4 training?",
+      "expected_answerable": false,
+      "status": "abstained",
+      "answer": "The provided evidence is insufficient to answer this question.",
+      "generation_latency_ms": 2279.8082919998706,
+      "service_latency_ms": 2466.394749999381,
+      "usage": {
+        "input_tokens": 1668,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 166,
+        "output_tokens_details": {
+          "reasoning_tokens": 128
+        },
+        "total_tokens": 1834
+      },
+      "estimated_cost_usd": 0.000749,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "5addd8904e5884b090493a826a6934b8344148ca61c0ee78d6b0fd8e42ba07a2",
+          "document_id": "ca7f9fda10b90fc05dd291a3accc85e9c1a4a860b99b31928dab03ed3fcb14e4",
+          "label": "S1",
+          "page_number": 8,
+          "section": null,
+          "source": "flashattention.pdf"
+        },
+        {
+          "chunk_id": "09b39ac239717b76957709e466d0cd9fb15ad1ba500d2311c0607e5870e54a71",
+          "document_id": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+          "label": "S2",
+          "page_number": 10,
+          "section": null,
+          "source": "flashattention2.pdf"
+        },
+        {
+          "chunk_id": "c60a6220e5b8c9c326c847084c53123e8cc9eb1937b3682fddf07354713f7430",
+          "document_id": "ca7f9fda10b90fc05dd291a3accc85e9c1a4a860b99b31928dab03ed3fcb14e4",
+          "label": "S3",
+          "page_number": 27,
+          "section": null,
+          "source": "flashattention.pdf"
+        },
+        {
+          "chunk_id": "5193a4e2959d862d688a556b673dde6e8fbd6df299f15ae825378e5216b7b404",
+          "document_id": "ca7f9fda10b90fc05dd291a3accc85e9c1a4a860b99b31928dab03ed3fcb14e4",
+          "label": "S4",
+          "page_number": 26,
+          "section": null,
+          "source": "flashattention.pdf"
+        },
+        {
+          "chunk_id": "0276a0eb0d211bd1ee90f7b236cce758da9ccf88404d58f3903c6d054c9b7854",
+          "document_id": "ca7f9fda10b90fc05dd291a3accc85e9c1a4a860b99b31928dab03ed3fcb14e4",
+          "label": "S5",
+          "page_number": 26,
+          "section": null,
+          "source": "flashattention.pdf"
+        }
+      ],
+      "citations": []
+    },
+    {
+      "question_id": "Q47",
+      "question": "What is the exact training dataset composition of ElevenLabs Scribe v2?",
+      "expected_answerable": false,
+      "status": "abstained",
+      "answer": "The provided evidence is insufficient to answer this question.",
+      "generation_latency_ms": 1972.435833000418,
+      "service_latency_ms": 2165.1782089993503,
+      "usage": {
+        "input_tokens": 1670,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 131,
+        "output_tokens_details": {
+          "reasoning_tokens": 64
+        },
+        "total_tokens": 1801
+      },
+      "estimated_cost_usd": 0.0006795,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "2fa219e0cb3ff5e71494a9ae93e5f0a8f7fe4e9d59b86717700d1916e5f2cf14",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S1",
+          "page_number": 7,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "f1ce807bc7ba7877162e06453b7bd2d8d566467fde3e561e975d6480a1383727",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S2",
+          "page_number": 4,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "0276a0eb0d211bd1ee90f7b236cce758da9ccf88404d58f3903c6d054c9b7854",
+          "document_id": "ca7f9fda10b90fc05dd291a3accc85e9c1a4a860b99b31928dab03ed3fcb14e4",
+          "label": "S3",
+          "page_number": 26,
+          "section": null,
+          "source": "flashattention.pdf"
+        },
+        {
+          "chunk_id": "bff8b363edca007da43ead275b00cbf294455d1c5c5cbdb0e87d05692f858af9",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S4",
+          "page_number": 2,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "e5303adf20b10ab75910af8ea292b9e9f019249c103fa8a33bb702739174e340",
+          "document_id": "4a881708378143547a5c053f62090104afb49782a4c71d78441dde0a818758ff",
+          "label": "S5",
+          "page_number": 4,
+          "section": null,
+          "source": "wav2vec2.pdf"
+        }
+      ],
+      "citations": []
+    },
+    {
+      "question_id": "Q48",
+      "question": "What WER does Whisper achieve on Moroccan Darija telephone conversations using the Scribe v2 benchmark?",
+      "expected_answerable": false,
+      "status": "abstained",
+      "answer": "The provided evidence is insufficient to answer this question.",
+      "generation_latency_ms": 2560.351999998602,
+      "service_latency_ms": 2757.6805830012745,
+      "usage": {
+        "input_tokens": 1631,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 198,
+        "output_tokens_details": {
+          "reasoning_tokens": 128
+        },
+        "total_tokens": 1829
+      },
+      "estimated_cost_usd": 0.00080375,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "dba16d1e74afc73fe5d529e7bce6a86a2802462374909f179de5a4454df182cd",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S1",
+          "page_number": 7,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "c4b2d4b3addcf76ae8050c832ff925ab67bd09d8e85ebd045fbe3b9f4b377605",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S2",
+          "page_number": 23,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "74286210ac53750f5ed6c5924b655bd698c55c51195a044add3ca3f5861da1c1",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S3",
+          "page_number": 16,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "fe7e5c302c31077adb769328a73222ad720a48087f6fa24a85586dbf801be4fd",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S4",
+          "page_number": 4,
+          "section": null,
+          "source": "whisper.pdf"
+        },
+        {
+          "chunk_id": "8a056a39e4ce836ba321fd04d8ff25411c441b99753dca2d67b17fdeebd99407",
+          "document_id": "84496ed07ac01bf3d00866a1934f81173ddbba99f7488de59bb8ae3b28f0f85e",
+          "label": "S5",
+          "page_number": 8,
+          "section": null,
+          "source": "whisper.pdf"
+        }
+      ],
+      "citations": []
+    },
+    {
+      "question_id": "Q49",
+      "question": "What is the exact architecture of GPT-5.2's attention layers?",
+      "expected_answerable": false,
+      "status": "abstained",
+      "answer": "The provided evidence is insufficient to answer this question.",
+      "generation_latency_ms": 3151.80670799964,
+      "service_latency_ms": 3336.14554199994,
+      "usage": {
+        "input_tokens": 1790,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 256,
+        "output_tokens_details": {
+          "reasoning_tokens": 192
+        },
+        "total_tokens": 2046
+      },
+      "estimated_cost_usd": 0.0009595,
+      "error": null,
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "completed",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "b3fd576c2ae53763570eaaddf60a4c1f7efbfa80e2ac65ee38197726ff731cba",
+          "document_id": "ca7f9fda10b90fc05dd291a3accc85e9c1a4a860b99b31928dab03ed3fcb14e4",
+          "label": "S1",
+          "page_number": 2,
+          "section": null,
+          "source": "flashattention.pdf"
+        },
+        {
+          "chunk_id": "838e6c71c550126cdc466a089e065136b19194799c63b8226cab9bfe6747c5c7",
+          "document_id": "4aa8935dfacaf6ae8c68f772ca92f730154a0dd0e1bceeb59c7bc56c512d5868",
+          "label": "S2",
+          "page_number": 10,
+          "section": null,
+          "source": "flashattention2.pdf"
+        },
+        {
+          "chunk_id": "a0fd2febb7fddbdae99bd8e0ceecca02fe5a1a97592e23b787f1e80fc3611a15",
+          "document_id": "ca7f9fda10b90fc05dd291a3accc85e9c1a4a860b99b31928dab03ed3fcb14e4",
+          "label": "S3",
+          "page_number": 2,
+          "section": null,
+          "source": "flashattention.pdf"
+        },
+        {
+          "chunk_id": "7e6b47578772298ead8219fdc7deec0c0173a8f1a869555440b4190074cabc35",
+          "document_id": "ca7f9fda10b90fc05dd291a3accc85e9c1a4a860b99b31928dab03ed3fcb14e4",
+          "label": "S4",
+          "page_number": 4,
+          "section": null,
+          "source": "flashattention.pdf"
+        },
+        {
+          "chunk_id": "b268ac3f4e1022a363a4b1d8941fd2f9799ab8acab5aa6dbea0ff548d2ce90ea",
+          "document_id": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697",
+          "label": "S5",
+          "page_number": 5,
+          "section": null,
+          "source": "attention_is_all_you_need.pdf"
+        }
+      ],
+      "citations": []
+    },
+    {
+      "question_id": "Q50",
+      "question": "What is the optimal PagedAttention block size when serving GPT-5 on NVIDIA B200 GPUs?",
+      "expected_answerable": false,
+      "status": "error",
+      "answer": null,
+      "generation_latency_ms": 11587.493125000037,
+      "service_latency_ms": 11790.74537499946,
+      "usage": {
+        "input_tokens": 1660,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0,
+          "cache_write_tokens_details": {
+            "ttl_12h_tokens": 0,
+            "ttl_30m_tokens": 0
+          }
+        },
+        "output_tokens": 1024,
+        "output_tokens_details": {
+          "reasoning_tokens": 960
+        },
+        "total_tokens": 2684
+      },
+      "estimated_cost_usd": 0.002463,
+      "error": "Returned generation status incomplete",
+      "api_attempts": 1,
+      "http_status": 200,
+      "response_status": "incomplete",
+      "response_model": "gpt-5-mini-2025-08-07",
+      "service_tier": "default",
+      "retrieved_sources": [
+        {
+          "chunk_id": "c04ce9f0b992f6f1a72cc5460231e3a586e76dff0b29a96ea26b1de3a248093e",
+          "document_id": "55b3b324d779a67c59dac2519445e3b07c14e6ff5c656fadb47a3d7b5997469e",
+          "label": "S1",
+          "page_number": 2,
+          "section": null,
+          "source": "pagedattention.pdf"
+        },
+        {
+          "chunk_id": "d522e1fd0f1bd3b9894564b5be060972e3a413b147b646c441a9d4dc9c7709ef",
+          "document_id": "55b3b324d779a67c59dac2519445e3b07c14e6ff5c656fadb47a3d7b5997469e",
+          "label": "S2",
+          "page_number": 12,
+          "section": null,
+          "source": "pagedattention.pdf"
+        },
+        {
+          "chunk_id": "d1b773b6f988809f9b0aa6037382f597a39eae55070a1334c0a258851e2e4632",
+          "document_id": "55b3b324d779a67c59dac2519445e3b07c14e6ff5c656fadb47a3d7b5997469e",
+          "label": "S3",
+          "page_number": 14,
+          "section": null,
+          "source": "pagedattention.pdf"
+        },
+        {
+          "chunk_id": "6b9b817deccfc623356b1f9e98e3d38b3ae8cf79f16644c9925b4d49d8b56b43",
+          "document_id": "55b3b324d779a67c59dac2519445e3b07c14e6ff5c656fadb47a3d7b5997469e",
+          "label": "S4",
+          "page_number": 1,
+          "section": null,
+          "source": "pagedattention.pdf"
+        },
+        {
+          "chunk_id": "d0b63074348eaf13f6692b9985152fe74d0075572c9bf0a3b4bc8364239a9153",
+          "document_id": "55b3b324d779a67c59dac2519445e3b07c14e6ff5c656fadb47a3d7b5997469e",
+          "label": "S5",
+          "page_number": 12,
+          "section": null,
+          "source": "pagedattention.pdf"
+        }
+      ],
+      "citations": []
+    }
+  ]
+}

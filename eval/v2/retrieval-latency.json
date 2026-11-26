@@ -1,0 +1,90 @@
+{
+  "started_at_utc": "2026-11-26T13:09:39.188819+00:00",
+  "scope": "warm in-process retrieval, including query inference where applicable",
+  "hardware": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "processor": "arm",
+    "logical_cpu_count": 18,
+    "chip_type": "Apple M5 Pro",
+    "number_processors": "proc 18:6:0:12",
+    "physical_memory": "48 GB"
+  },
+  "software": {
+    "python": "3.11.17",
+    "faiss-cpu": "1.16.0",
+    "numpy": "2.4.6",
+    "torch": "2.15.0",
+    "sentence-transformers": "6.3.0",
+    "transformers": "5.23.0",
+    "rank-bm25": "0.2.2"
+  },
+  "threads": {
+    "OMP_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "TOKENIZERS_PARALLELISM": "false",
+    "faiss_openmp": 1,
+    "torch_intraop": 1,
+    "torch_interop": 18
+  },
+  "index_manifest_sha256": "d71f40939505b30e335b69201a6b34c918589b5921b7ed70854edd28d81a5321",
+  "questions_sha256": "4030c79be79503c316e57b655acfef1d5b31f286cd03e55b4b83aa43cd627fc0",
+  "embedding_model": {
+    "name": "sentence-transformers/all-MiniLM-L6-v2",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "batch_size": 32
+  },
+  "reranker_model": {
+    "name": "cross-encoder/ms-marco-MiniLM-L6-v2",
+    "revision": "233902d25c440f23af6f7d6e94d2946bac0bee0a",
+    "batch_size": 16
+  },
+  "index_chunk_count": 1238,
+  "question_count": 50,
+  "top_k": 5,
+  "candidate_depth": 20,
+  "repetitions": 5,
+  "seed": 42,
+  "methods": {
+    "faiss": {
+      "count": 250,
+      "median_ms": 2.5687914999999997,
+      "p95_ms": 2.94031845,
+      "mean_ms": 2.591719896,
+      "result_counts": {
+        "5": 250
+      },
+      "frozen_top5_matches": 250
+    },
+    "bm25": {
+      "count": 250,
+      "median_ms": 1.5431045,
+      "p95_ms": 2.0931814,
+      "mean_ms": 1.535113988,
+      "result_counts": {
+        "5": 250
+      },
+      "frozen_top5_matches": 250
+    },
+    "hybrid": {
+      "count": 250,
+      "median_ms": 4.2767295,
+      "p95_ms": 5.06668125,
+      "mean_ms": 4.3226867,
+      "result_counts": {
+        "5": 250
+      },
+      "frozen_top5_matches": 250
+    },
+    "rerank": {
+      "count": 250,
+      "median_ms": 164.486062,
+      "p95_ms": 174.94522675000002,
+      "mean_ms": 164.930358156,
+      "result_counts": {
+        "5": 250
+      },
+      "frozen_top5_matches": 250
+    }
+  }
+}
