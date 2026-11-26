@@ -1003,6 +1003,7 @@ roadmap, not a record of measured time spent.
 | 4 | ~2 hours | Complete | Local FastAPI, observability, queue-wait limits, CPU Docker deployment, manual HTTP retrieval integration and final documentation audit |
 | 5 | ~2 hours | In progress | Broader evaluation, benchmarking, and GitHub documentation building on the existing five-question evaluation and timing measurements |
 
-The expanded corpus is ready for the next evaluation stage. The 50-question set is pending.
+The 50-question benchmark is frozen and its blind labeling batches are ready.
+[Dataset preparation and reproduction](eval/v2/README.md).
 
 Intended GitHub owner: `baraa42`. No remote repository is required for local setup.

@@ -1,0 +1,801 @@
+{
+  "Q01": {
+    "category": "transformer",
+    "difficulty": "easy",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "It supplies token order information because the architecture has neither recurrence nor convolution.",
+    "references": [
+      {
+        "chunk_id": "3faa9ef937eedd5b6e0c94af2cfcba9ce055a427152f6ea4738fece24f0b0425",
+        "source": "attention_is_all_you_need.pdf",
+        "page_number": 6
+      }
+    ]
+  },
+  "Q02": {
+    "category": "transformer",
+    "difficulty": "easy",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "The original Transformer reports O(n²d) per unrestricted self-attention layer for sequence length n and representation dimension d.",
+    "references": [
+      {
+        "chunk_id": "9ef24abb4a7408c0a44b6e63725a7eb7415f75dc4e3737f57ee0bc6f369ac5c3",
+        "source": "attention_is_all_you_need.pdf",
+        "page_number": 6
+      }
+    ]
+  },
+  "Q03": {
+    "category": "attention_systems",
+    "difficulty": "medium",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "It tiles Q, K and V, computes attention blocks in on-chip SRAM, and avoids moving full score and probability matrices through HBM.",
+    "references": [
+      {
+        "chunk_id": "0fd4561dd2946cc6847f7ab6eca0914bd39271707fedf5d062e3978b4142c218",
+        "source": "flashattention.pdf",
+        "page_number": 4
+      },
+      {
+        "chunk_id": "b3fd576c2ae53763570eaaddf60a4c1f7efbfa80e2ac65ee38197726ff731cba",
+        "source": "flashattention.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q04": {
+    "category": "retrieval_and_context",
+    "difficulty": "medium",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "A pretrained sequence-to-sequence generator provides parametric memory, while a neural retriever supplies passages from a dense Wikipedia index.",
+    "references": [
+      {
+        "chunk_id": "3fdcc221c2c6897b9893f4cd7865736cd4c52ecfdb18ba42c93a2244c83c2f93",
+        "source": "rag_2020.pdf",
+        "page_number": 1
+      },
+      {
+        "chunk_id": "892b2f0b0dfa72c7314ec22b0e22fbe5ecf7d99531eb61e937aa3dcd3b9a0708",
+        "source": "rag_2020.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q05": {
+    "category": "retrieval_and_context",
+    "difficulty": "medium",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "RAG-Sequence marginalizes one latent document for the whole output. RAG-Token marginalizes documents separately at each output token.",
+    "references": [
+      {
+        "chunk_id": "d59232120b12eb3a32994df0f46235cec709bb1b62b507644a789d7e8a07591b",
+        "source": "rag_2020.pdf",
+        "page_number": 3
+      }
+    ]
+  },
+  "Q06": {
+    "category": "transformer",
+    "difficulty": "easy",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "Separate heads attend to different positions and representation subspaces in parallel. A single head averages those signals.",
+    "references": [
+      {
+        "chunk_id": "e98dc7e99fa597f864a45396255260eeebafa6ab8b0378b484f55015c1d0d782",
+        "source": "attention_is_all_you_need.pdf",
+        "page_number": 5
+      }
+    ]
+  },
+  "Q07": {
+    "category": "transformer",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "Dot products grow in variance with key dimension. Scaling prevents large logits from saturating softmax and shrinking gradients.",
+    "references": [
+      {
+        "chunk_id": "a5a516d0e3479c87be675d45b1f9b6a25a82e3be6fffe3338899d5e63fb48e58",
+        "source": "attention_is_all_you_need.pdf",
+        "page_number": 4
+      }
+    ]
+  },
+  "Q08": {
+    "category": "transformer",
+    "difficulty": "easy",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It masks disallowed attention logits before softmax and shifts target embeddings by one position so prediction depends only on previous outputs.",
+    "references": [
+      {
+        "chunk_id": "79212d733d56163b6446d53d444904101c24cb6d220f2dbd697d93d95ecda4af",
+        "source": "attention_is_all_you_need.pdf",
+        "page_number": 3
+      },
+      {
+        "chunk_id": "93af9ce7d1a9306ae66444930d39135308370d90785ffa015b8d735c71b7aa57",
+        "source": "attention_is_all_you_need.pdf",
+        "page_number": 5
+      }
+    ]
+  },
+  "Q09": {
+    "category": "attention_systems",
+    "difficulty": "hard",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "It processes score tiles while maintaining row maxima and normalization statistics, rescaling block contributions to produce the exact normalized output.",
+    "references": [
+      {
+        "chunk_id": "0fd4561dd2946cc6847f7ab6eca0914bd39271707fedf5d062e3978b4142c218",
+        "source": "flashattention.pdf",
+        "page_number": 4
+      }
+    ]
+  },
+  "Q10": {
+    "category": "attention_systems",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It stores the output and normalization statistics and reconstructs attention tiles on chip during backward, trading extra arithmetic for less HBM storage and traffic.",
+    "references": [
+      {
+        "chunk_id": "242a811e9b1d03c0b03ba022140b3448b785948e2d16a388d0300f4739c0a3a0",
+        "source": "flashattention.pdf",
+        "page_number": 5
+      },
+      {
+        "chunk_id": "522940fa2f594925061c6a16a0d9091de2ba3ec70f7ca5bc61223b34bf0aade2",
+        "source": "flashattention.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q11": {
+    "category": "attention_systems",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It accumulates an unnormalized output and normalizes at the end, avoiding repeated output rescaling by the normalizer. Backward needs only the log-sum-exp statistic from forward.",
+    "references": [
+      {
+        "chunk_id": "81a83de75dd1e4da4bf2332e9f9f6b46888e21e9ed4e6f949b3c6dfe7a41c865",
+        "source": "flashattention2.pdf",
+        "page_number": 5
+      },
+      {
+        "chunk_id": "2408e83902c0f80eceb4f803eed17b59a6c5b45951732717c39245d994352683",
+        "source": "flashattention2.pdf",
+        "page_number": 5
+      }
+    ]
+  },
+  "Q12": {
+    "category": "attention_systems",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It also distributes sequence blocks across thread blocks, increasing occupancy when batch and head dimensions expose little parallel work.",
+    "references": [
+      {
+        "chunk_id": "7794b030efa1c281c47095b55ac61c17915b214a05fe4b39cf20bd82dc47a610",
+        "source": "flashattention2.pdf",
+        "page_number": 2
+      },
+      {
+        "chunk_id": "7b9fced08f4c4e40c55f05060e292536ebab1096c0ed763b8a82c1cc8dec8e11",
+        "source": "flashattention2.pdf",
+        "page_number": 8
+      }
+    ]
+  },
+  "Q13": {
+    "category": "attention_systems",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "Split-K partitions K and V across warps and reduces partial outputs through shared memory. Split-Q partitions query rows, letting each warp compute its output rows with shared K and V and no forward inter-warp reduction.",
+    "references": [
+      {
+        "chunk_id": "45ffbfecf9c92e6cf94a6c55b177dadb86b7ea9281e55993b547e84979375dec",
+        "source": "flashattention2.pdf",
+        "page_number": 9
+      },
+      {
+        "chunk_id": "ee4fff2ec6bbbb24cebe3140e0099bfda278195b54736968c60e74e905a35194",
+        "source": "flashattention2.pdf",
+        "page_number": 9
+      }
+    ]
+  },
+  "Q14": {
+    "category": "attention_systems",
+    "difficulty": "medium",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "Fragmentation, over-reservation and redundant copies waste GPU memory, so fewer requests fit in a batch and throughput falls.",
+    "references": [
+      {
+        "chunk_id": "5d3379af48b8a993dc2ae32058d30a807f3e50acd71cd27f0505203c2bb22cca",
+        "source": "pagedattention.pdf",
+        "page_number": 1
+      },
+      {
+        "chunk_id": "65d1dcd81bf469d0fe9bcf01c1a106d6a9cf8da59269d7df7806faaddb605d41",
+        "source": "pagedattention.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q15": {
+    "category": "attention_systems",
+    "difficulty": "medium",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "Logical blocks can reference the same physical prefix blocks. The manager tracks references and copies a shared block before a sequence writes to it.",
+    "references": [
+      {
+        "chunk_id": "30d21ec5b1921c404b6fe7fc76bf2298970198af43c9c48ad10298c9a2aee54f",
+        "source": "pagedattention.pdf",
+        "page_number": 7
+      },
+      {
+        "chunk_id": "4394eab264ea0b4e168536b4249e1dddd4e255f1030a3426c2dc56725d1c413f",
+        "source": "pagedattention.pdf",
+        "page_number": 7
+      }
+    ]
+  },
+  "Q16": {
+    "category": "attention_systems",
+    "difficulty": "easy",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "Each generated token adds keys and values, so the required cache grows with the sequence. PagedAttention allocates another physical block when needed.",
+    "references": [
+      {
+        "chunk_id": "09ad945e94db94e2b37122a49d28e860d74206c61f875e1d6fdca4f52b86d8c1",
+        "source": "pagedattention.pdf",
+        "page_number": 2
+      },
+      {
+        "chunk_id": "e7b3acff22067badaf013384477da86584a2e3bac14564558acd27d432ff373c",
+        "source": "pagedattention.pdf",
+        "page_number": 6
+      }
+    ]
+  },
+  "Q17": {
+    "category": "attention_systems",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It schedules one thread block per attention column block, which handles the associated key and value gradients. Workers use atomic adds to accumulate their shared contributions to the query gradient.",
+    "references": [
+      {
+        "chunk_id": "63745490e1da050e419875a05fab7248a32d4c01f8916f997f82803362fb7eee",
+        "source": "flashattention2.pdf",
+        "page_number": 8
+      },
+      {
+        "chunk_id": "53b8b9e6ec5df9c5ae5882c765f75e7ea4d75a8f7aba950d742f4f387563e9c2",
+        "source": "flashattention2.pdf",
+        "page_number": 8
+      }
+    ]
+  },
+  "Q18": {
+    "category": "attention_systems",
+    "difficulty": "hard",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "FlashAttention reduces transfers between HBM and SRAM during attention computation. PagedAttention reduces serving-time KV-cache waste through logical-to-physical block mapping and on-demand allocation.",
+    "references": [
+      {
+        "chunk_id": "0fd4561dd2946cc6847f7ab6eca0914bd39271707fedf5d062e3978b4142c218",
+        "source": "flashattention.pdf",
+        "page_number": 4
+      },
+      {
+        "chunk_id": "888766a7135f4a1cc02d95b023082282b00ee9737b96f3ed519a5113ac2ad9b8",
+        "source": "pagedattention.pdf",
+        "page_number": 6
+      }
+    ]
+  },
+  "Q19": {
+    "category": "transformer",
+    "difficulty": "easy",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "The same feed-forward transformation is applied independently at each position within a layer.",
+    "references": [
+      {
+        "chunk_id": "93af9ce7d1a9306ae66444930d39135308370d90785ffa015b8d735c71b7aa57",
+        "source": "attention_is_all_you_need.pdf",
+        "page_number": 5
+      }
+    ]
+  },
+  "Q20": {
+    "category": "attention_systems",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It skips blocks entirely in the future, applies the causal mask to boundary blocks, and processes blocks wholly in the allowed region without an elementwise causal mask.",
+    "references": [
+      {
+        "chunk_id": "520f1e8871c627ff6435601ac3e4c0e19083770d9d33066d5b4d910b63cccaa7",
+        "source": "flashattention2.pdf",
+        "page_number": 6
+      },
+      {
+        "chunk_id": "5461e5af2f56041c51ed50feb6ea0380baf455a1fa9c9d573247dcfd907d05de",
+        "source": "flashattention2.pdf",
+        "page_number": 6
+      }
+    ]
+  },
+  "Q21": {
+    "category": "retrieval_and_context",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "A DPR bi-encoder uses separate BERT-base query and document encoders. Maximum inner-product search over indexed document vectors returns the top passages.",
+    "references": [
+      {
+        "chunk_id": "fd7fe01f0c7edae6eb043f897a17325b7b874dfb5bb89117ff1aeab0c2f6e1a4",
+        "source": "rag_2020.pdf",
+        "page_number": 3
+      },
+      {
+        "chunk_id": "8a37f81ce1e1e8142ee1b361d41d201f4353a8ab9e2115cffb64cb8a562a59cf",
+        "source": "rag_2020.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q22": {
+    "category": "retrieval_and_context",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "Changing the document encoder would require recomputing document representations and refreshing the index. The authors found this unnecessary and trained the query encoder and generator.",
+    "references": [
+      {
+        "chunk_id": "721eddcaffce959e099ab6d69aa5738069842ef3407a8ddd6d793e607fac0f99",
+        "source": "rag_2020.pdf",
+        "page_number": 4
+      }
+    ]
+  },
+  "Q23": {
+    "category": "retrieval_and_context",
+    "difficulty": "easy",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "Replacing the index changes which facts the model can retrieve at inference time without retraining the model weights.",
+    "references": [
+      {
+        "chunk_id": "edb80653361c3252ee543d5a65d5deee1734823bb36316a85450f368c0b7971a",
+        "source": "rag_2020.pdf",
+        "page_number": 7
+      }
+    ]
+  },
+  "Q24": {
+    "category": "retrieval_and_context",
+    "difficulty": "easy",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "It precomputes a set of contextualized token embeddings for each document. The query representation is computed at search time.",
+    "references": [
+      {
+        "chunk_id": "c6290c2b266eb82e96da6405b65f523dbedd0ac80944c556f3447f53c22997b2",
+        "source": "colbert.pdf",
+        "page_number": 1
+      },
+      {
+        "chunk_id": "6325c78f247c2e4bfc41708460e4ee504efc0d5be2297364ad6194fb06417d62",
+        "source": "colbert.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q25": {
+    "category": "retrieval_and_context",
+    "difficulty": "medium",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "For each query embedding, take its highest similarity to any document embedding and sum those maxima over query embeddings.",
+    "references": [
+      {
+        "chunk_id": "6325c78f247c2e4bfc41708460e4ee504efc0d5be2297364ad6194fb06417d62",
+        "source": "colbert.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q26": {
+    "category": "retrieval_and_context",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It pads a short query to the fixed query length with mask tokens. BERT contextualizes those positions and their embeddings participate in matching.",
+    "references": [
+      {
+        "chunk_id": "abce2e89d68e3a84cb996a910a7fddbfc35254cea099462c8f9540fe1ef662da",
+        "source": "colbert.pdf",
+        "page_number": 4
+      },
+      {
+        "chunk_id": "72659b8b70bd1a5bda5d651d3a69a021ec6625dfc5d9cae7a0061bf740ce14e5",
+        "source": "colbert.pdf",
+        "page_number": 4
+      }
+    ]
+  },
+  "Q27": {
+    "category": "retrieval_and_context",
+    "difficulty": "easy",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It filters the contextual vectors for punctuation tokens using a predefined punctuation list.",
+    "references": [
+      {
+        "chunk_id": "985fab4a584f526f5a02c842ec2d809326af55f36e6839bf44c56cfa224914ec",
+        "source": "colbert.pdf",
+        "page_number": 4
+      }
+    ]
+  },
+  "Q28": {
+    "category": "retrieval_and_context",
+    "difficulty": "easy",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "The studied models often perform best when evidence appears near the beginning or end, with lower performance when it appears in the middle.",
+    "references": [
+      {
+        "chunk_id": "e0050053a2f0bad7ab54cd6cb6210f9010fa69c3c5bea5648c6e37c1bdfe7862",
+        "source": "lost_in_the_middle.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q29": {
+    "category": "retrieval_and_context",
+    "difficulty": "easy",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It uses multi-document question answering and synthetic key-value retrieval.",
+    "references": [
+      {
+        "chunk_id": "baa171dfc1c1518008237b33e79bca9f3625653039e0fb5817bd425bcf5c372f",
+        "source": "lost_in_the_middle.pdf",
+        "page_number": 1
+      }
+    ]
+  },
+  "Q30": {
+    "category": "retrieval_and_context",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "Additional documents can improve retriever recall while reader accuracy plateaus because the model fails to use the extra context effectively.",
+    "references": [
+      {
+        "chunk_id": "32b029d946d5d8808383db8d7691158f973763c48e76af6708cec78282098f9e",
+        "source": "lost_in_the_middle.pdf",
+        "page_number": 3
+      },
+      {
+        "chunk_id": "cfb416e1889d0909898aacc10336a1243382a34a134f266fd91a6dc2ae277a46",
+        "source": "lost_in_the_middle.pdf",
+        "page_number": 10
+      }
+    ]
+  },
+  "Q31": {
+    "category": "retrieval_and_context",
+    "difficulty": "hard",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "ColBERT sums token-level maximum similarities, while RAG's DPR compares one dense query vector against one dense passage vector by inner product.",
+    "references": [
+      {
+        "chunk_id": "6325c78f247c2e4bfc41708460e4ee504efc0d5be2297364ad6194fb06417d62",
+        "source": "colbert.pdf",
+        "page_number": 2
+      },
+      {
+        "chunk_id": "fd7fe01f0c7edae6eb043f897a17325b7b874dfb5bb89117ff1aeab0c2f6e1a4",
+        "source": "rag_2020.pdf",
+        "page_number": 3
+      }
+    ]
+  },
+  "Q32": {
+    "category": "retrieval_and_context",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It selects the answer-bearing Wikipedia paragraph from NaturalQuestions annotations and adds retrieved distractor documents that lack the answer.",
+    "references": [
+      {
+        "chunk_id": "22783cb9f77e8468c979ee9cef2455b7de5b286b6b467653a1815674191e8bed",
+        "source": "lost_in_the_middle.pdf",
+        "page_number": 3
+      },
+      {
+        "chunk_id": "cd563a4467107fbea748cc1b1306369ac0e5a3fe0fe092ee1fd57c42e5bdebb2",
+        "source": "lost_in_the_middle.pdf",
+        "page_number": 3
+      }
+    ]
+  },
+  "Q33": {
+    "category": "retrieval_and_context",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "This led to near-perfect synthetic key-value retrieval, but made little difference to the position sensitivity trend in multi-document QA.",
+    "references": [
+      {
+        "chunk_id": "695158e71e8afd1c068ab18755473945c294d22a4a722009883bebc86bad97a2",
+        "source": "lost_in_the_middle.pdf",
+        "page_number": 8
+      },
+      {
+        "chunk_id": "5a34088ee38f3848538b1098e10aeac66c44f48ea4c3279129aab992ec67b0c7",
+        "source": "lost_in_the_middle.pdf",
+        "page_number": 8
+      },
+      {
+        "chunk_id": "de20887e94370d1d368ad5d8dcba909f8e2a36242945248f778a35be35d09dd3",
+        "source": "lost_in_the_middle.pdf",
+        "page_number": 9
+      }
+    ]
+  },
+  "Q34": {
+    "category": "speech",
+    "difficulty": "easy",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "680,000 hours of labeled audio across languages and tasks.",
+    "references": [
+      {
+        "chunk_id": "450a044f81e68340d9fcc3bc1e7aefbe6ca940b2a60a9ef3aa552db519acfdb7",
+        "source": "whisper.pdf",
+        "page_number": 1
+      }
+    ]
+  },
+  "Q35": {
+    "category": "speech",
+    "difficulty": "easy",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "An 80-channel log-magnitude Mel spectrogram computed from audio resampled to 16 kHz, with 25 ms windows and a 10 ms stride.",
+    "references": [
+      {
+        "chunk_id": "0eeaf6edb79b089cb7595dca51ac57044a0fa41cb6f9016473d6c3246d825532",
+        "source": "whisper.pdf",
+        "page_number": 3
+      }
+    ]
+  },
+  "Q36": {
+    "category": "speech",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "Special output-prefix tokens specify the language and task, such as transcription or translation, and control timestamp behavior.",
+    "references": [
+      {
+        "chunk_id": "f33763a85091f1840894c425487986801073b237c7f668517c9b6acbfd847c4d",
+        "source": "whisper.pdf",
+        "page_number": 3
+      },
+      {
+        "chunk_id": "849a2a061f1a93faaac9d50f7e131561a075eff251a4c43be995f0772bef5845",
+        "source": "whisper.pdf",
+        "page_number": 3
+      }
+    ]
+  },
+  "Q37": {
+    "category": "speech",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "The authors remove machine-generated transcripts as part of transcript-quality filtering. Punctuation and capitalization patterns help identify existing ASR output.",
+    "references": [
+      {
+        "chunk_id": "39830a82ceb08aee7748219c0133d6b39b387141aa2ac8d5ee9d7b54dc2f5f88",
+        "source": "whisper.pdf",
+        "page_number": 2
+      },
+      {
+        "chunk_id": "da6f7b9054f3e63af7e277de61c718f7c84ac361c0b2eba95e2a3b24e3d08b16",
+        "source": "whisper.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q38": {
+    "category": "speech",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "At a masked position, the contextual representation must identify the true quantized latent among distractor latents, scored using temperature-scaled cosine similarity.",
+    "references": [
+      {
+        "chunk_id": "a84f64b500a7097b869cd84f3c2da1f1510e050c5937972a9789d9f27b5c35eb",
+        "source": "wav2vec2.pdf",
+        "page_number": 3
+      }
+    ]
+  },
+  "Q39": {
+    "category": "speech",
+    "difficulty": "easy",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It masks spans of the convolutional feature encoder's latent outputs before they enter the contextual Transformer.",
+    "references": [
+      {
+        "chunk_id": "9574b2e1f569d84e81478dcf486d7b70195f062e5d4c2158b0b162beed601874",
+        "source": "wav2vec2.pdf",
+        "page_number": 1
+      }
+    ]
+  },
+  "Q40": {
+    "category": "speech",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "It uses product quantization with learned codebooks and differentiable straight-through Gumbel-softmax selection to produce the discrete contrastive targets.",
+    "references": [
+      {
+        "chunk_id": "e8b5b7d48ddbd5d80a0c69971e3bc8ece89652f2501dd2d63080c6a77fa4427e",
+        "source": "wav2vec2.pdf",
+        "page_number": 3
+      }
+    ]
+  },
+  "Q41": {
+    "category": "speech",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "Depthwise convolution captures local patterns, while multi-head self-attention captures longer-range, content-dependent interactions.",
+    "references": [
+      {
+        "chunk_id": "731f2bdb2bbed0b358fb25d4560bb25658a4d603b5a8b6a77eff390acd929104",
+        "source": "conformer.pdf",
+        "page_number": 1
+      },
+      {
+        "chunk_id": "6724c20256661c3bd203dc336654de0c2b3eabab26314ece699fc2ddcd4bf0f4",
+        "source": "conformer.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q42": {
+    "category": "speech",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "Two feed-forward modules with half-step residual scaling surround the attention and convolution modules.",
+    "references": [
+      {
+        "chunk_id": "2ba6f0ac9354233f03e4d0d70f72d763dbbbec4824e58086abb9fddce18b46ea",
+        "source": "conformer.pdf",
+        "page_number": 1
+      },
+      {
+        "chunk_id": "2b15010ba02d316b0d1018c601b7fedfed24b6231a48e730cf821909e44ddf74",
+        "source": "conformer.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q43": {
+    "category": "speech",
+    "difficulty": "hard",
+    "split": "development",
+    "answerable": true,
+    "reference_answer": "Whisper learns to predict text from paired audio and transcripts. wav2vec 2.0 self-supervises on unlabeled audio using masked latent prediction with a contrastive objective and later fine-tunes on labeled data.",
+    "references": [
+      {
+        "chunk_id": "39830a82ceb08aee7748219c0133d6b39b387141aa2ac8d5ee9d7b54dc2f5f88",
+        "source": "whisper.pdf",
+        "page_number": 2
+      },
+      {
+        "chunk_id": "9574b2e1f569d84e81478dcf486d7b70195f062e5d4c2158b0b162beed601874",
+        "source": "wav2vec2.pdf",
+        "page_number": 1
+      }
+    ]
+  },
+  "Q44": {
+    "category": "speech",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": true,
+    "reference_answer": "A pointwise convolution and gated linear unit precede one-dimensional depthwise convolution, batch normalization, Swish, a final pointwise convolution and dropout.",
+    "references": [
+      {
+        "chunk_id": "37ddd325106c57bf915ea3679eb57cd02d657734890e769a1806a56e7f4aafaa",
+        "source": "conformer.pdf",
+        "page_number": 2
+      },
+      {
+        "chunk_id": "6724c20256661c3bd203dc336654de0c2b3eabab26314ece699fc2ddcd4bf0f4",
+        "source": "conformer.pdf",
+        "page_number": 2
+      }
+    ]
+  },
+  "Q45": {
+    "category": "out_of_corpus",
+    "difficulty": "medium",
+    "split": "held_out",
+    "answerable": false,
+    "reference_answer": "The corpus provides no account of global workspace theory or conscious access.",
+    "references": []
+  },
+  "Q46": {
+    "category": "out_of_corpus",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": false,
+    "reference_answer": "The corpus mentions or evaluates GPT-4 but provides no total training-energy figure.",
+    "references": []
+  },
+  "Q47": {
+    "category": "out_of_corpus",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": false,
+    "reference_answer": "The corpus discusses other speech systems and provides no Scribe v2 training dataset breakdown.",
+    "references": []
+  },
+  "Q48": {
+    "category": "out_of_corpus",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": false,
+    "reference_answer": "Whisper reports other WER results. The requested language, domain and benchmark combination is unsupported.",
+    "references": []
+  },
+  "Q49": {
+    "category": "out_of_corpus",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": false,
+    "reference_answer": "The corpus describes other Transformer variants and provides no GPT-5.2 attention architecture.",
+    "references": []
+  },
+  "Q50": {
+    "category": "out_of_corpus",
+    "difficulty": "hard",
+    "split": "held_out",
+    "answerable": false,
+    "reference_answer": "The paper studies block-size trade-offs in its own experiments. The requested model and GPU combination has no supporting measurements in the corpus.",
+    "references": []
+  }
+}

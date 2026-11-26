@@ -131,3 +131,109 @@ def test_question_cli_empty_index(tmp_path, monkeypatch):
     assert data["question_id"] == "Q01"
     assert data["question"] == "Question?"
     assert data["candidates"] == []
+
+
+V2 = Path(__file__).resolve().parents[1] / "eval" / "v2"
+
+
+def test_validate_frozen_questions():
+    questions = json.loads((V2 / "questions.json").read_bytes())
+    metadata = json.loads((V2 / "metadata.json").read_bytes())
+    baseline = json.loads((V2.parent / "questions.json").read_bytes())
+    export.validate_batch_dataset(questions, metadata, baseline)
+
+    override = dict(questions, Q01="Changed baseline question?")
+    with pytest.raises(ValueError, match="Baseline question"):
+        export.validate_batch_dataset(override, metadata, baseline)
+
+    override = dict(questions, Q50=questions["Q49"])
+    with pytest.raises(ValueError, match="Duplicate question"):
+        export.validate_batch_dataset(override, metadata, baseline)
+
+    override_metadata = dict(metadata, Q50=dict(metadata["Q50"], split="development"))
+    with pytest.raises(ValueError, match="15 development"):
+        export.validate_batch_dataset(questions, override_metadata, baseline)
+
+
+def test_batch_reuses_models_and_blinds_outside_references(tmp_path, monkeypatch):
+    picked, extra = result("picked"), result("extra")
+    index = SimpleNamespace(chunks=[picked, extra])
+    chunks = export.pool_candidates({"faiss": [picked], "rerank": [picked]})
+    load = Mock(return_value=index)
+    embedder, reranker, bm25, hybrid = Mock(), Mock(), Mock(), Mock()
+    retrieve = Mock(return_value=chunks)
+    monkeypatch.setattr(export.VectorIndex, "load", load)
+    monkeypatch.setattr(export, "Embedder", embedder)
+    monkeypatch.setattr(export, "CrossEncoderReranker", reranker)
+    monkeypatch.setattr(export, "BM25Index", bm25)
+    monkeypatch.setattr(export, "HybridRetriever", hybrid)
+    monkeypatch.setattr(export, "retrieve_candidates", retrieve)
+    monkeypatch.setattr(export, "validate_batch_dataset", Mock())
+    questions = tmp_path / "questions.json"
+    metadata = tmp_path / "metadata.json"
+    questions.write_text(json.dumps({"Q01": "First?", "Q02": "Second?"}))
+    metadata.write_text(
+        json.dumps(
+            {
+                "Q01": {
+                    "references": [
+                        {
+                            "chunk_id": extra.chunk_id,
+                            "source": extra.source,
+                            "page_number": 3,
+                        }
+                    ]
+                },
+                "Q02": {"references": []},
+            }
+        )
+    )
+    (tmp_path / "manifest.json").write_text(
+        json.dumps(
+            {
+                "sha256": {"vectors.faiss": "fixture"},
+                "model_name": "model",
+                "model_revision": "revision",
+            }
+        )
+    )
+    output = tmp_path / "batch"
+    export.export_batch(questions, metadata, tmp_path, output)
+    load.assert_called_once_with(tmp_path)
+    embedder.assert_called_once()
+    reranker.assert_called_once()
+    assert retrieve.call_count == 2
+    for call in retrieve.call_args_list:
+        assert call.args[1:] == (
+            index,
+            bm25.return_value,
+            hybrid.return_value,
+            embedder.return_value,
+            reranker.return_value,
+        )
+    blind = json.loads((output / "blind" / "Q01.json").read_bytes())["candidates"]
+    assert {r["chunk_id"] for r in blind} == {"picked", "extra"}
+    assert all(
+        set(r) == {"chunk_id", "source", "page_number", "section", "text"}
+        for r in blind
+    )
+    assert blind == export.blind_candidates("Q01", list(reversed(blind)), blind)
+    compact = json.loads((output / "rankings.json").read_bytes())
+    assert compact["rankings"]["Q01"] == {
+        "faiss": ["picked"],
+        "bm25": [],
+        "hybrid": [],
+        "rerank": ["picked"],
+    }
+    summary = json.loads((output / "run.json").read_bytes())
+    assert summary["failures"] == {}
+    assert summary["questions"]["Q01"]["pooled"] == 1
+    assert summary["questions"]["Q01"]["blind"] == 2
+
+    retrieve.side_effect = RuntimeError("failed test query")
+    failed = tmp_path / "failed"
+    with pytest.raises(ValueError, match="failed queries"):
+        export.export_batch(questions, metadata, tmp_path, failed)
+    summary = json.loads((failed / "run.json").read_bytes())
+    assert set(summary["failures"]) == {"Q01", "Q02"}
+    assert not (failed / "rankings.json").exists()
